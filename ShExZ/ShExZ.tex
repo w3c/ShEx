@@ -1,0 +1,648 @@
+\documentclass[fuzz]{llncs}
+\usepackage{llncsdoc}
+\usepackage{xspace,amssymb,mathtools,fixltx2e}
+\usepackage{amsmath, bbm}
+\usepackage{zed}
+\usepackage[utf8]{inputenc}
+\def\entryFor{\cdot}
+\def\eqtn{eq_{tn}}
+
+\def\pass{{\mathbbm{p}}}
+\def\fail{{\mathbbm{f}}}
+\def\dunno{\varnothing}
+\def\error{\varepsilon}
+\def\nomatch{\mathbbm{z}}
+
+\def\zc{\textit}
+\def\zcb{\textit{\textbf}}
+
+\include{uml_style}
+
+%%inop \entryFor 4
+%%inrel \eqtn
+
+
+\begin{document} 
+
+\title{A Formal Model of the Shape Expression Language}
+
+\titlerunning{A Formal Model of Shape Expressions}  
+
+\author{%
+  Harold Solbrig\inst{1}, Eric Prud'hommeaux\inst{2}}
+
+\authorrunning{Harold Solbrig, Eric Prud'hommeaux} 
+
+\tocauthor{Harold Solbrig, Eric Prud'hommeaux} 
+%
+\institute{Mayo Clinic, Rochester MN 55095, USA,\\
+\email{solbrig.harold@mayo.edu}
+\and
+World Wide Web Consortium, Cambridge MA 02139, USA,\\
+\email{eric@w3.org} } 
+
+\maketitle          
+
+\begin{abstract}
+Shape Expressions express formal constraints on the content of RDF graphs and are intended to be used to validate RDF documents, communicate expected graph patterns for interfaces and to generate forms and validation code.  This document describes the formal semantics of the Shape Expressions language through the use of the $Z$ Specification Language.
+\end{abstract}
+ 
+
+  \keywords{RDF, RDF Graph, RDF Dataset, validation, formal schema,
+    ShEx, RDF Validation, Z Specification Language}
+
+\section{Introduction}
+The Shape Expressions Language ($ShEx$) is used to specify formal constraints on the content of RDF graphs and are intended to be used to validate RDF documents, communicate expected graph patterns for interfaces and to generate forms and validation code. $ShEx$ can be used to:
+\begin{itemize}
+\item Describe the contents of an RDF graph
+\item Express invariants about an RDF triple store
+\item Define a predicate that can be tested against an RDF graph instance
+\item Define a set of rules that can be used to generate forms, validation code and other constructs in specific target languages
+\end{itemize} 
+
+Information about the use, grammar and syntax of $ShEx$ can be found at \verb#http://www.w3.org/2013/ShEx#. The purpose of this document is to describe the formal \textit{semantics} of the $ShEx$ language using the $Z$ specification language.  We begin with a formal specification of the characteristics of an \textit{RDF Graph} that are referenced by $ShEx$.
+
+\section{The RDF Data Model}
+Using the formal definitions in \textit{RDF 1.1 Concepts and Abstract Syntax}\cite{RDF11}, we begin with:
+\begin{quote}``An \textbf{RDF graph} is a set of \textbf{RDF Triples}''\end{quote}
+Formally:
+\begin{zed}
+Graph == \power Triple
+\end{zed}
+The specification then defines the notion of \textbf{Triple}:
+\begin{quote}``An \textbf{RDF triple} consists of three components:
+\begin{itemize}
+\item the \textit{subject}, which is an \textbf{IRI} or a \textbf{blank node}
+\item the \textit{predicate}, which is an \textbf{IRI}
+\item the \textit{object}, which is an \textbf{IRI}, a \textbf{literal} or a \textbf{blank node}''
+\end{itemize}
+\end{quote}
+\begin{quote}
+```... \textbf{IRI}s, \textbf{literal}s and \textbf{blank nodes} are distinct and distinguishable.''
+\end{quote} 
+
+The $ShEx$ language treats \textbf{IRI}s and \textbf{blank nodes} as primitive types, so we can formally define them as $Z$ free types:
+\begin{zed}
+[IRI, BlankNode]
+\end{zed}
+
+The $ShEx$ language can express constraints on both the type and content of \textbf{literals}, so we need to model these separately.  Starting with:
+
+\begin{quote}
+``A \textbf{literal} in an RDF graph consists of two or three elements:
+\begin{itemize}
+\item a \textbf{lexical form}, being a Unicode string...
+\item a \textbf{datatype IRI}, being an IRI
+\item if and only if the datatype IRI is \\
+\verb|http://www.w3.org/1999/02/22-rdf-syntax-ns#langString|, a non-empty language tag as defined in [BCP47]\cite{BCP47}. The language tag MUST be well-formed according to section 2.2.9 of [BCP47]\cite{BCP47}.''
+\end{itemize}
+\end{quote}
+We model this by defining $String$ and $LanguageTag$ as free types:
+\begin{zed}
+[String, LanguageTag]
+\end{zed}
+And then use them in the definition the two flavors of $RDFLiteral$,  plain literal and typed literal::
+\begin{zed}
+TypedLiteral \defs [lexicalForm:String ; dataType : IRI | dataType \neq XSD\_String] \\
+PlainLiteral \defs [lexicalForm:String ; dataType : IRI; langTag : LanguageTag | \\
+\t3 dataType = XSD\_String] \\
+RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata \\ 
+\end{zed}
+The RDF 1.1 specification the defines $RDFTerm$ as:
+\begin{quote}
+``\textbf{IRI}s, \textbf{literal}s and \textbf{blank nodes} are collectively known as \textbf{RDF terms}
+\end{quote}
+
+\begin{zed}
+RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ldata BlankNode \rdata
+\end{zed}
+We are now in the position to complete the definition of $Triple$ as a tuple consisting of three constrained $RDFTerm$s:
+\begin{schema}{Triple}
+   s,p,o : RDFTerm
+\where
+   iri \entryFor s \in IRI \lor bnode \entryFor s \in BlankNode \\
+   iri \entryFor p \in IRI \\
+   iri \entryFor o \in IRI \lor bnode \entryFor o \in BlankNode \lor literal \entryFor o \in RDFLiteral
+\end{schema}
+
+The $ShEx$ language uses the following functions:
+
+\paragraph{\zc{subjects}} -- return set of triples in a graph triples whose subject is a given \zc{RDFTerm}
+\begin{gendef}
+   subjects: RDFTerm \fun Graph \fun Graph
+\where
+   \forall subj: RDFTerm; g: Graph @ subjects~subj~g = \{t: g | t.s = subj \}
+\end{gendef}
+
+\paragraph{\zc{objects}} -- return set of objects in \zc{Graph}
+\begin{gendef}
+   objects: Graph \fun \power RDFTerm
+\where
+   \forall g: Graph @ objects~g = \{t: g @ t.o \}
+\end{gendef}
+
+It is also useful to define a couple of well known URI's for future reference:
+
+\begin{axdef}
+XSD\_String, RDF\_Resource : IRI
+\end{axdef}
+
+This completes the formal definition of \zc{Graph}, \zc{Triple}, \zc{RDFTerm} and their components, which we can now use to describe the relationship between an $ShEx$ $Schema$ and an RDF graph.
+
+\section{Shape Expression Evaluation}
+A Shape Expression \zc{Schema} is a collection of labeled rules where exactly one rule in the collection is identified as the outermost or ``starting'' rule. In addition, any rule 
+that is referenced within the \zc{Schema} is also itself a member of the \zc{Schema} Formally:
+
+\begin{schema}{Schema}
+   rules : Label \pfun Rule \\
+   start : Label
+\where
+   start \in \dom rules \\
+\forall r: \ran rules @ \\
+\t1 (r \in \ran group \implies (group \entryFor r).rule \in \dom rules) \land \\
+\t1 (r \in \ran and \implies \ran (and \entryFor r) \subseteq \dom rules) \land \\
+\t1 (r \in \ran xor \implies \ran (xor \entryFor r) \subseteq \dom rules) \land \\ 
+\t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran valueRef \implies \\
+\t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules)
+\end{schema}
+While existing $ShEx$ implementations define a rule \zc{Label} as being either an \zc{IRI} or
+a \zc{BlankNode}, the type of \zc{Label} does not impact the evaluation semantics.  For our 
+purposes, we can simply define it as a separate free type:
+\begin{zed}
+[Label]
+\end{zed}
+
+
+The validity of a given RDF \zc{Graph} is determined by taking the \zc{start} \zc{Rule} of a
+$ShEx$ \zc{Schema} and a subject \zc{IRI} and evaluating the validity of the \zc{Rule} against
+the subset of the triples in the graph having the supplied \zc{subject}.  It is necessary that
+this evaluation be done in the \textit{context} of the entire \zc{Schema} and \zc{Graph}, as
+the \zc{start} rule in the schema will usually reference other \zc{rules} and it will
+frequently be the case that the \zc{objects} of the subject graphs will (recursively) reference
+other graph subjects.
+
+Formally, the \zc{evaluate} function takes a \zc{Schema}, a \zc{Graph} and a subject \zc{IRI}
+and, if the \zc{start} \zc{Rule} in the \zc{Schema}, when evaluated against the subject graph
+in the context of the starting \zc{Schema} and \zc{graph}, returns either \zc{nomatch} 
+($\nomatch$) or \zc{pass} ($\pass$) then the function returns \zc{pass}.  In all other cases,
+the function returns \zc{fail} ($\fail$).
+\begin{gendef}
+   evaluate: Schema \fun Graph \fun IRI \fun OptValidity
+\where
+   \forall s: Schema; g: Graph; i: IRI; v: OptValidity; ec: EvalContext | \\
+\t1 ec.graph = g \land ec.schema = s @ \\
+   evaluate ~s ~g ~i = \\
+\t1 \IF evalRule ~ec ~ (subjects~ (iri~ i)~ g)~ (s.rules~ s.start) \in \{\nomatch, \pass\} \\
+\t1 \THEN \pass \ELSE \fail
+\end{gendef}
+
+\section{Rule Evaluation}
+A $ShEx$ \zc{Rule} is a set of constraints that can be evaluated against an RDF
+\zc{Graph} in the context of a given \zc{Schema} and RDF \zc{Graph}:
+\begin{zed}
+EvalContext \defs [schema: Schema; graph: Graph] \\
+\end{zed}
+The \zc{Graph} being evaluated does not necessarily have to be a subset of the
+\zc{Graph} in \zc{EvalContext}, and may also have
+more than one \zc{subject}.  While the \zc{evaluate} function described earlier in this section 
+actually ensures that both of these conditions are true, it is envisioned that the \zc{eval} 
+function may have other applications beyond the scope of the \zc{evaluate} function itself.
+
+Formally, the \zc{evalRule} function takes an \zc{EvalContext}, a \zc{Graph} and a \zc{Rule} and returns one of the following:
+\begin{itemize}
+\item \textbf{Pass ($\pass$)} - the supplied \zc{Graph} satisfied the evaluation \zc{Rule}
+\item \textbf{Fail ($\fail$)} - the supplied \zc{Graph} did not satisfy the evaluation \zc{Rule}
+\item \textbf{Nomatch ($\nomatch$)} - an \zc{optional} \zc{GroupRule} was encountered and there were no matching triples
+\item \textbf{Dunno ($\dunno$)} - an \zc{ArcRule} was encountered with a minimum cardinality of 0 and there were no matching triples
+\item \textbf{Error($\error$)} - an \zc{XorRule} was evaluated and two or more components passed the evaluation.
+\end{itemize}
+\begin{zed}
+OptValidity ::= \pass | \fail | \nomatch | \dunno | \error \\
+\end{zed}
+A  \zc{Rule} can take one of four forms. Each will be formally described later in this
+document, but informally they are:
+\begin{itemize}
+\item \textbf{\zc{ArcRule}} -- selects a subset of the graph having predicates that match
+criteria described in the rule and
+and validates the objects of this subset
+\item \textbf{\zc{GroupRule}} -- identifies a \zc{Rule} and declares it as optional and/or
+describes a set of external \zc{Actions} to be evaluated if the inner \zc{Rule} passes.
+\item \textbf{\zc{AndRule}} -- identifies a set of \zc{Rules}, all of which must pass when
+evaluated against the supplied \zc{Graph} and \zc{EvalContext}
+\item \textbf{\zc{XorRule}} -- identifies a set of \zc{Rules}, exactly one of which must pass when
+evaluated against the supplied \zc{Graph} and \zc{EvalContext}
+\end{itemize}
+\begin{zed}
+Rule ::= arc \ldata ArcRule \rdata | \\
+\t1 group \ldata GroupRule \rdata | \\
+\t1 and \ldata AndRule \rdata | \\
+\t1 xor \ldata XorRule \rdata \\
+\end{zed}
+\begin{gendef}
+   evalRule: EvalContext \fun Graph \fun Rule \fun OptValidity
+\where
+   \forall ec: EvalContext; g:Graph; r: Rule @ evalRule~ec~g~r = \\
+\t1 \IF r \in \ran arc \\
+\t2 \THEN evalArcRule~ec~g~(arc \entryFor r) \\
+\t1 \ELSE \IF r \in \ran group \\
+\t2 \THEN evalGroupRule~ec~g~(group \entryFor r) \\
+\t1 \ELSE \IF r \in \ran and \\
+\t2 \THEN evalAndRule~ec~g~(and \entryFor r) \\
+\t1 \ELSE \\
+\t2 evalXorRule~ec~g~(xor \entryFor r)
+\end{gendef}
+The function below is used to execute the rules that referenced by \zc{GroupRule}s,
+\zc{AndRules} and \zc{OrRules}. Its purpose is to de-reference the supplied \zc{Label} and
+invoke \zc{evalRule} with the result.  This is not explicitly represented because
+the $Z$ specification language does not allow cyclic dependencies. Note that this function
+is undefined if \zc{Label} is not in \zc{EvalContext}
+\begin{gendef}
+   evalRuleLabel: EvalContext \fun Graph \fun Label \fun OptValidity
+\where
+   \forall ec: EvalContext; l:Label @ l \in \dom ec.schema.rules
+\end{gendef}
+
+\subsection{ArcRule evaluation}
+The \zc{ArcRule} is used to select the subset of the graph having a given predicate or
+predicates and to determine whether the cardinality and/or ``type'' of this subset matches
+a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to select the triples,
+ an \zc{ObjectSpecification} to evaluate the result, a optional \zc{min} and \zc{max}
+ cardinality and a (possibly empty) set of \zc{Actions}:
+\begin{schema}{ArcRule}
+   filter: PredicateFilter \\
+   valueSpec: ObjectSpecification \\
+   min, max: \optional[\nat] \\
+   actions: \power Action
+\where
+   (\# min = 1 \land \# max = 1) \implies v~ min \leq v~ max
+\end{schema}
+\zc{ArcRule} evaluation consists of:
+\begin{enumerate}
+\item Selecting all of the triples in \zc{Graph} having predicates that match  \zc{PredicateFilter}
+\item If the number of triples from the previous step is 0, return either \zc{nomatch}
+($\nomatch$) if \zc{min} is 0 otherwise \zc{dunno}($\dunno$).
+\item If \zc{min} is specified and the number of triples from the previous step is < \zc{min}
+then return \zc{fail} ($\fail$)
+\item If \zc{max} is specified and the number of triples from the previous step is > \zc{max}
+then return \zc{fail} ($\fail$)
+\item Evaluate the object of each of the triples in the set against \zc{ObjectSpecification}.  If any of the evaluations fail, return \zc{fail} ($\fail$).
+\item Return the result of evaluating \zc{actions} against the matching triples.
+\end{enumerate}
+\begin{gendef}
+   evalArcRule: EvalContext \fun Graph \fun ArcRule \fun OptValidity
+\where
+   \forall ec: EvalContext; g, sg: Graph; ar: ArcRule | \\ 
+\t1 sg = evalPredicateFilter~ar.filter~ec.graph @ \\
+evalArcRule~ec~g~ar = \\
+\t1 \IF \# ar.min = 1 \land \# sg = 0 \land  v~ ar.min = 0 \\
+\t2 \THEN \nomatch \\
+\t1 \ELSE \IF \# sg = 0 \\
+\t2 \THEN \dunno \\
+\t1 \ELSE \IF (\# ar.min = 1 \land \# sg < v~ ar.min) \lor \\
+\t3 (\# ar.max = 1 \land \# sg > v~ ar.max) \\
+\t2 \THEN \fail \\
+\t1 \ELSE \IF evalObjectSpecification~ec~ar.valueSpec~sg = \pass \\
+\t2 \THEN dispatch~ ar.actions~ sg~ ec \\
+\t1 \ELSE \\
+\t2  evalObjectSpecification~ec~ar.valueSpec~sg
+\end{gendef}
+
+
+\subsubsection{\zc{PredicateFilter} Validation}
+A \zc{PredicateFilter} can be one of:
+\begin{itemize}
+\item an \zc{pfIRI} - the IRI of a specific predicate or the IRIstem that defines a set of
+predicates
+\item \zc{pfWild} - an expression that matches any predicate \emph{except} those matching the (possibly empty) set of \zc{IRIorStems} 
+\end{itemize}
+\begin{zed}
+IRIorStem ::= iosi \ldata IRI \rdata | ioss \ldata IRIstem \rdata \\
+PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorStem \rdata
+\end{zed}
+An \zc{IRIstem} matches any \zc{IRI} whose stringified representation begins with the stringified
+representation of \zc{IRIstem} according to standard IRI matching rules \cite{MR}. This is represented by the function:
+\begin{zed}
+[IRIstem]
+\end{zed}
+\begin{gendef}
+	IRIstemRange: IRIstem \pfun \power IRI
+\end{gendef}
+\zc{evalPredicateFilter} returns all of the triples in a \zc{Graph} whose predicate
+matches the supplied \zc{PredicateFilter}:
+\begin{gendef}
+   evalPredicateFilter : PredicateFilter \pfun Graph \pfun Graph
+\where
+   \forall f: PredicateFilter; g: Graph @ evalPredicateFilter~ f ~g = \\
+\t1 \IF f \in \ran pfIRI \THEN evalIRIorStem~ (pfIRI \entryFor f)~ g \\
+\t1 \ELSE evalWild~ (pfWild \entryFor f)~ g
+\end{gendef}
+\zc{evalIRIorStem} returns all of the triples in a \zc{Graph} matching the supplied 
+\zc{IRIorStem}
+\begin{gendef}
+   evalIRIorStem: IRIorStem \pfun Graph \pfun Graph
+\where
+   \forall e: IRIorStem; g: Graph @ evalIRIorStem~ e ~g = \\
+\t1 \IF e \in \ran iosi \THEN \{t : g | iri \entryFor t.p = iosi \entryFor e \} \\
+\t1 \ELSE \{t: g | iri \entryFor t.p \in IRIstemRange~ (ioss \entryFor e) \}
+\end{gendef}
+\zc{evalWild} returns all of the triples in a \zc{Graph} that do \emph{not} match an entry
+in the set of \zc{IRIorStems}.
+\begin{gendef}
+   evalWild: \power IRIorStem \pfun Graph \pfun Graph
+\where
+   \forall es: \power IRIorStem; g: Graph @ evalWild ~es ~g = \\
+\t1 \{t: g | t \notin \bigcup \{e: es @ evalIRIorStem~e~g\} \}
+\end{gendef}
+
+
+\subsubsection{ObjectSpecification evaluation}
+\zc{ObjectSpecification} specifies a set of possible values for an \zc{RDFTerm} and takes one of the following forms:
+\begin{itemize}
+\item \zc{ValueType} - matches \zc{Literals} having a specified data type
+\item \zc{ValueSet} - matches \zc{IRIs} or \zc{Literals} that match one or more of the expressions in the specified set
+\item \zc{ValueWild} - matches any target \emph{except} those matching the (possibly empty) set of \zc{IRIstems}
+\item \zc{ValueReference} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
+\end{itemize}
+\begin{zed}
+MatchValue ::= mviri \ldata IRI \rdata | mviris \ldata IRIstem \rdata | \\
+\t2 mvlit \ldata RDFLiteral \rdata \\
+ObjectSpecification ::= valueType \ldata IRI \rdata | \\
+\t1 valueSet \ldata \power MatchValue \rdata | \\
+\t1 osWild \ldata \power MatchValue \rdata | \\
+\t1 valueRef \ldata Label \rdata
+\end{zed}
+
+
+\paragraph{evalObjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
+match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
+\begin{gendef}
+   evalObjectSpecification: EvalContext \fun ObjectSpecification \fun Graph \fun \\
+\t1 OptValidity
+\where
+   \forall ec: EvalContext; os: ObjectSpecification; g: Graph @ \\ evalObjectSpecification~ec~os~g = \\
+\t1 \IF \forall t: g @ evalObjectSpecificationTriple~ec~os~t.o = \pass \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+\begin{gendef}
+   evalObjectSpecificationTriple: EvalContext \fun ObjectSpecification \fun \\
+\t1 RDFTerm \fun OptValidity
+\where
+   \forall ec:EvalContext; os: ObjectSpecification; t: RDFTerm @ \\
+  evalObjectSpecificationTriple~ec~os~t = \\
+\t1 \IF os \in \ran valueType \THEN \\
+\t2 evalValueType~(valueType \entryFor os)~t \\
+\t1 \ELSE \IF os \in \ran valueSet \THEN \\
+\t2 evalValueSet~(valueSet \entryFor os)~t \\
+\t1 \ELSE \IF os \in \ran osWild \THEN \\
+\t2 evalValueWild~(osWild \entryFor os)~t \\
+\t1 \ELSE \\
+\t2 evalValueReference~ec~(valueRef \entryFor os)~t
+\end{gendef}
+
+
+\paragraph{evalValueType} -- returns pass if the supplied \zc{RDFTerm} is:
+\begin{itemize}
+\item type \zc{literal} and whose \zc{dataType} matches ValueType
+\item type \zc{IRI} and \zc{ValueType} is type \zc{RDF\_Literal}
+\end{itemize}
+\begin{gendef}
+   evalValueType: IRI \pfun RDFTerm \pfun OptValidity
+\where
+   \forall vt: IRI; t: RDFTerm; l: RDFLiteral @ evalValueType~vt~ t = \\
+\t1 \IF vt = RDF\_Resource \land  t \in \ran iri \THEN \pass \\
+\t1 \ELSE \IF t \in \ran literal \land l = (literal \entryFor t) \land \\
+\t2 ((l \in \ran pl \land (pl \entryFor l).dataType = vt) \lor \\
+\t2  (l \in \ran tl \land (tl \entryFor l).dataType = vt)) \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+
+\paragraph{evalValueSet} -- return $\pass$ if the supplied \zc{RDFTerm} is a member of \zc{MatchValue}
+\begin{gendef}
+   evalValueSet: \power MatchValue \pfun RDFTerm \pfun OptValidity
+\where
+   \forall mvs: \power MatchValue; t: RDFTerm @ evalValueSet~mvs~t = \\
+\t1	\IF \exists mv: mvs @ \\
+\t2 ((mv \in \ran mviri \land (iri \entryFor t) = mviri \entryFor mv) \lor \\
+\t2  (mv \in \ran mviris \land (iri \entryFor t) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
+\t2  (mvlit \entryFor mv = literal \entryFor t)) \\
+\t1 \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+
+
+\paragraph{evalValueWild} -- return pass ($\pass$) if the supplied \zc{RDFTerm} is \textit{not} a member of \zc{MatchValue}.
+
+\begin{gendef}
+   evalValueWild: \power MatchValue \fun RDFTerm \fun OptValidity
+\where
+   \forall mvs: \power MatchValue; t: RDFTerm @ evalValueWild~mvs~t = \\
+\t1 \IF evalValueSet~ mvs~ t = \pass \THEN \fail \ELSE \pass
+\end{gendef}
+
+\paragraph{evalValueReference} -- return $\pass$ if the subgraph of the \zc{EvalContext} graph whose subjects match the supplied \zc{RDFTerm} satisfies the \zc{ValueReference} rule.
+
+\begin{gendef}
+   evalValueReference: EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
+\where
+	\forall ec: EvalContext; vr: Label; t: RDFTerm @ \\ evalValueReference~ec~vr~t = \\
+\t1 \IF t \notin \ran literal \THEN evalRuleLabel~ec~(subjects~t~ec.graph)~vr \\
+\t1 \ELSE \fail
+\end{gendef}
+
+
+\subsection{GroupRule evaluation}
+A \zc{GroupRule} serves two purposes.  The first is to declare that a referenced rule is to be
+treated as ``optional'', which, in this case means that if (a) the referenced rule returned
+\zc{dunno} ($\dunno$), (meaning an \zc{ArcRule} was encountered that had no matching
+predicates and a non-zero minimum cardinality) the group rule returns \zc{nomatch} 
+($\nomatch$).  An optional \zc{GroupRule} also treats an error situation as a \zc{fail} 
+($\fail$).
+
+The second purpose of a group rule is to allow a set of external \zc{actions} to be evaluated
+whenever the referenced \zc{rule} returns \zc{pass} ($\pass$). 
+
+%% TODO: Why fail????
+
+\begin{zed}
+OPT ::= OPTIONAL | REQUIRED \\
+GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
+\end{zed}
+\zc{evalGroupRule} evaluates \zc{Rule}, applies \zc{opt} and,if the result is \zc{pass} ($\pass$) evaluates the actions with respect the passing \zc{Graph} 
+\begin{gendef}
+   evalGroupRule: EvalContext \fun Graph \fun GroupRule \fun OptValidity
+\where
+   \forall ec: EvalContext; g: Graph; gr: GroupRule @ evalGroupRule~ ec~ g ~ gr = \\
+\t1 \IF evalRuleLabel~ec~g~gr.rule = \dunno \land gr.opt = OPTIONAL \\
+\t2 \THEN \nomatch \\
+\t1 \ELSE \IF evalRuleLabel~ec~g~gr.rule = \error \land gr.opt = OPTIONAL \\
+\t2 \THEN \fail \\
+\t1 \ELSE \IF evalRuleLabel~ec~g~gr.rule = \pass \\
+\t2 \THEN dispatch~ gr.actions~ g~ ec \\
+\t1 \ELSE evalRuleLabel~ec~g~gr.rule
+\end{gendef}
+
+\subsection{AndRule evaluation}
+An \zc{AndRule} consists of a set of one or more \zc{Rules}, whose evaluation is determined
+by the following table: \\
+
+\begin{tabular}{c || c | c | c | c | c |}
+   \hline 
+   \zcb{And} & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\
+   \hline \hline
+   $\dunno$ & $\dunno$ & $\dunno$ & $\fail$ & $\fail$ & $\error$ \\ \hline
+   $\nomatch$ & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\ \hline
+   $\fail$ & $\fail$ & $\fail$ & $\fail$ & $\fail$ & $\error$ \\ \hline
+   $\pass$ & $\fail$ & $\pass$ & $\fail$ & $\pass$ & $\error$ \\ \hline
+   $\error$ & $\error$ & $\error$ & $\error$ & $\error$ & $\error$ \\ \hline 
+\end{tabular} \\
+
+The formal implementation of which will be realized in the corresponding function:
+\begin{gendef}
+   And: OptValidity \fun OptValidity \fun OptValidity
+\end{gendef}
+
+Observing that the above table is a monoid with \zc{nomatch} ($\nomatch$) as an identity
+element, \zc{evalAndRule} can be applied using the standard functional pattern:
+\begin{zed}
+AndRule == \seq_1 Label
+\end{zed}
+\begin{gendef}
+   evalAndRule: EvalContext \fun Graph \fun AndRule \fun OptValidity
+\where
+   \forall ec: EvalContext; g: Graph; r: AndRule  @ \\
+	evalAndRule~ec~g~r = \\
+\t1	foldr~ And~ \nomatch ~ (map~(evalRuleLabel~ec~g)~r)
+\end{gendef}
+
+\subsection{XorRule evaluation}
+An \zc{XorRule} consists of a set of one or more \zc{Rules}, whose evaluation is determined
+by the following table: \\
+
+\begin{tabular}{c || c | c | c | c | c |}
+   \hline
+   \zcb{Xor} & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\
+   \hline \hline
+   $\dunno$ & $\dunno$ & $\nomatch$ & $\dunno$ & $\pass$ & $\error$ \\ \hline
+   $\nomatch$ & $\nomatch$ & $\nomatch$ & $\nomatch$ & $\pass$ & $\error$ \\ \hline
+   $\fail$ & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\ \hline
+   $\pass$ & $\pass$ & $\pass$ & $\pass$ & $\error$ & $\error$ \\ \hline
+   $\error$ & $\error$ & $\error$ & $\error$ & $\error$ & $\error$ \\ \hline 
+\end{tabular}
+\\
+The formal implementation of which will be realized in the corresponding function:
+\begin{gendef}
+   Xor: OptValidity \fun OptValidity \fun OptValidity
+\end{gendef}
+As with the \zc{And} function above, \zc{Xor} is a monoid whose identity is \zc{fail} ($\fail$)
+resulting in the following definition for \zc{evalXorRule}
+\begin{zed}
+XorRule == \seq_1 Label
+\end{zed}
+\begin{gendef}
+   evalXorRule: EvalContext \fun Graph \fun XorRule \fun OptValidity
+\where
+   \forall ec: EvalContext; g: Graph; r: XorRule  @ \\
+	evalXorRule~ec~g~r = \\
+\t1	foldr~ Xor~ \fail ~ (map~(evalRuleLabel~ ec ~g)~ r)
+\end{gendef}
+
+\section{Action evaluation}
+The \zc{dispatch} function allows the evaluation / execution of arbitrary external ``\zc{Actions}''.  While the evaluation of an \zc{Action} can (obviously) have side effects
+outside the context of the $ShEx$ environment, it must be side effect free within the 
+execution context.  In particular, an \zc{Action} may not change anything in the 
+\zc{EvalContext} or passing \zc{Graph}
+The action dispatcher exists to allow external events to happen. Parameters:
+\begin{itemize}
+\item \zc{EvalContext} - the evaluation context
+\item \zc{Actions} - the set of \zc{Actions} associated with the associated \zc{GroupRule} or \zc{ArcRule}
+\item \zc{Graph} - the \zc{Graph} that passed the associated Rule.
+\end{itemize}
+
+The dispatch function usually returns pass ($\pass$) or fail ($\fail$), although there may also be cases for other \zc{OptValidity} values in certain circumstances. The dispatch function
+always returns \zc{pass} ($\pass$) if the set of actions is empty.
+\begin{zed}
+[Action]
+\end{zed}
+\begin{gendef}
+   dispatch: \power Action \fun Graph \fun EvalContext \fun OptValidity
+\where
+   \forall as: \power Action; g: Graph; ec: EvalContext @ \\
+\t1 as = \emptyset \implies dispatch~ as~ g ~ec = \pass
+\end{gendef}
+
+
+\section{Appendix}
+\subsection{Foldr}
+The \zc{foldr} function is the standard functional pattern, which takes a binary function
+of type \zc{T}, an identity function for type \zc{T}, a sequence of type \zc{T} and returns
+the result of applying the function to the right to left pairs of the sequence.
+\begin{gendef}[T]
+   foldr: (T \fun T \fun T) \fun T \fun \seq T \fun T
+\where
+   \forall f:T \fun T \fun T; id: T; xs: \seq T @ foldr~f~id~xs = \\
+\t1 \IF xs = \langle \rangle \THEN id \\
+\t1 \ELSE f~(head~xs)~(foldr~f~id~(tail~xs))
+\end{gendef}
+
+\subsection{Map}
+The \zc{map} function takes a function from type \zc{A} to type \zc{B} and applies it to
+all members in the supplied sequence
+\begin{gendef}[A,B]
+   map: (A \fun B) \fun \seq A \fun \seq B
+\where
+   \forall f: A \fun B; xs: \seq A @ map~f~xs = \\
+\t1 \IF xs = \langle \rangle \THEN \langle \rangle \\
+\t1 \ELSE \langle f~(head~xs) \rangle \cat map~f~(tail~xs)
+\end{gendef}
+
+\subsection{Helper Functions}
+${Z}$ uses the notion of \textit{free type definitions} in the form: 
+%%unchecked
+\begin{syntax}
+FreeType ::= constructor \ldata source \rdata
+\end{syntax}
+which introduces a collection of constants of type $FreeType$, one for each element of the set $source$.  $constructor$ is an injective function from $source$ to $FreeType$:
+%%unchecked
+\begin{syntax}
+constructor ::= source \inj FreeType
+\end{syntax}
+In the models that follow, there is a need to reverse this -- to find the $source$ for a given $FreeType$ instance. The 
+$\entryFor$ function exists for this purpose.  As an example, if one were to define:
+%%unchecked
+\begin{syntax}
+TravelDirections ::= bus \ldata BusDirections \rdata | \ walking \ldata WalkingDirections \rdata
+\end{syntax}
+If one is supplied with an instance of $Travel$ , one can convert it to the appropriate type by:
+%%unchecked
+\begin{syntax}
+x : TravelDirections
+\where
+\IF x \in \ran bus \THEN bus \entryFor x \ELSE walking \entryFor x
+\end{syntax}
+
+\begin{gendef}[X, Y]
+    \_~  \entryFor \_~   : (X \inj Y) \cross Y \pfun X
+   %
+   \where %
+   \forall y : Y; f : X \inj Y @  f \entryFor y =
+   (\mu x : \dom f | f~x = y)
+\end{gendef}
+
+
+As ${Z}$ has no notion of absence, it is convenient to add a bit of syntactic sugar. 
+\begin{zed} 
+  \optional[T] == \{ s : \power T \mid \# s \leq 1 \} \\
+\end{zed}
+
+It is also useful to provide a shorthand for addressing the content of singletons:
+\begin{gendef}[T]
+   v: \power T \pfun T
+\where
+   \forall s: \power T @ v~ s = (\mu e : T | e \in s) 
+\end{gendef}
+\bibliographystyle{plain}
+\bibliography{master}
+
+
+
+\end{document}

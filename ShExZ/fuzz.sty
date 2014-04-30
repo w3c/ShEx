@@ -1,0 +1,170 @@
+%
+% fuzz.sty
+% Copyright (c) J.M. Spivey 1988, 1990
+%
+
+\typeout{Style Option 'fuzz'. Thu Apr 26 14:28:15 PDT 1990.}
+\def\@setmcodes#1#2#3{{\count0=#1 \count1=#3
+	\loop \global\mathcode\count0=\count1 \ifnum \count0<#2
+	\advance\count0 by1 \advance\count1 by1 \repeat}}
+\@setmcodes{`A}{`Z}{"7441}
+\@setmcodes{`a}{`z}{"7461}
+\mathcode`\;="8000 % Makes ; active in math mode
+{\catcode`\;=\active \gdef;{\semicolon\;}}
+\mathchardef\semicolon="603B
+\newdimen\zedindent	\zedindent=\leftmargini
+\newdimen\zedleftsep	\zedleftsep=1em
+\newdimen\zedtab	\zedtab=2em
+\newdimen\zedbar	\zedbar=6em
+\newskip\zedskip	\zedskip=\medskipamount
+\newcount\interzedlinepenalty \interzedlinepenalty=10000
+\newcount\preboxpenalty \preboxpenalty=0
+\newif\ifzt@p		\zt@pfalse
+\def\@narrow{\advance\linewidth by-\zedindent}
+\def\@topline#1{\omit \hbox to\linewidth{\strut
+	\vrule height0.4pt\hbox to\zedleftsep{\hrulefill\thinspace}%
+	#1\thinspace\hrulefill}\cr}
+\def\@zedline{\omit \hbox to\linewidth{\hrulefill}\cr}
+\def\where{\@zskip\jot \omit \hbox to\zedbar{\hrulefill}\cr \@zskip\jot}
+\def\also{\crcr \noalign{\penalty\interdisplaylinepenalty \vskip\zedskip}}
+\def\t#1{\hskip #1\zedtab}
+\def\@zskip#1{\crcr \noalign{\nointerlineskip} 
+	\omit\vrule height#1\cr \noalign{\nointerlineskip}}
+\def\@zed{\ifvmode\@zleavevmode\fi
+	$$\global\zt@ptrue \lineskip=0pt
+	\advance\linewidth by-\zedindent
+	\advance\displayindent by\zedindent
+	\def\\{\crcr}% Must have \def and not \let for nested alignments.
+	\let\par=\relax
+	\everycr={\noalign{\ifzt@p \global\zt@pfalse
+		\else \penalty\interzedlinepenalty \fi}}
+        \tabskip=0pt}
+\def\end@zed{$$\global\@ignoretrue}
+\def\zed{\@zed\halign to\linewidth\bgroup
+        \strut$\@lign##$\hfil \tabskip=0pt plus1fil\cr}
+\def\endzed{\crcr\egroup\end@zed}
+\let\[=\zed
+\def\]{\crcr\egroup$$\ignorespaces}
+\def\axdef{\def\also{\@zskip\zedskip}%
+	\predisplaypenalty=\preboxpenalty
+	\@zed\halign to\linewidth\bgroup
+        \strut\vrule\hskip\zedleftsep$\@lign##$\hfil \tabskip=0pt plus1fil\cr}
+\let\endaxdef=\endzed
+\def\schema#1{\@narrow\axdef \@topline{$#1$}}
+\def\endschema{\@zskip\jot \@zedline \endzed}
+\@namedef{schema*}{\@narrow\axdef
+	\noalign{\kern-\ht\strutbox} \@zedline \@zskip\jot}
+\expandafter\let\csname endschema*\endcsname=\endschema
+\def\gendef{\@ifnextchar[{\@gendef}{\@ngendef}}
+\def\@gendef[#1]{\setbox0=\hbox{$[#1]$}\setbox1=\null \wd1=\wd0
+        \@narrow\axdef \@topline{\box0}%
+        \noalign{\kern-\baselineskip\kern-\doublerulesep \nobreak}%
+	\@topline{\box1} \noalign{\kern\doublerulesep \nobreak}}
+\def\@ngendef{\@narrow\axdef
+	\@zedline \noalign{\nobreak \nointerlineskip}
+	\omit \hbox to\linewidth{\vrule height\doublerulesep\hrulefill}\cr
+	\noalign{\nobreak} \@zskip\jot}
+\let\endgendef=\endschema
+\def\argue{\@zed \interzedlinepenalty=\interdisplaylinepenalty
+	\openup 1\jot \halign to\linewidth\bgroup
+        \strut$\@lign##$\hfil \tabskip=0pt plus1fil
+	&\hbox to0pt{\hss[\@lign##\unskip]}\tabskip=0pt\cr
+	\noalign{\vskip-\jot}}
+\let\endargue=\endzed
+\def\syntax{\@zed \halign\bgroup
+	\strut$\@lign##$\hfil &\hfil$\@lign{}##{}$\hfil
+	&$\@lign##$\hfil\cr}
+\let\endsyntax=\endzed
+\def\infrule{\@zed \halign\bgroup
+	\strut\quad$\@lign##$\quad\hfil&\quad\@lign##\hfil\cr}
+\let\endinfrule=\endzed
+\def\derive{\crcr \noalign{\nointerlineskip \vskip\jot} \omit\hrulefill
+		\@ifnextchar[{\@xderive}{\@yderive}}
+\def\@xderive[#1]{&$\smash{\lower 0.5ex\hbox{$[\;#1\;]$}}$\cr 
+		\noalign{\nointerlineskip \vskip\jot}}
+\def\@yderive{\cr \noalign{\nointerlineskip \vskip\jot}}
+\def\@zleavevmode{\if@inlabel\indent\else\if@noskipsec\indent\else\if@nobreak
+	\global\@nobreakfalse\everypar={}\abovedisplayskip=0pt\fi
+	{\parskip=0pt\noindent}\fi\fi}
+\font\ninox=oxsy9
+\font\tenox=oxsy10
+\font\elvox=oxsy10 scaled\magstephalf
+\font\twlox=oxsy10 scaled\magstep1
+\newfam\oxfam
+\@addfontinfo\@ixpt{\textfont\oxfam=\ninox}
+\@addfontinfo\@xpt{\textfont\oxfam=\tenox}
+\@addfontinfo\@xipt{\textfont\oxfam=\elvox}
+\@addfontinfo\@xiipt{\textfont\oxfam=\twlox}
+\@normalsize
+\edef\@fz{\ifcase\oxfam 0\or 1\or 2\or 3\or 4\or 5\or 6\or 7\or
+	8\or 9\or A\or B\or C\or D\or E\or F\fi}
+\def\@myop#1{\mathop{\mathstrut{#1}}\nolimits}
+\def\_{\leavevmode \vbox{\hrule width0.5em}}
+\let\@mc=\mathchardef
+\@mc \lblot	"4\@fz09
+\@mc \rblot	"5\@fz0A
+\def \defs	{\mathrel{\widehat=}}
+\def \power	{\@myop{\mathchar"\@fz0B}}
+\let \cross	\times
+\def \lambda	{\@myop{\mathchar"115}}
+\def \mu	{\@myop{\mathchar"116}}
+\@mc \lbag	"4\@fz0E
+\@mc \rbag	"5\@fz0F
+\def \lnot	{\neg\;}
+\@mc \land	"325E
+\@mc \lor	"325F
+\let \implies	\Rightarrow
+\let \iff	\Leftrightarrow
+\def \forall	{\@myop{\mathchar"238}}
+\def \exists	{\@myop{\mathchar"239}}
+\@mc \spot	"320F
+\@mc \hide	"326E
+\@mc \project	"3\@fz02
+\def \pre	{{\rm pre}\;}
+\@mc \semi	"3\@fz1C
+\@mc \ldata	"4\@fz12
+\@mc \rdata	"5\@fz13
+\let \shows	\vdash
+\@mc \empty	"0\@fz1E
+\let \rel	\leftrightarrow
+\def \dom	{\mathop{\rm dom}}
+\def \ran	{\mathop{\rm ran}}
+\def \id	{\mathop{\rm id}}
+\@mc \comp	"2\@fz1C
+\@mc \dres	"2\@fz03
+\@mc \rres	"2\@fz04
+\@mc \ndres	"2\@fz05
+\@mc \nrres	"2\@fz06
+\def \inv	{^\sim}
+\@mc \limg	"4\@fz10
+\@mc \rimg	"5\@fz11
+\@mc \pfun	"3\@fz14
+\let \fun	\rightarrow
+\@mc \pinj	"3\@fz19
+\@mc \inj	"3\@fz18
+\@mc \psurj	"3\@fz17
+\@mc \surj	"3\@fz16
+\@mc \bij	"3\@fz1B
+\@mc \nat	"0\@fz0D
+\@mc \num	"0\@fz1D
+\def \div	{\mathbin{\rm div}}
+\def \mod	{\mathbin{\rm mod}}
+\def \upto	{\mathbin{\ldotp\ldotp}}
+\def \plus	{^+}
+\def \star	{^*}
+\def \finset	{\@myop{\mathchar"\@fz0C}}
+\@mc \ffun	"3\@fz15
+\@mc \finj	"3\@fz1A
+\def \seq	{\mathop{\rm seq}}
+\def \iseq	{\mathop{\rm iseq}}
+\@mc \cat	"2\@fz1F
+\@mc \filter	"2\@fz02
+\def \dcat	{\mathop{\cat/}}
+\def \bag	{\mathop{\rm bag}}
+\def \inbag     {\mathrel{\rm in}}
+\def \disjoint  {{\rm disjoint}\;}
+\def \partition {\mathrel{\rm partition}}
+\mathcode`\@=\spot
+\mathcode`\|=\mid
+\def\bsup{^\bgroup}
+\def\esup{\egroup}

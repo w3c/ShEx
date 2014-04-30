@@ -1,0 +1,7 @@
+body { background-color: white }
+
+div.mixed, div.zed { margin-left: 20px }
+
+var.zed, td.zed { font-family: sans-serif; font-style: normal }
+              
+var.zed, td.zed { font-size: smaller }

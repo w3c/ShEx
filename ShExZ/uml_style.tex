@@ -1,0 +1,101 @@
+% c - concept operators
+
+%%inop \ccup 4
+%%inop \ccap 3
+\def\ccup{\mathrel{\sqcup}}
+\def\ccap{\mathrel{\sqcap}}
+\def\cnot{\mathop{\neg}}
+\def\csub{\mathrel{\sqsubseteq}}
+\def\cequiv{\mathrel{\equiv}}
+
+
+\def\:{:}
+
+%%inop \csub 1
+%%inop \cequiv 1
+
+% r - relation operators
+
+\def\rsub{\mathrel{\sqsubseteq}}
+\def\requiv{\mathrel{\equiv}}
+%%inop \rsub \atleastone[1
+%%inop]uiv 1
+
+%%ignore \ldots 
+
+% quantifiers 
+
+\makeatletter % here come some @s in macro names
+
+\def\newquant#1#2{%
+  \@namedef{#1}{#2\@ifnextchar~{\@quantapp}{\relax}}}
+\def\@quantapp~#1~#2{#1 \mathbin{.} #2}
+
+\newquant{cforall}{\forall}
+\newquant{cexists}{\exists}
+\newquant{cge}{\le}
+\newquant{cle}{\ge}
+
+% multiplicities for attribute declarations
+
+\def\newmult#1#2{%
+  \@namedef{#1}{\@ifnextchar[{\@multapp{#2}}{\relax}}}
+\def\@multapp#1[#2]{#2 [#1]}
+
+\newmult{optional}{0\upto 1}
+\newmult{many}{0\upto *}
+\newmult{one}{1\upto 1}
+\newmult{atleastone}{1\upto *}
+
+\makeatother % done with the @s 
+
+% set of all concepts, set of atomic concepts, set of complex concepts
+
+\def\concept{\Phi}
+\def\atomic{\Phi_A}
+\def\complex{\Phi_C}
+
+\def\axiom{\mathsf{axiom}}
+\def\role{\mathsf{role}}
+\def\assertion{\mathsf{assertion}}
+
+\def\TBox{\mathsf{TBox}}
+\def\RBox{\mathsf{RBox}}
+\def\ABox{\mathsf{ABox}}
+
+%%postop \rinv 
+\def\rinv{^{{-}}}
+
+\def\individual{\Upsilon}
+\def\assertion{\mathsf{assertion}}
+
+% and more concept operators 
+
+%%inop \cin \cnin \rin \rnin \ieq \ineq 6
+\def\cin{\in}
+\def\cnin{\mathrel{:\!\neg}}
+\def\rin{\in}
+\def\rnin{\mathrel{:\!\neg}}
+\def\ieq{=}
+\def\ineq{\neq}
+
+\def\ltd{<_{DT}}
+\def\opt{OPT}
+
+\def\leqlevel{\leq_{level}}
+
+\def\real{\mathsf{\mathbb{R}}}
+
+\def\optopt[#1]{\optional[#1]_{OPT}}
+\def\opt[#1]{#1_{OPT}}
+\def\optmany[#1]{\many[#1]_{OPT}}
+\def\optatleastone[#1]{\atleastone[#1]_{OPT}}
+
+\def\nameIn{\mathrel{nameIn}}
+\def\refIn{\mathrel{refIn}}
+\def\overwrite{\oplus}
+\def\mapIn{\mathrel{mapIn}}
+\def\equivTo{\mathrel{==}}
+
+\def\umlclass#1{{\tt #1}}
+\def\umlatt#1{{\it #1}}
