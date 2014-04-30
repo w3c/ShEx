@@ -1,7 +1,7 @@
 \documentclass[fuzz]{llncs}
 \usepackage{llncsdoc}
 \usepackage{xspace,amssymb,mathtools,fixltx2e}
-\usepackage{amsmath, bbm}
+\usepackage{amsmath, bbm, unicode-math}
 \usepackage{zed}
 \usepackage[utf8]{inputenc}
 \def\entryFor{\cdot}
@@ -320,7 +320,7 @@ IRIorStem ::= iosi \ldata IRI \rdata | ioss \ldata IRIstem \rdata \\
 PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorStem \rdata
 \end{zed}
 An \zc{IRIstem} matches any \zc{IRI} whose stringified representation begins with the stringified
-representation of \zc{IRIstem} according to standard IRI matching rules \cite{MR}. This is represented by the function:
+representation of \zc{IRIstem} according to standard IRI matching rules \cite{RFC3987}. This is represented by the function:
 \begin{zed}
 [IRIstem]
 \end{zed}

@@ -7,7 +7,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
 <!-- html --> 
 <meta name="src" content="ShExZ.tex"> 
-<meta name="date" content="2014-04-29 17:45:00"> 
+<meta name="date" content="2014-04-30 11:27:00"> 
 <link rel="stylesheet" type="text/css" href="ShExZ.css"> 
 </head><body 
 >
@@ -96,8 +96,8 @@ class="cmti-10">ShEx</span>.
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-20002"></a>The RDF Data Model</h3>
 <!--l. 66--><p class="noindent" >Using the formal definitions in <span 
-class="cmti-10">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<span 
-class="cmbx-10">?</span>]</span>, we begin
+class="cmti-10">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<a 
+href="#XRDF11">1</a>]</span>, we begin
 with:
    <div class="quote">
    <!--l. 67--><p class="noindent" >&#8220;An <span 
@@ -163,10 +163,10 @@ class="cmbx-10">datatype IRI</span>, being an IRI
    <li class="itemize">if and only if the datatype IRI is <br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10">http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</span></span></span>,   a
-   non-empty language tag as defined in [BCP47]<span class="cite">[<span 
-class="cmbx-10">?</span>]</span>. The language tag
-   MUST be well-formed according to section 2.2.9 of [BCP47]<span class="cite">[<span 
-class="cmbx-10">?</span>]</span>.&#8221;</li></ul>
+   non-empty language tag as defined in [BCP47]<span class="cite">[<a 
+href="#XBCP47">3</a>]</span>. The language tag
+   MUST be well-formed according to section 2.2.9 of [BCP47]<span class="cite">[<a 
+href="#XBCP47">3</a>]</span>.&#8221;</li></ul>
    </div>
 <!--l. 100--><p class="noindent" >We model this by defining <span 
 class="cmti-10">String </span>and <span 
@@ -597,8 +597,8 @@ An <span
 class="cmti-10">IRIstem </span>matches any <span 
 class="cmti-10">IRI </span>whose stringified representation begins with the
 stringified representation of <span 
-class="cmti-10">IRIstem </span>according to standard IRI matching rules <span class="cite">[<span 
-class="cmbx-10">?</span>]</span>.
+class="cmti-10">IRIstem </span>according to standard IRI matching rules <span class="cite">[<a 
+href="#XRFC3987">2</a>]</span>.
 This is represented by the function:
 <center class="math-display" >
 <img 
@@ -1283,6 +1283,51 @@ src="ShExZ50x.png" alt="|-[T]---------------------------------------------------
 |-v-: &#x2119;T-&#x2192;&#x21A6;-T
 | &#x2200;s : &#x2119;T &#x2219; vs = (&#x03BC; e : T | e &#x2208; s)
 ------------------------------------------------------------  " class="math-display" ></center>
+   <h3 class="likesectionHead"><a 
+ id="x1-230006.3"></a>References</h3>
+<!--l. 1--><p class="noindent" >
+  <div class="thebibliography">
+  <p class="bibitem" ><span class="biblabel">
+<span 
+class="cmr-9">1.</span> <span class="bibsp"><span 
+class="cmr-9">&#x00A0;</span><span 
+class="cmr-9">&#x00A0;</span><span 
+class="cmr-9">&#x00A0;</span></span></span><a 
+ id="XRDF11"></a><span 
+class="cmr-9">Richard Cyganiak and David Wood.  RDF 1.1 concepts and abstract syntax -</span>
+  <span 
+class="cmr-9">generalized rdf triples, graphs, and datasets. World Wide Web Consortium, Working</span>
+  <span 
+class="cmr-9">Draft WD-rdf11-concepts-20130723, August 2013.</span>
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<span 
+class="cmr-9">2.</span> <span class="bibsp"><span 
+class="cmr-9">&#x00A0;</span><span 
+class="cmr-9">&#x00A0;</span><span 
+class="cmr-9">&#x00A0;</span></span></span><a 
+ id="XRFC3987"></a><span 
+class="cmr-9">M.</span><span 
+class="cmr-9">&#x00A0;D</span><span 
+class="cmr-9">ürst and M.</span><span 
+class="cmr-9">&#x00A0;Suignard.  Internationalized resource identifiers (iris).  RFC,</span>
+  <span 
+class="cmr-9">January 2005.</span>
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<span 
+class="cmr-9">3.</span> <span class="bibsp"><span 
+class="cmr-9">&#x00A0;</span><span 
+class="cmr-9">&#x00A0;</span><span 
+class="cmr-9">&#x00A0;</span></span></span><a 
+ id="XBCP47"></a><span 
+class="cmr-9">RA</span><span 
+class="cmr-9">&#x00A0;Phillips and M.</span><span 
+class="cmr-9">&#x00A0;Davis.  Tags for identifying language.  IETF Best Current</span>
+  <span 
+class="cmr-9">Practices, September 2009.</span>
+</p>
+  </div>
     
 </body></html> 
 
