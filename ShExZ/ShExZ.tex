@@ -1,17 +1,17 @@
 \documentclass[fuzz]{llncs}
 \usepackage{llncsdoc}
-\usepackage{xspace,amssymb,mathtools,fixltx2e}
-\usepackage{amsmath, bbm, unicode-math}
+\usepackage{xspace,amssymb, mathtools, fixltx2e}
+\usepackage{amsmath, bbm}
 \usepackage{zed}
 \usepackage[utf8]{inputenc}
 \def\entryFor{\cdot}
 \def\eqtn{eq_{tn}}
 
-\def\pass{{\mathbbm{p}}}
-\def\fail{{\mathbbm{f}}}
+\def\pass{\textbf{\textit{p}}}
+\def\fail{\textbf{\textit{f}}}
 \def\dunno{\varnothing}
 \def\error{\varepsilon}
-\def\nomatch{\mathbbm{z}}
+\def\nomatch{\textbf{\textit{z}}}
 
 \def\zc{\textit}
 \def\zcb{\textit{\textbf}}
@@ -251,7 +251,7 @@ Rule ::= arc \ldata ArcRule \rdata | \\
 \t1 \ELSE \\
 \t2 evalXorRule~ec~g~(xor \entryFor r)
 \end{gendef}
-The function below is used to execute the rules that referenced by \zc{GroupRule}s,
+The function below is used to execute the rules that are referenced by \zc{GroupRule}s,
 \zc{AndRules} and \zc{OrRules}. Its purpose is to de-reference the supplied \zc{Label} and
 invoke \zc{evalRule} with the result.  This is not explicitly represented because
 the $Z$ specification language does not allow cyclic dependencies. Note that this function
@@ -274,16 +274,16 @@ a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to selec
    min, max: \optional[\nat] \\
    actions: \power Action
 \where
-   (\# min = 1 \land \# max = 1) \implies v~ min \leq v~ max
+   (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
 \end{schema}
 \zc{ArcRule} evaluation consists of:
 \begin{enumerate}
 \item Selecting all of the triples in \zc{Graph} having predicates that match  \zc{PredicateFilter}
 \item If the number of triples from the previous step is 0, return either \zc{nomatch}
 ($\nomatch$) if \zc{min} is 0 otherwise \zc{dunno}($\dunno$).
-\item If \zc{min} is specified and the number of triples from the previous step is < \zc{min}
+\item If \zc{min} is specified and the number of triples from the previous step is $<$ \zc{min}
 then return \zc{fail} ($\fail$)
-\item If \zc{max} is specified and the number of triples from the previous step is > \zc{max}
+\item If \zc{max} is specified and the number of triples from the previous step is $>$ \zc{max}
 then return \zc{fail} ($\fail$)
 \item Evaluate the object of each of the triples in the set against \zc{ObjectSpecification}.  If any of the evaluations fail, return \zc{fail} ($\fail$).
 \item Return the result of evaluating \zc{actions} against the matching triples.
@@ -294,12 +294,12 @@ then return \zc{fail} ($\fail$)
    \forall ec: EvalContext; g, sg: Graph; ar: ArcRule | \\ 
 \t1 sg = evalPredicateFilter~ar.filter~ec.graph @ \\
 evalArcRule~ec~g~ar = \\
-\t1 \IF \# ar.min = 1 \land \# sg = 0 \land  v~ ar.min = 0 \\
+\t1 \IF \# ar.min = 1 \land \# sg = 0 \land  value~ ar.min = 0 \\
 \t2 \THEN \nomatch \\
 \t1 \ELSE \IF \# sg = 0 \\
 \t2 \THEN \dunno \\
-\t1 \ELSE \IF (\# ar.min = 1 \land \# sg < v~ ar.min) \lor \\
-\t3 (\# ar.max = 1 \land \# sg > v~ ar.max) \\
+\t1 \ELSE \IF (\# ar.min = 1 \land \# sg < value~ ar.min) \lor \\
+\t3 (\# ar.max = 1 \land \# sg > value~ ar.max) \\
 \t2 \THEN \fail \\
 \t1 \ELSE \IF evalObjectSpecification~ec~ar.valueSpec~sg = \pass \\
 \t2 \THEN dispatch~ ar.actions~ sg~ ec \\
@@ -636,10 +636,11 @@ As ${Z}$ has no notion of absence, it is convenient to add a bit of syntactic su
 
 It is also useful to provide a shorthand for addressing the content of singletons:
 \begin{gendef}[T]
-   v: \power T \pfun T
+   value: \power T \pfun T
 \where
-   \forall s: \power T @ v~ s = (\mu e : T | e \in s) 
+   \forall s: \power T @ value~ s = (\mu e : T | e \in s) 
 \end{gendef}
+
 \bibliographystyle{plain}
 \bibliography{master}
 

@@ -128,6 +128,8 @@ div.author{white-space: nowrap;}
 .quotation {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; }
 .abstract p {margin-left:5%; margin-right:5%;}
 div.abstract {width:100%;}
+.subsectionToc, .likesubsectionToc {margin-left:2em;}
+.subsubsectionToc, .likesubsubsectionToc {margin-left:4em;}
 table.multicols { width:100%; margin-left:1em; margin-top:1em; margin-bottom:1em; }
 .equation td{text-align:center; }
 .equation-star td{text-align:center; }
@@ -142,5 +144,6 @@ table.multline, table.multline-star {width:100%;}
 td.gather {text-align:center; }
 table.gather {width:100%;}
 div.gather-star {text-align:center;}
+CENTER {text-align: left; padding: 10px; }
 /* end css.sty */
 
