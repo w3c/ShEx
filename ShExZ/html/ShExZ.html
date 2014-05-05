@@ -7,7 +7,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
 <!-- 2,sections+,html --> 
 <meta name="src" content="ShExZ.tex"> 
-<meta name="date" content="2014-05-05 10:25:00"> 
+<meta name="date" content="2014-05-05 12:14:00"> 
 <link rel="stylesheet" type="text/css" href="ShExZ.css"> 
 </head><body 
 >
@@ -601,11 +601,11 @@ class="cmti-10">IRIorStem</span>
 <center class="math-display" >
 <img 
 src="ShExZ23x.png" alt="|-----------------------------------------------------------
-| evalIRIorStem  : IRIorStem &#x2192;&#x21A6; Graph&#x2192;&#x21A6; Graph
-|-----------
+--evalIRIorStem  : IRIorStem &#x2192;&#x21A6; Graph&#x2192;&#x21A6; Graph
 | &#x2200;e : IRIorStem; g : Graph &#x2219; evalIRIorStemeg =
 |     ife &#x2208; ran iosi then {t : g | iri &#x22C5;t.p = iosi &#x22C5;e}
-------else-{t : g-| iri &#x22C5;t.p &#x2208;-IRIstemRange-(ioss &#x22C5;e)}----------
+|     else {t : g | iri &#x22C5;t.p &#x2208; IRIstemRange (ioss &#x22C5;e)}
+------------------------------------------------------------
 " class="math-display" ></center>
 <span 
 class="cmti-10">evalWild </span>returns all of the triples in a <span 
@@ -616,87 +616,87 @@ class="cmti-10">IRIorStems</span>.
 <center class="math-display" >
 <img 
 src="ShExZ24x.png" alt="|-----------------------------------------------------------
-|-----------------------------------------------------------
-|-evalWild-: &#x2119;IRIorStem &#x2192;&#x21A6;Graph &#x2192;&#x21A6; Graph
-| &#x2200;es : &#x2119;IRIorStem; g : Graph &#x2219; evalWildesg =
-|     {t : g | t &#x2215;&#x2208; &#x22C3; {e : es &#x2219; evalIRIorStemeg }}
+|-evalWild-: &#x2119;IRIorStem-&#x2192;&#x21A6;Graph-&#x2192;&#x21A6;-Graph---------------------
+|-----------
+| &#x2200;es : &#x2119;IRIorStem&#x22C3;; g : Graph &#x2219; evalWildesg =
+|     {t : g | t &#x2215;&#x2208; {e : es &#x2219; evalIRIorStemeg }}
 ------------------------------------------------------------ " class="math-display" ></center>
    <h5 class="subsubsectionHead"><a 
-href="#x1-110004.1" id="x1-110004.1">ObjectSpecification evaluation</a></h5>
-<!--l. 345--><p class="noindent" ><span 
-class="cmti-10">ObjectSpecification </span>specifies a set of possible values for an <span 
-class="cmti-10">RDFTerm </span>and takes one of
-the following forms:
-   <ul class="itemize1">
-   <li class="itemize"><span 
-class="cmti-10">ValueType </span>- matches <span 
-class="cmti-10">Literals </span>having a specified data type
-   </li>
-   <li class="itemize"><span 
-class="cmti-10">ValueSet  </span>-  matches  <span 
-class="cmti-10">IRIs  </span>or  <span 
-class="cmti-10">Literals  </span>that  match  one  or  more  of  the
-   expressions in the specified set
-   </li>
-   <li class="itemize"><span 
-class="cmti-10">ValueWild </span>- matches any target <span 
-class="cmti-10">except </span>those matching the (possibly empty)
-   set of <span 
-class="cmti-10">IRIstems</span>
-
-   </li>
-   <li class="itemize"><span 
-class="cmti-10">ValueReference </span>- matches any target that is considered valid according the
-   <span 
-class="cmti-10">Rule </span>identified by <span 
-class="cmti-10">Label</span>.</li></ul>
-<!--l. 352--><p class="noindent" >
-   <center class="math-display" >
-<img 
-src="ShExZ25x.png" alt="MatchValue ::= mviri&#x27E8;&#x27E8;IRI &#x27E9;&#x27E9; | mviris&#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9; |
-        mvlit&#x27E8;&#x27E8;RDFLiteral&#x27E9;&#x27E9;
-ObjectSpecification ::= valueType &#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; |
-    valueSet&#x27E8;&#x27E8;&#x2119; MatchValue&#x27E9;&#x27E9; |
-    osWild&#x27E8;&#x27E8;&#x2119; MatchValue&#x27E9;&#x27E9; |
-    valueRef&#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
-   <h5 class="subsubsectionHead"><a 
-href="#x1-120004.1" id="x1-120004.1">evalCardinality</a></h5>
-<!--l. 361--><p class="noindent" >&#8211; evaluates the cardinality the supplied graph.
-   <ul class="itemize1">
-   <li class="itemize">If the graph has no elements and:
-      <ul class="itemize2">
-      <li class="itemize"><span 
-class="cmti-10">min </span>value is 0 &#8211; <span 
-class="cmti-10">nomatch </span>(<span 
-class="cmbxti-10">z</span>)
-      </li>
-      <li class="itemize"><span 
-class="cmti-10">min </span>value isn&#8217;t specified or is <span 
-class="cmmi-10">&#x003E; </span>0 &#8211; <span 
-class="cmti-10">dunno </span>(<span 
-class="msbm-10">&#x2205;</span>)</li></ul>
-   </li>
-   <li class="itemize">Otherwise:
-      <ul class="itemize2">
-      <li class="itemize">If number of elements in graph <span 
+href="#x1-110004.1" id="x1-110004.1">evalCardinality</a></h5>
+<!--l. 343--><p class="noindent" >&#8211; evaluates the cardinality the supplied graph. Rules:
+   <div class="tabular"> <table id="TBL-1" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-1-1g"><col 
+id="TBL-1-1"></colgroup><colgroup id="TBL-1-2g"><col 
+id="TBL-1-2"></colgroup><colgroup id="TBL-1-3g"><col 
+id="TBL-1-3"></colgroup><colgroup id="TBL-1-4g"><col 
+id="TBL-1-4"></colgroup><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-1"  
+class="td11">  # elements  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-2"  
+class="td11"> <span 
+class="cmti-10">min  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-3"  
+class="td11"> <span 
+class="cmti-10">max  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-4"  
+class="td11">result</td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-1"  
+class="td11">      0          </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-2"  
+class="td11">   0    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-3"  
+class="td11">      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-4"  
+class="td11">  <span 
+class="cmbxti-10">z</span>   </td></tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-1"  
+class="td11"> 0 </td> <td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-2"  
+class="td11"> </td> <td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-3"  
+class="td11"> </td> <td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-4"  
+class="td11"> <span 
+class="msbm-10">&#x2205;</span></td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-1"  
+class="td11"><span 
+class="cmmi-10">&#x003E; </span>0 and <span 
 class="cmmi-10">&#x003C; </span><span 
-class="cmti-10">min </span>or <span 
+class="cmti-10">min</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-2"  
+class="td11">present</td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-3"  
+class="td11">      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-4"  
+class="td11">  <span 
+class="cmbxti-10">f</span>   </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-1"  
+class="td11"><span 
+class="cmmi-10">&#x003E; </span>0 and <span 
 class="cmmi-10">&#x003E; </span><span 
-class="cmti-10">max </span>&#8211; <span 
-class="cmti-10">fail </span>(<span 
-class="cmbxti-10">f</span> )
-      </li>
-      <li class="itemize">Otherwise &#8211; <span 
-class="cmti-10">pass </span>(<span 
-class="cmbxti-10">p</span>)</li></ul>
-   </li></ul>
-<!--l. 377--><p class="indent" >
+class="cmti-10">max</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-2"  
+class="td11">      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-3"  
+class="td11">present</td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-4"  
+class="td11">  <span 
+class="cmbxti-10">f</span>   </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-1"  
+class="td11">             </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-2"  
+class="td11">      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-3"  
+class="td11">      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-4"  
+class="td11">  <span 
+class="cmbxti-10">p</span>  </td>
+</tr><tr 
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-1-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-1"  
+class="td11">             </td> </tr></table></div><br 
+class="newline" />
+<!--l. 359--><p class="indent" >
 
    <center class="math-display" >
 <img 
-src="ShExZ26x.png" alt="|-----------------------------------------------------------
-|-----------------------------------------------------------
-|-evalCardinality : Graph &#x2192; &#x2115; [0 ..1] &#x2192; &#x2115;[0..1] &#x2192; OptValidity
+src="ShExZ25x.png" alt="|-----------------------------------------------------------
+| evalCardinality : Graph &#x2192; &#x2115; [0 ..1] &#x2192; &#x2115;[0..1] &#x2192; OptValidity
+|-----------
 | &#x2200;g : Graph;min,max : &#x2115;[0 ..1] &#x2219; evalCardinalitygminmax =
 |     if#min  = 1 &#x2227; #g = 0 &#x2227; valuemin = 0
 |         then z
@@ -705,9 +705,46 @@ src="ShExZ26x.png" alt="|-------------------------------------------------------
 |     else if(#min  = 1 &#x2227; #g &#x003C; valuemin ) &#x2228;
 |            (#max  = 1 &#x2227; #g &#x003E; valuemax)
 |         then f
-|     else p
-------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 391--><p class="noindent" ><span class="paragraphHead"><a 
+------else-p-------------------------------------------------  " class="math-display" ></center>
+   <h5 class="subsubsectionHead"><a 
+href="#x1-120004.1" id="x1-120004.1">ObjectSpecification evaluation</a></h5>
+<!--l. 374--><p class="noindent" ><span 
+class="cmti-10">ObjectSpecification </span>specifies a set of possible values for an <span 
+class="cmti-10">RDFTerm </span>and takes one of
+the following forms:
+   <ul class="itemize1">
+   <li class="itemize"><span 
+class="cmti-10">valueType </span>- matches <span 
+class="cmti-10">Literals </span>having a specified data type
+   </li>
+   <li class="itemize"><span 
+class="cmti-10">valueSet </span>- matches <span 
+class="cmti-10">IRIs </span>or <span 
+class="cmti-10">Literals </span>that match one or more of the expressions
+   in the specified set
+   </li>
+   <li class="itemize"><span 
+class="cmti-10">valueWild </span>- matches any target <span 
+class="cmti-10">except </span>those matching the (possibly empty)
+   set of <span 
+class="cmti-10">IRIstems</span>
+   </li>
+   <li class="itemize"><span 
+class="cmti-10">valueRef  </span>- matches any target that is considered valid according the <span 
+class="cmti-10">Rule</span>
+   identified by <span 
+class="cmti-10">Label</span>.</li></ul>
+<!--l. 381--><p class="noindent" >
+   <center class="math-display" >
+
+<img 
+src="ShExZ26x.png" alt="MatchValue ::= mviri&#x27E8;&#x27E8;IRI &#x27E9;&#x27E9; | mviris&#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9; |
+        mvlit&#x27E8;&#x27E8;RDFLiteral&#x27E9;&#x27E9;
+ObjectSpecification ::= valueType &#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; |
+    valueSet&#x27E8;&#x27E8;&#x2119; MatchValue&#x27E9;&#x27E9; |
+    valueWild&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
+    valueRef&#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
+<!--l. 392--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-130004.1" id="x1-130004.1"><span 
 class="cmbx-10">evalObjectSpecification</span></a></span>
    &#8211; returns <span 
@@ -728,24 +765,23 @@ src="ShExZ27x.png" alt="|-------------------------------------------------------
 | evalObjectSpecificationecosg =
 |     if &#x2200;t : g &#x2219; evalObjectSpecificationTripleecost.o = p then p
 ------else-f-------------------------------------------------  " class="math-display" ></center>
-
    <center class="math-display" >
 <img 
 src="ShExZ28x.png" alt="|-----------------------------------------------------------
 | evalObjectSpecificationTriple : EvalContext &#x2192; ObjectSpecification &#x2192;
-|     RDFTerm  &#x2192; OptValidity
-|-----------
+|-----RDFTerm  &#x2192; OptValidity
 | &#x2200;ec : EvalContext;os : ObjectSpecification;n : RDFTerm &#x2219;
 | evalObjectSpecificationTripleecosn =
 |     ifos &#x2208; ran valueType then
 |         evalValueType(valueType &#x22C5;os)n
 |     else ifos &#x2208; ran valueSet then
 |         evalTermSet(valueSet &#x22C5;os)n
-|     else ifos &#x2208; ran osWild then
-|         evalTermWild(osWild &#x22C5;os)n
+|     else ifos &#x2208; ran valueWild then
+|         evalTermWild(valueWild &#x22C5;os)n
 |     else
-----------evalTermReferenceec(valueRef-&#x22C5;os)n--------------------  " class="math-display" ></center>
-<!--l. 418--><p class="noindent" ><span class="paragraphHead"><a 
+|         evalTermReferenceec(valueRef &#x22C5;os)n
+------------------------------------------------------------  " class="math-display" ></center>
+<!--l. 419--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-140004.1" id="x1-140004.1"><span 
 class="cmbx-10">evalValueType</span></a></span>
    &#8211; returns pass if the supplied <span 
@@ -760,7 +796,7 @@ class="cmti-10">IRI </span>and <span
 class="cmti-10">ValueType </span>is type <span 
 class="cmti-10">RDF</span>_<span 
 class="cmti-10">Literal</span></li></ul>
-<!--l. 424--><p class="noindent" >
+<!--l. 425--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ29x.png" alt="|-----------------------------------------------------------
@@ -772,7 +808,8 @@ src="ShExZ29x.png" alt="|-------------------------------------------------------
 |         (l &#x2208; rantl &#x2227; (tl &#x22C5;l).dataType = vt)) then p
 |     else f
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 434--><p class="noindent" ><span class="paragraphHead"><a 
+
+<!--l. 435--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-150004.1" id="x1-150004.1"><span 
 class="cmbx-10">evalTermSet</span></a></span>
    &#8211; return <span 
@@ -782,7 +819,8 @@ class="cmti-10">MatchValue</span>
    <center class="math-display" >
 <img 
 src="ShExZ30x.png" alt="|-----------------------------------------------------------
-|-evalTermSet : &#x2119;MatchValue &#x2192;&#x21A6;RDFTerm  &#x21A6;&#x2192; OptValidity
+| evalTermSet : &#x2119;MatchValue &#x2192;&#x21A6;RDFTerm  &#x21A6;&#x2192; OptValidity
+|-----------
 | &#x2200;mvs : &#x2119; MatchValue;n : RDFTerm &#x2219; evalTermSetmvsn =
 |     if &#x2203;mv : mvs &#x2219;
 |         ((mv &#x2208; ranmviri &#x2227; n &#x2208; ran iri &#x2227; (iri &#x22C5;n ) = mviri &#x22C5;mv ) &#x2228;
@@ -790,9 +828,8 @@ src="ShExZ30x.png" alt="|-------------------------------------------------------
 |            (iri &#x22C5;n) &#x2208; IRIstemRange (mviris &#x22C5;mv )) &#x2228;
 |         (n &#x2208; ranliteral &#x2227; mvlit &#x22C5;mv = literal &#x22C5;n ))
 |     then p
-|     else f
-------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 449--><p class="noindent" ><span class="paragraphHead"><a 
+------else-f-------------------------------------------------  " class="math-display" ></center>
+<!--l. 450--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-160004.1" id="x1-160004.1"><span 
 class="cmbx-10">evalTermWild</span></a></span>
    &#8211; return pass (<span 
@@ -800,16 +837,15 @@ class="cmbxti-10">p</span>) if the supplied <span
 class="cmti-10">RDFTerm </span>is <span 
 class="cmti-10">not </span>a member of <span 
 class="cmti-10">MatchValue</span>.
-<!--l. 452--><p class="indent" >
-
+<!--l. 453--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ31x.png" alt="|-----------------------------------------------------------
-| evalTermWild : &#x2119; MatchValue &#x2192; RDFTerm &#x2192; OptValidity
-|-----------
+|-evalTermWild : &#x2119; MatchValue &#x2192; RDFTerm &#x2192; OptValidity
 | &#x2200;mvs : &#x2119; MatchValue;n : RDFTerm &#x2219; evalTermWildmvsn =
-------ifevalTermSetmvsn--=-p-then f-else p--------------------  " class="math-display" ></center>
-<!--l. 458--><p class="noindent" ><span class="paragraphHead"><a 
+|     ifevalTermSetmvsn  = p then f else p
+------------------------------------------------------------  " class="math-display" ></center>
+<!--l. 459--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-170004.1" id="x1-170004.1"><span 
 class="cmbx-10">evalTermReference</span></a></span>
    &#8211; return <span 
@@ -818,24 +854,23 @@ class="cmti-10">EvalContext </span>graph whose subjects match the
 supplied <span 
 class="cmti-10">RDFTerm </span>satisfies the <span 
 class="cmti-10">ValueReference </span>rule.
-<!--l. 461--><p class="indent" >
+<!--l. 462--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ32x.png" alt="|-----------------------------------------------------------
-|-evalTermReference : EvalContext&#x2192;&#x21A6; Label&#x2192;&#x21A6; RDFTerm &#x2192;&#x21A6; OptValidity
+| evalTermReference : EvalContext&#x2192;&#x21A6; Label&#x2192;&#x21A6; RDFTerm &#x2192;&#x21A6; OptValidity
+|-----------
 | &#x2200;ec : EvalContext;vr : Label;n : RDFTerm &#x2219;
 | evalTermReferenceecvrn =
 |     ifn &#x2215;&#x2208; ranliteral then evalRule&#x2032;ecnvr
-|     else f
-------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 469--><p class="noindent" >
+------else-f-------------------------------------------------  " class="math-display" ></center>
+<!--l. 470--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.2   </span> <a 
 href="#x1-180004.2" id="x1-180004.2">RevArcRule evaluation</a></h4>
-<!--l. 470--><p class="noindent" >The <span 
+<!--l. 471--><p class="noindent" >The <span 
 class="cmti-10">RevArcRule </span>is used to select the subset of the graph having a given
 predicate or predicates and to determine whether the cardinality and/or
 &#8220;type&#8221; of this subset matches a supplied criteria. The rule itself consists of a
-
 <span 
 class="cmti-10">PredicateFilter </span>to select the triples, an <span 
 class="cmti-10">SubjectSpecification </span>to evaluate the
@@ -844,15 +879,16 @@ class="cmti-10">min </span>and <span
 class="cmti-10">max </span>cardinality and a (possibly empty) set of
 <span 
 class="cmti-10">Actions</span>:
+
    <center class="math-display" >
 <img 
-src="ShExZ33x.png" alt="|-RevArcRule------------------------------------------------
+src="ShExZ33x.png" alt="--RevArcRule------------------------------------------------
 | filter : PredicateFilter
 | valueSpec : SubjectSpecification
 | min,max : &#x2115; [0 ..1]
-|-actions-: &#x2119;Action
-| (#min = 1 &#x2227; #max = 1) &#x21D2; valuemin &#x2264; valuemax
-------------------------------------------------------------
+| actions : &#x2119;Action
+|-----------
+--(#min-=-1-&#x2227;-#max-=-1) &#x21D2;-valuemin-&#x2264;-valuemax----------------
 " class="math-display" ></center>
 <span 
 class="cmti-10">RevArcRule </span>evaluation consists of:
@@ -876,7 +912,7 @@ class="cmbxti-10">f</span> ).
    <li 
   class="enumerate" id="x1-18008x4">Return the result of evaluating <span 
 class="cmti-10">actions </span>against the matching triples.</li></ol>
-<!--l. 491--><p class="noindent" >
+<!--l. 492--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ34x.png" alt="|-----------------------------------------------------------
@@ -893,7 +929,7 @@ src="ShExZ34x.png" alt="|-------------------------------------------------------
 ------------------------------------------------------------  " class="math-display" ></center>
    <h5 class="subsubsectionHead"><a 
 href="#x1-190004.2" id="x1-190004.2">SubjectSpecification evaluation</a></h5>
-<!--l. 505--><p class="noindent" ><span 
+<!--l. 506--><p class="noindent" ><span 
 class="cmti-10">SubjectSpecification </span>specifies a set of possible values for an <span 
 class="cmti-10">RDFTerm </span>and takes one
 of the following forms:
@@ -915,14 +951,14 @@ class="cmti-10">subjectRef  </span>- matches any target that is considered valid
 class="cmti-10">Rule</span>
    identified by <span 
 class="cmti-10">Label</span>.</li></ul>
-<!--l. 511--><p class="noindent" >
+<!--l. 512--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ35x.png" alt="SubjectSpecification ::= subjectSet&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
     ssWild &#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
     subjectRef &#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
 
-<!--l. 517--><p class="indent" >   paragraphevalSubjectSpecification &#8211; returns <span 
+<!--l. 518--><p class="indent" >   paragraphevalSubjectSpecification &#8211; returns <span 
 class="cmti-10">pass </span>(<span 
 class="cmbxti-10">p</span>) if all of the triples in a
 <span 
@@ -955,10 +991,10 @@ src="ShExZ37x.png" alt="|-------------------------------------------------------
 |     else
 ----------evalTermReferenceec(subjectRef-&#x22C5;ss)n-------------------  " class="math-display" ></center>
 
-<!--l. 541--><p class="noindent" >
+<!--l. 542--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.3   </span> <a 
 href="#x1-200004.3" id="x1-200004.3">GroupRule evaluation</a></h4>
-<!--l. 542--><p class="noindent" >A <span 
+<!--l. 543--><p class="noindent" >A <span 
 class="cmti-10">GroupRule </span>serves two purposes. The first is to declare that a referenced rule is to
 be treated as &#8220;optional&#8221;, which, in this case means that if (a) the referenced rule
 returned <span 
@@ -973,13 +1009,13 @@ class="cmti-10">GroupRule </span>also treats an error situation as a <span
 class="cmti-10">fail</span>
 (<span 
 class="cmbxti-10">f</span> ).
-<!--l. 549--><p class="indent" >   The second purpose of a group rule is to allow a set of external <span 
+<!--l. 550--><p class="indent" >   The second purpose of a group rule is to allow a set of external <span 
 class="cmti-10">actions </span>to be
 evaluated whenever the referenced <span 
 class="cmti-10">rule </span>returns <span 
 class="cmti-10">pass </span>(<span 
 class="cmbxti-10">p</span>).
-<!--l. 553--><p class="indent" >
+<!--l. 554--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ38x.png" alt="OPT  ::= OPTIONAL   | REQUIRED
@@ -1004,124 +1040,124 @@ src="ShExZ39x.png" alt="|-------------------------------------------------------
 |         then dispatchgr.actions&#x2205;ec
 |     else evalRule&#x2032;ecigr.rule
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 569--><p class="noindent" >
+<!--l. 570--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.4   </span> <a 
 href="#x1-210004.4" id="x1-210004.4">AndRule evaluation</a></h4>
-<!--l. 570--><p class="noindent" >An <span 
+<!--l. 571--><p class="noindent" >An <span 
 class="cmti-10">AndRule </span>consists of a set of one or more <span 
 class="cmti-10">Rules</span>, whose evaluation is determined by
 the following table: <br 
 class="newline" />
-   <div class="tabular"> <table id="TBL-1" class="tabular" 
+   <div class="tabular"> <table id="TBL-2" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
-><colgroup id="TBL-1-1g"><col 
-id="TBL-1-1"></colgroup><colgroup id="TBL-1-2g"><col 
-id="TBL-1-2"></colgroup><colgroup id="TBL-1-3g"><col 
-id="TBL-1-3"></colgroup><colgroup id="TBL-1-4g"><col 
-id="TBL-1-4"></colgroup><colgroup id="TBL-1-5g"><col 
-id="TBL-1-5"></colgroup><colgroup id="TBL-1-6g"><col 
-id="TBL-1-6"></colgroup><tr 
+><colgroup id="TBL-2-1g"><col 
+id="TBL-2-1"></colgroup><colgroup id="TBL-2-2g"><col 
+id="TBL-2-2"></colgroup><colgroup id="TBL-2-3g"><col 
+id="TBL-2-3"></colgroup><colgroup id="TBL-2-4g"><col 
+id="TBL-2-4"></colgroup><colgroup id="TBL-2-5g"><col 
+id="TBL-2-5"></colgroup><colgroup id="TBL-2-6g"><col 
+id="TBL-2-6"></colgroup><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-1-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-1"  
-class="td11">And</td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-2"  
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-1"  
+class="td11">And</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-2"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-3"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-3"  
 class="td11"><span 
-class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-4"  
+class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-4"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-5"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-5"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-6"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-1-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-1"  
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-1"  
 class="td11"> <span 
-class="msbm-10">&#x2205;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-2"  
+class="msbm-10">&#x2205;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-2"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-3"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-3"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-4"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-4"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-5"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-5"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-6"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-1-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-1"  
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-1"  
 class="td11"> <span 
-class="cmbxti-10">z</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-2"  
+class="cmbxti-10">z</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-2"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-3"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-3"  
 class="td11"><span 
-class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-4"  
+class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-4"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-5"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-5"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-6"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-1-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-1"  
+ style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-1"  
 class="td11">  <span 
-class="cmbxti-10">f</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-2"  
+class="cmbxti-10">f</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-2"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-3"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-3"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-4"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-4"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-5"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-5"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-6"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-1-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-1"  
+ style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-1"  
 class="td11"> <span 
-class="cmbxti-10">p</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-2"  
+class="cmbxti-10">p</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-2"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-3"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-3"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-4"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-4"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-5"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-5"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-6"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-1-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-1"  
+ style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-1"  
 class="td11">  <span 
-class="cmmi-10">&#x03B5;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-2"  
+class="cmmi-10">&#x03B5;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-2"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-3"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-3"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-4"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-4"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-5"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-5"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-6"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td></tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-1-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-1"  
+ style="vertical-align:baseline;" id="TBL-2-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-1"  
 class="td11"> </td> </tr></table>
 </div> <br 
 class="newline" />
-<!--l. 584--><p class="indent" >   The formal implementation of which will be realized in the corresponding
+<!--l. 585--><p class="indent" >   The formal implementation of which will be realized in the corresponding
 function:
    <center class="math-display" >
 <img 
 src="ShExZ40x.png" alt="|-----------------------------------------------------------
 --And-: OptValidity &#x2192;-OptValidity-&#x2192;-OptValidity-----------------  " class="math-display" ></center>
-<!--l. 589--><p class="indent" >   Observing that the above table is a monoid with <span 
+<!--l. 590--><p class="indent" >   Observing that the above table is a monoid with <span 
 class="cmti-10">nomatch </span>(<span 
 class="cmbxti-10">z</span>) as an identity
 element, <span 
@@ -1138,114 +1174,114 @@ src="ShExZ42x.png" alt="|-------------------------------------------------------
 | &#x2200;ec : EvalContext;i : RDFTerm; r : AndRule &#x2219;
 | evalAndRuleecir =
 ------foldrAndz-(map-(evalRule&#x2032;eci)r)---------------------------  " class="math-display" ></center>
-<!--l. 602--><p class="noindent" >
+<!--l. 603--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.5   </span> <a 
 href="#x1-220004.5" id="x1-220004.5">XorRule evaluation</a></h4>
-<!--l. 603--><p class="noindent" >An <span 
+<!--l. 604--><p class="noindent" >An <span 
 class="cmti-10">XorRule </span>consists of a set of one or more <span 
 class="cmti-10">Rules</span>, whose evaluation is determined by
 the following table: <br 
 class="newline" />
-   <div class="tabular"> <table id="TBL-2" class="tabular" 
+   <div class="tabular"> <table id="TBL-3" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
-><colgroup id="TBL-2-1g"><col 
-id="TBL-2-1"></colgroup><colgroup id="TBL-2-2g"><col 
-id="TBL-2-2"></colgroup><colgroup id="TBL-2-3g"><col 
-id="TBL-2-3"></colgroup><colgroup id="TBL-2-4g"><col 
-id="TBL-2-4"></colgroup><colgroup id="TBL-2-5g"><col 
-id="TBL-2-5"></colgroup><colgroup id="TBL-2-6g"><col 
-id="TBL-2-6"></colgroup><tr 
+><colgroup id="TBL-3-1g"><col 
+id="TBL-3-1"></colgroup><colgroup id="TBL-3-2g"><col 
+id="TBL-3-2"></colgroup><colgroup id="TBL-3-3g"><col 
+id="TBL-3-3"></colgroup><colgroup id="TBL-3-4g"><col 
+id="TBL-3-4"></colgroup><colgroup id="TBL-3-5g"><col 
+id="TBL-3-5"></colgroup><colgroup id="TBL-3-6g"><col 
+id="TBL-3-6"></colgroup><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-1"  
-class="td11">Xor</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-2"  
+ style="vertical-align:baseline;" id="TBL-3-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-1"  
+class="td11">Xor</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-2"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-3"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-3"  
 class="td11"><span 
-class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-4"  
+class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-4"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-5"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-5"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-6"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-1"  
+ style="vertical-align:baseline;" id="TBL-3-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-1"  
 class="td11"> <span 
-class="msbm-10">&#x2205;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-2"  
+class="msbm-10">&#x2205;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-2"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-3"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-3"  
 class="td11"><span 
-class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-4"  
+class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-4"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-5"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-5"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-6"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-1"  
+ style="vertical-align:baseline;" id="TBL-3-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-1"  
 class="td11"> <span 
-class="cmbxti-10">z</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-2"  
+class="cmbxti-10">z</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-2"  
 class="td11"><span 
-class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-3"  
+class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-3"  
 class="td11"><span 
-class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-4"  
+class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-4"  
 class="td11"><span 
-class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-5"  
+class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-5"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-6"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-1"  
+ style="vertical-align:baseline;" id="TBL-3-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-1"  
 class="td11"> <span 
-class="cmbxti-10">f</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-2"  
+class="cmbxti-10">f</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-2"  
 class="td11"><span 
-class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-3"  
+class="msbm-10">&#x2205;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-3"  
 class="td11"><span 
-class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-4"  
+class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-4"  
 class="td11"><span 
-class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-5"  
+class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-5"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-6"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-1"  
+ style="vertical-align:baseline;" id="TBL-3-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-1"  
 class="td11"> <span 
-class="cmbxti-10">p</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-2"  
+class="cmbxti-10">p</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-2"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-3"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-3"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-4"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-4"  
 class="td11"><span 
-class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-5"  
+class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-5"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-6"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td>
 </tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-1"  
+ style="vertical-align:baseline;" id="TBL-3-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-1"  
 class="td11"> <span 
-class="cmmi-10">&#x03B5;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-2"  
+class="cmmi-10">&#x03B5;  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-2"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-3"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-3"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-4"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-4"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-5"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-5"  
 class="td11"><span 
-class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-6"  
+class="cmmi-10">&#x03B5;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-6"  
 class="td11"><span 
 class="cmmi-10">&#x03B5;</span></td></tr><tr 
 class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-2-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-1"  
+ style="vertical-align:baseline;" id="TBL-3-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-7-1"  
 class="td11"> </td> </tr></table>
 </div> <br 
 class="newline" />The formal implementation of which will be realized in the corresponding
@@ -1275,10 +1311,10 @@ src="ShExZ45x.png" alt="|-------------------------------------------------------
 | evalXorRuleecir =
 ------foldrXorf(map-(evalRule&#x2032;eci)r)----------------------------  " class="math-display" ></center>
 
-<!--l. 636--><p class="noindent" >
+<!--l. 637--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
 href="#QQ2-1-25" id="x1-230005">Action evaluation</a></h3>
-<!--l. 637--><p class="noindent" >The <span 
+<!--l. 638--><p class="noindent" >The <span 
 class="cmti-10">dispatch </span>function allows the evaluation / execution of arbitrary external
 &#8220;<span 
 class="cmti-10">Actions</span>&#8221;. While the evaluation of an <span 
@@ -1313,7 +1349,7 @@ class="cmti-10">EvalContext </span>containing the <span
 class="cmti-10">Schema </span>and <span 
 class="cmti-10">Graph</span>
    </li></ul>
-<!--l. 649--><p class="indent" >   The dispatch function usually returns pass (<span 
+<!--l. 650--><p class="indent" >   The dispatch function usually returns pass (<span 
 class="cmbxti-10">p</span>) or fail (<span 
 class="cmbxti-10">f</span> ), although there may also
 be cases for other <span 
@@ -1331,13 +1367,13 @@ src="ShExZ47x.png" alt="|-------------------------------------------------------
 | &#x2200;as : &#x2119;Action;g : Graph; ec : EvalContext &#x2219;
 |     as = &#x2205; &#x21D2; dispatchasgec = p
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 662--><p class="noindent" >
+<!--l. 663--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
 href="#QQ2-1-26" id="x1-240006">Appendix</a></h3>
-<!--l. 663--><p class="noindent" >
+<!--l. 664--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">6.1   </span> <a 
 href="#x1-250006.1" id="x1-250006.1">Foldr</a></h4>
-<!--l. 664--><p class="noindent" >The <span 
+<!--l. 665--><p class="noindent" >The <span 
 class="cmti-10">foldr </span>function is the standard functional pattern, which takes a binary
 function of type <span 
 class="cmti-10">T</span>, an identity function for type <span 
@@ -1353,10 +1389,10 @@ src="ShExZ48x.png" alt="|-[T]---------------------------------------------------
 |     ifxs = &#x27E8;&#x27E9; then id
 |     else f(headxs)(foldrfid (tailxs))
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 675--><p class="noindent" >
+<!--l. 676--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
 href="#x1-260006.2" id="x1-260006.2">Map</a></h4>
-<!--l. 676--><p class="noindent" >The <span 
+<!--l. 677--><p class="noindent" >The <span 
 class="cmti-10">map </span>function takes a function from type <span 
 class="cmti-10">A </span>to type <span 
 class="cmti-10">B </span>and applies it to all
@@ -1370,10 +1406,10 @@ src="ShExZ49x.png" alt="|-[A,B]-------------------------------------------------
 | &#x2200;f : A &#x2192; B; xs : seqA &#x2219; mapf xs =
 |     ifxs = &#x27E8;&#x27E9; then &#x27E8;&#x27E9;&#x2322;
 ------else-&#x27E8;f(headxs)&#x27E9;--mapf(tailxs)---------------------------  " class="math-display" ></center>
-<!--l. 686--><p class="noindent" >
+<!--l. 687--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">6.3   </span> <a 
 href="#x1-270006.3" id="x1-270006.3">Helper Functions</a></h4>
-<!--l. 687--><p class="noindent" ><span 
+<!--l. 688--><p class="noindent" ><span 
 class="cmti-10">Z </span>uses the notion of <span 
 class="cmti-10">free type definitions </span>in the form:
    <center class="math-display" >
@@ -1410,19 +1446,19 @@ type by:
 src="ShExZ53x.png" alt="x : TravelDirections
 |-----------
 ifx &#x2208; ranbus then bus &#x22C5;x else walking &#x22C5;x  " class="math-display" ></center>
-<!--l. 711--><p class="indent" >
+<!--l. 712--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ54x.png" alt="--[X,Y ]----------------------------------------------------
 | -&#x22C5;- : (X &#x21A3; Y ) &#x00D7; Y &#x2192;&#x21A6;X
 |-----------
 --&#x2200;y-: Y-;f : X-&#x21A3;-Y-&#x2219;-f &#x22C5;y-=-(&#x03BC;x-: dom-f | fx-=-y)----------  " class="math-display" ></center>
-<!--l. 719--><p class="indent" >   One way to represent optional values is a set with one member. We take that
+<!--l. 720--><p class="indent" >   One way to represent optional values is a set with one member. We take that
 route here and introduce a bit of syntactic sugar to show our intent:
    <center class="math-display" >
 <img 
 src="ShExZ55x.png" alt="T [0 ..1] == {s : &#x2119; T | #s &#x2264; 1} " class="math-display" ></center>
-<!--l. 725--><p class="indent" >   And a shorthand for addressing the content:
+<!--l. 726--><p class="indent" >   And a shorthand for addressing the content:
    <center class="math-display" >
 <img 
 src="ShExZ56x.png" alt="|-[T]-------------------------------------------------------

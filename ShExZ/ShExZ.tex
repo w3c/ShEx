@@ -297,7 +297,7 @@ evalArcRule~ec~s~ar = \\
 \subsubsection{\zc{PredicateFilter} Validation}
 A \zc{PredicateFilter} can be one of:
 \begin{itemize}
-\item an \zc{pfIRI} - the IRI of a specific predicate or the IRIstem that defines a set of
+\item \zc{pfIRI} - the IRI of a specific predicate or the IRIstem that defines a set of
 predicates
 \item \zc{pfWild} - an expression that matches any predicate \emph{except} those matching the (possibly empty) set of \zc{IRIorStems} 
 \end{itemize}
@@ -340,37 +340,19 @@ in the set of \zc{IRIorStems}.
 \t1 \{t: g | t \notin \bigcup \{e: es @ evalIRIorStem~e~g\} \}
 \end{gendef}
 
+\subsubsection{evalCardinality} -- evaluates the cardinality the supplied graph. Rules:
 
-\subsubsection{ObjectSpecification evaluation}
-\zc{ObjectSpecification} specifies a set of possible values for an \zc{RDFTerm} and takes one of the following forms:
-\begin{itemize}
-\item \zc{ValueType} - matches \zc{Literals} having a specified data type
-\item \zc{ValueSet} - matches \zc{IRIs} or \zc{Literals} that match one or more of the expressions in the specified set
-\item \zc{ValueWild} - matches any target \emph{except} those matching the (possibly empty) set of \zc{IRIstems}
-\item \zc{ValueReference} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
-\end{itemize}
-\begin{zed}
-MatchValue ::= mviri \ldata IRI \rdata | mviris \ldata IRIstem \rdata | \\
-\t2 mvlit \ldata RDFLiteral \rdata \\
-ObjectSpecification ::= valueType \ldata IRI \rdata | \\
-\t1 valueSet \ldata \power MatchValue \rdata | \\
-\t1 osWild \ldata \power MatchValue \rdata | \\
-\t1 valueRef \ldata Label \rdata
-\end{zed}
 
-\subsubsection{evalCardinality} -- evaluates the cardinality the supplied graph. 
-\begin{itemize}
-\item If the graph has no elements and:
-\begin{itemize}
-\item $min$ value is 0 -- \zc{nomatch} ($\nomatch$)
-\item $min$ value isn't specified or is $>$ 0 -- \zc{dunno} ($\dunno$)
-\end{itemize}
-\item Otherwise:
-\begin{itemize}
-\item If number of elements in graph $<$ $min$ or $>$ $max$ -- \zc{fail} ($\fail$)
-\item Otherwise -- \zc{pass} ($\pass$)
-\end{itemize}
-\end{itemize}
+\begin{tabular}{| c || c | c || c |}
+   \hline 
+   \# elements & $min$ & $max$ & result \\
+   \hline \hline
+   0 & 0 & & $\nomatch$ \\ \hline
+   0 &  & & $\dunno$ \\ \hline
+   $>$ 0 and $<$ $min$ & present &  & $\fail$ \\ \hline
+   $>$ 0 and $>$ $max$ & & present & $\fail$ \\ \hline
+    & & & $\pass$ \\ \hline
+\end{tabular} \\
 
 
 \begin{gendef}
@@ -386,6 +368,25 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 \t2 \THEN \fail \\
 \t1 \ELSE \pass
 \end{gendef}
+
+
+\subsubsection{ObjectSpecification evaluation}
+\zc{ObjectSpecification} specifies a set of possible values for an \zc{RDFTerm} and takes one of the following forms:
+\begin{itemize}
+\item \zc{valueType} - matches \zc{Literals} having a specified data type
+\item \zc{valueSet} - matches \zc{IRIs} or \zc{Literals} that match one or more of the expressions in the specified set
+\item \zc{valueWild} - matches any target \emph{except} those matching the (possibly empty) set of \zc{IRIstems}
+\item \zc{valueRef} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
+\end{itemize}
+\begin{zed}
+MatchValue ::= mviri \ldata IRI \rdata | mviris \ldata IRIstem \rdata | \\
+\t2 mvlit \ldata RDFLiteral \rdata \\
+ObjectSpecification ::= valueType \ldata IRI \rdata | \\
+\t1 valueSet \ldata \power MatchValue \rdata | \\
+\t1 valueWild \ldata \power MatchValue \rdata | \\
+\t1 valueRef \ldata Label \rdata
+\end{zed}
+
 
 
 \paragraph{evalObjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
@@ -408,8 +409,8 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \t2 evalValueType~(valueType \entryFor os)~n \\
 \t1 \ELSE \IF os \in \ran valueSet \THEN \\
 \t2 evalTermSet~(valueSet \entryFor os)~n \\
-\t1 \ELSE \IF os \in \ran osWild \THEN \\
-\t2 evalTermWild~(osWild \entryFor os)~n \\
+\t1 \ELSE \IF os \in \ran valueWild \THEN \\
+\t2 evalTermWild~(valueWild \entryFor os)~n \\
 \t1 \ELSE \\
 \t2 evalTermReference~ec~(valueRef \entryFor os)~n
 \end{gendef}
@@ -549,7 +550,6 @@ predicates and a non-zero minimum cardinality) the group rule returns \zc{nomatc
 The second purpose of a group rule is to allow a set of external \zc{actions} to be evaluated
 whenever the referenced \zc{rule} returns \zc{pass} ($\pass$). 
 
-%% TODO: Why fail????
 
 \begin{zed}
 OPT ::= OPTIONAL | REQUIRED \\
@@ -562,8 +562,6 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
    \forall ec: EvalContext; i: RDFTerm; gr: GroupRule @ evalGroupRule~ ec~ i ~ gr = \\
 \t1 \IF evalRule'~ec~i~gr.rule = \dunno \land gr.opt = OPTIONAL \\
 \t2 \THEN \nomatch \\
-\t1 \ELSE \IF evalRule'~ec~i~gr.rule = \error \land gr.opt = OPTIONAL \\
-\t2 \THEN \fail \\
 \t1 \ELSE \IF evalRule'~ec~i~gr.rule = \pass \\
 \t2 \THEN dispatch~ gr.actions~ \emptyset ~ ec \\
 \t1 \ELSE evalRule'~ec~i~gr.rule
