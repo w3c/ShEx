@@ -407,11 +407,11 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \t1 \IF os \in \ran valueType \THEN \\
 \t2 evalValueType~(valueType \entryFor os)~n \\
 \t1 \ELSE \IF os \in \ran valueSet \THEN \\
-\t2 evalValueSet~(valueSet \entryFor os)~n \\
+\t2 evalTermSet~(valueSet \entryFor os)~n \\
 \t1 \ELSE \IF os \in \ran osWild \THEN \\
-\t2 evalValueWild~(osWild \entryFor os)~n \\
+\t2 evalTermWild~(osWild \entryFor os)~n \\
 \t1 \ELSE \\
-\t2 evalValueReference~ec~(valueRef \entryFor os)~n
+\t2 evalTermReference~ec~(valueRef \entryFor os)~n
 \end{gendef}
 
 
@@ -431,35 +431,36 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \t1 \ELSE \fail
 \end{gendef}
 
-\paragraph{evalValueSet} -- return $\pass$ if the supplied \zc{RDFTerm} is a member of \zc{MatchValue}
+\paragraph{evalTermSet} -- return $\pass$ if the supplied \zc{RDFTerm} is a member of \zc{MatchValue}
 \begin{gendef}
-   evalValueSet: \power MatchValue \pfun RDFTerm \pfun OptValidity
+   evalTermSet: \power MatchValue \pfun RDFTerm \pfun OptValidity
 \where
-   \forall mvs: \power MatchValue; n: RDFTerm @ evalValueSet~mvs~n = \\
+   \forall mvs: \power MatchValue; n: RDFTerm @ evalTermSet~mvs~n = \\
 \t1	\IF \exists mv: mvs @ \\
-\t2 ((mv \in \ran mviri \land (iri \entryFor n) = mviri \entryFor mv) \lor \\
-\t2  (mv \in \ran mviris \land (iri \entryFor n) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
-\t2  (mvlit \entryFor mv = literal \entryFor n)) \\
+\t2 ((mv \in \ran mviri \land n \in \ran iri \land (iri \entryFor n) = mviri \entryFor mv) \lor \\
+\t2  (mv \in \ran mviris \land n \in \ran iri \land  \\
+\t3 (iri \entryFor n) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
+\t2  (n \in \ran literal \land mvlit \entryFor mv = literal \entryFor n)) \\
 \t1 \THEN \pass \\
 \t1 \ELSE \fail
 \end{gendef}
 
 
-\paragraph{evalValueWild} -- return pass ($\pass$) if the supplied \zc{RDFTerm} is \textit{not} a member of \zc{MatchValue}.
+\paragraph{evalTermWild} -- return pass ($\pass$) if the supplied \zc{RDFTerm} is \textit{not} a member of \zc{MatchValue}.
 
 \begin{gendef}
-   evalValueWild: \power MatchValue \fun RDFTerm \fun OptValidity
+   evalTermWild: \power MatchValue \fun RDFTerm \fun OptValidity
 \where
-   \forall mvs: \power MatchValue; n: RDFTerm @ evalValueWild~mvs~n = \\
-\t1 \IF evalValueSet~ mvs~ n = \pass \THEN \fail \ELSE \pass
+   \forall mvs: \power MatchValue; n: RDFTerm @ evalTermWild~mvs~n = \\
+\t1 \IF evalTermSet~ mvs~ n = \pass \THEN \fail \ELSE \pass
 \end{gendef}
 
-\paragraph{evalValueReference} -- return $\pass$ if the subgraph of the \zc{EvalContext} graph whose subjects match the supplied \zc{RDFTerm} satisfies the \zc{ValueReference} rule.
+\paragraph{evalTermReference} -- return $\pass$ if the subgraph of the \zc{EvalContext} graph whose subjects match the supplied \zc{RDFTerm} satisfies the \zc{ValueReference} rule.
 
 \begin{gendef}
-   evalValueReference: EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
+   evalTermReference: EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
 \where
-	\forall ec: EvalContext; vr: Label; n: RDFTerm @ \\ evalValueReference~ec~vr~n = \\
+	\forall ec: EvalContext; vr: Label; n: RDFTerm @ \\ evalTermReference~ec~vr~n = \\
 \t1 \IF n \notin \ran literal \THEN evalRule'~ec~n~vr \\
 \t1 \ELSE \fail
 \end{gendef}
@@ -530,11 +531,11 @@ match the supplied \zc{SubjectSpecification}, otherwise \zc{fail} ($\fail$)
    \forall ec:EvalContext; ss: SubjectSpecification; n: RDFTerm @ \\
   evalSubjectSpecificationTriple~ec~ss~n = \\
 \t1 \IF ss \in \ran subjectSet \THEN \\
-\t2 evalValueSet~(subjectSet \entryFor ss)~n \\
+\t2 evalTermSet~(subjectSet \entryFor ss)~n \\
 \t1 \ELSE \IF ss \in \ran ssWild \THEN \\
-\t2 evalValueWild~(ssWild \entryFor ss)~n \\
+\t2 evalTermWild~(ssWild \entryFor ss)~n \\
 \t1 \ELSE \\
-\t2 evalValueReference~ec~(subjectRef \entryFor ss)~n
+\t2 evalTermReference~ec~(subjectRef \entryFor ss)~n
 \end{gendef}
 
 \subsection{GroupRule evaluation}
@@ -642,9 +643,9 @@ execution context.  In particular, an \zc{Action} may not change anything in the
 \zc{EvalContext} 
 The action dispatcher exists to allow external events to happen. Parameters:
 \begin{itemize}
-\item \zc{g} - the \zc{Graph} that passed the associated Rule.
-\item \zc{ec} - the evaluation context
-\item \zc{as} - the set of \zc{Actions} associated with the associated \zc{GroupRule} or \zc{ArcRule}
+\item \zc{as} - the set of \zc{Actions} associated with the \zc{GroupRule}, \zc{ArcRule} or \zc{RevArcRule} 
+\item \zc{g} - the \zc{Graph} that passed the \zc{ArcRule} or \zc{RevArcRule}.  Empty in the case of \zc{GroupRule}
+\item \zc{ec} - the \zc{EvalContext} containing the \zc{Schema} and \zc{Graph}
 
 \end{itemize}
 
@@ -718,13 +719,13 @@ x : TravelDirections
    (\mu x : \dom f | f~x = y)
 \end{gendef}
 
-
-As ${Z}$ has no notion of absence, it is convenient to add a bit of syntactic sugar. 
+One way to represent optional values is a set with one member.  We take that route here 
+and introduce a bit of syntactic sugar to show our intent:
 \begin{zed} 
   \optional[T] == \{ s : \power T \mid \# s \leq 1 \} \\
 \end{zed}
 
-It is also useful to provide a shorthand for addressing the content of singletons:
+And a shorthand for addressing the content:
 \begin{gendef}[T]
    value: \power T \pfun T
 \where
