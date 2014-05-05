@@ -124,24 +124,27 @@ We are now in the position to complete the definition of $Triple$ as a tuple con
    iri \entryFor p \in IRI \\
    iri \entryFor o \in IRI \lor bnode \entryFor o \in BlankNode \lor literal \entryFor o \in RDFLiteral
 \end{schema}
+\subsection{RDF Access Functions}
 
 The $ShEx$ language uses the following functions:
 
-\paragraph{\zc{subjects}} -- return set of triples in a graph triples whose subject is a given \zc{RDFTerm}
+\subsubsection{\zc{triplesForSubject}} -- return set of triples in a graph triples whose subject is a given \zc{RDFTerm}
 \begin{gendef}
-   subjects: RDFTerm \fun Graph \fun Graph
+   triplesForSubject: RDFTerm \fun Graph \fun Graph
 \where
-   \forall subj: RDFTerm; g: Graph @ subjects~subj~g = \{t: g | t.s = subj \}
+   \forall subj: RDFTerm; g: Graph @ triplesForSubject~subj~g = \{t: g | t.s = subj \}
 \end{gendef}
 
-\paragraph{\zc{objects}} -- return set of objects in \zc{Graph}
+\subsubsection{\zc{triplesForObject}} -- return set of triples in a graph triples whose object is a given \zc{RDFTerm}
 \begin{gendef}
-   objects: Graph \fun \power RDFTerm
+   triplesForObject: RDFTerm \fun Graph \fun Graph
 \where
-   \forall g: Graph @ objects~g = \{t: g @ t.o \}
+   \forall obj: RDFTerm; g: Graph @ triplesForObject~obj~g = \{t: g | t.o = obj \}
 \end{gendef}
 
-It is also useful to define a couple of well known URI's for future reference:
+\subsection{Well Known URIs}
+
+The following URI's are referenced explicitly in the $ShEx$ implementation:
 
 \begin{axdef}
 XSD\_String, RDF\_Resource : IRI
@@ -165,6 +168,8 @@ that is referenced within the \zc{Schema} is also itself a member of the \zc{Sch
 \t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran valueRef \implies \\
 \t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules)
 \end{schema}
+
+
 While existing $ShEx$ implementations define a rule \zc{Label} as being either an \zc{IRI} or
 a \zc{BlankNode}, the type of \zc{Label} does not impact the evaluation semantics.  For our 
 purposes, we can simply define it as a separate free type:
@@ -172,17 +177,11 @@ purposes, we can simply define it as a separate free type:
 [Label]
 \end{zed}
 
-
 The validity of a given RDF \zc{Graph} is determined by taking the \zc{start} \zc{Rule} of a
-$ShEx$ \zc{Schema} and a subject \zc{IRI} and evaluating the validity of the \zc{Rule} against
-the subset of the triples in the graph having the supplied \zc{subject}.  It is necessary that
-this evaluation be done in the \textit{context} of the entire \zc{Schema} and \zc{Graph}, as
-the \zc{start} rule in the schema will usually reference other \zc{rules} and it will
-frequently be the case that the \zc{objects} of the subject graphs will (recursively) reference
-other graph subjects.
+$ShEx$ \zc{Schema} and a reference \zc{IRI} and evaluating the validity of the \zc{Rule} against the supplied graph. 
 
-Formally, the \zc{evaluate} function takes a \zc{Schema}, a \zc{Graph} and a subject \zc{IRI}
-and, if the \zc{start} \zc{Rule} in the \zc{Schema}, when evaluated against the subject graph
+Formally, the \zc{evaluate} function takes a \zc{Schema}, a \zc{Graph} and a reference \zc{IRI}
+and, if the \zc{start} \zc{Rule} in the \zc{Schema}, 
 in the context of the starting \zc{Schema} and \zc{graph}, returns either \zc{nomatch} 
 ($\nomatch$) or \zc{pass} ($\pass$) then the function returns \zc{pass}.  In all other cases,
 the function returns \zc{fail} ($\fail$).
@@ -192,23 +191,19 @@ the function returns \zc{fail} ($\fail$).
    \forall s: Schema; g: Graph; i: IRI; v: OptValidity; ec: EvalContext | \\
 \t1 ec.graph = g \land ec.schema = s @ \\
    evaluate ~s ~g ~i = \\
-\t1 \IF evalRule ~ec ~ (subjects~ (iri~ i)~ g)~ (s.rules~ s.start) \in \{\nomatch, \pass\} \\
+\t1 \IF evalRule ~ec ~ (iri~ i)~ (s.rules~ s.start) \in \{\nomatch, \pass\} \\
 \t1 \THEN \pass \ELSE \fail
 \end{gendef}
 
 \section{Rule Evaluation}
-A $ShEx$ \zc{Rule} is a set of constraints that can be evaluated against an RDF
-\zc{Graph} in the context of a given \zc{Schema} and RDF \zc{Graph}:
+A $ShEx$ \zc{Rule} is a set of constraints that can be evaluated against a reference ${RDFTerm}$
+ in the context of a given \zc{Schema} and RDF \zc{Graph}:
 \begin{zed}
 EvalContext \defs [schema: Schema; graph: Graph] \\
 \end{zed}
-The \zc{Graph} being evaluated does not necessarily have to be a subset of the
-\zc{Graph} in \zc{EvalContext}, and may also have
-more than one \zc{subject}.  While the \zc{evaluate} function described earlier in this section 
-actually ensures that both of these conditions are true, it is envisioned that the \zc{eval} 
-function may have other applications beyond the scope of the \zc{evaluate} function itself.
 
-Formally, the \zc{evalRule} function takes an \zc{EvalContext}, a \zc{Graph} and a \zc{Rule} and returns one of the following:
+
+Formally, the \zc{evalRule} function takes an \zc{EvalContext}, a reference \zc{RDFTerm} and a \zc{Rule} and returns one of the following:
 \begin{itemize}
 \item \textbf{Pass ($\pass$)} - the supplied \zc{Graph} satisfied the evaluation \zc{Rule}
 \item \textbf{Fail ($\fail$)} - the supplied \zc{Graph} did not satisfy the evaluation \zc{Rule}
@@ -219,12 +214,11 @@ Formally, the \zc{evalRule} function takes an \zc{EvalContext}, a \zc{Graph} and
 \begin{zed}
 OptValidity ::= \pass | \fail | \nomatch | \dunno | \error \\
 \end{zed}
-A  \zc{Rule} can take one of four forms. Each will be formally described later in this
+A  \zc{Rule} can take one of five forms. Each will be formally described later in this
 document, but informally they are:
 \begin{itemize}
-\item \textbf{\zc{ArcRule}} -- selects a subset of the graph having predicates that match
-criteria described in the rule and
-and validates the objects of this subset
+\item \textbf{\zc{ArcRule}} -- selects the subset of the graph having the reference ${RDFTerm}$ as the subject and matching predicates and and validates the resulting objects
+\item \textbf{\zc{RevArcRule}} -- selects the subset of the graph having the reference ${RDFTerm}$ as the object and matching predicates and and validates the resulting subjects 
 \item \textbf{\zc{GroupRule}} -- identifies a \zc{Rule} and declares it as optional and/or
 describes a set of external \zc{Actions} to be evaluated if the inner \zc{Rule} passes.
 \item \textbf{\zc{AndRule}} -- identifies a set of \zc{Rules}, all of which must pass when
@@ -234,30 +228,32 @@ evaluated against the supplied \zc{Graph} and \zc{EvalContext}
 \end{itemize}
 \begin{zed}
 Rule ::= arc \ldata ArcRule \rdata | \\
+\t1 rarc \ldata RevArcRule \rdata | \\
 \t1 group \ldata GroupRule \rdata | \\
 \t1 and \ldata AndRule \rdata | \\
 \t1 xor \ldata XorRule \rdata \\
 \end{zed}
 \begin{gendef}
-   evalRule: EvalContext \fun Graph \fun Rule \fun OptValidity
+   evalRule: EvalContext \fun RDFTerm \fun Rule \fun OptValidity
 \where
-   \forall ec: EvalContext; g:Graph; r: Rule @ evalRule~ec~g~r = \\
+   \forall ec: EvalContext; i:RDFTerm; r: Rule @ evalRule~ec~i~r = \\
 \t1 \IF r \in \ran arc \\
-\t2 \THEN evalArcRule~ec~g~(arc \entryFor r) \\
+\t2 \THEN evalArcRule~ec~i~(arc \entryFor r) \\
+\t1 \ELSE \IF r \in \ran rarc \\
+\t2 \THEN evalRevArcRule~ec~i~(rarc \entryFor r) \\
 \t1 \ELSE \IF r \in \ran group \\
-\t2 \THEN evalGroupRule~ec~g~(group \entryFor r) \\
+\t2 \THEN evalGroupRule~ec~i~(group \entryFor r) \\
 \t1 \ELSE \IF r \in \ran and \\
-\t2 \THEN evalAndRule~ec~g~(and \entryFor r) \\
+\t2 \THEN evalAndRule~ec~i~(and \entryFor r) \\
 \t1 \ELSE \\
-\t2 evalXorRule~ec~g~(xor \entryFor r)
+\t2 evalXorRule~ec~i~(xor \entryFor r)
 \end{gendef}
-The function below is used to execute the rules that are referenced by \zc{GroupRule}s,
-\zc{AndRules} and \zc{OrRules}. Its purpose is to de-reference the supplied \zc{Label} and
+The function below de-references the supplied \zc{Label} and
 invoke \zc{evalRule} with the result.  This is not explicitly represented because
 the $Z$ specification language does not allow cyclic dependencies. Note that this function
 is undefined if \zc{Label} is not in \zc{EvalContext}
 \begin{gendef}
-   evalRuleLabel: EvalContext \fun Graph \fun Label \fun OptValidity
+   evalRule': EvalContext \fun RDFTerm \fun Label \fun OptValidity
 \where
    \forall ec: EvalContext; l:Label @ l \in \dom ec.schema.rules
 \end{gendef}
@@ -278,33 +274,23 @@ a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to selec
 \end{schema}
 \zc{ArcRule} evaluation consists of:
 \begin{enumerate}
-\item Selecting all of the triples in \zc{Graph} having predicates that match  \zc{PredicateFilter}
-\item If the number of triples from the previous step is 0, return either \zc{nomatch}
-($\nomatch$) if \zc{min} is 0 otherwise \zc{dunno}($\dunno$).
-\item If \zc{min} is specified and the number of triples from the previous step is $<$ \zc{min}
-then return \zc{fail} ($\fail$)
-\item If \zc{max} is specified and the number of triples from the previous step is $>$ \zc{max}
-then return \zc{fail} ($\fail$)
+\item Select the subset of the \zc{EvalContext} \zc{Graph} with the supplied subject and predicates matching  \zc{PredicateFilter}
+\item Evaluate the cardinality and return the result if it doesn't pass
 \item Evaluate the object of each of the triples in the set against \zc{ObjectSpecification}.  If any of the evaluations fail, return \zc{fail} ($\fail$).
 \item Return the result of evaluating \zc{actions} against the matching triples.
 \end{enumerate}
 \begin{gendef}
-   evalArcRule: EvalContext \fun Graph \fun ArcRule \fun OptValidity
+   evalArcRule: EvalContext \fun RDFTerm \fun ArcRule \fun OptValidity
 \where
-   \forall ec: EvalContext; g, sg: Graph; ar: ArcRule | \\ 
-\t1 sg = evalPredicateFilter~ar.filter~ec.graph @ \\
-evalArcRule~ec~g~ar = \\
-\t1 \IF \# ar.min = 1 \land \# sg = 0 \land  value~ ar.min = 0 \\
-\t2 \THEN \nomatch \\
-\t1 \ELSE \IF \# sg = 0 \\
-\t2 \THEN \dunno \\
-\t1 \ELSE \IF (\# ar.min = 1 \land \# sg < value~ ar.min) \lor \\
-\t3 (\# ar.max = 1 \land \# sg > value~ ar.max) \\
-\t2 \THEN \fail \\
-\t1 \ELSE \IF evalObjectSpecification~ec~ar.valueSpec~sg = \pass \\
-\t2 \THEN dispatch~ ar.actions~ sg~ ec \\
+   \forall ec: EvalContext; s: RDFTerm; ar: ArcRule; sg: Graph  | \\ 
+\t1 sg = evalPredicateFilter~ar.filter~(triplesForSubject~ s~ ec.graph) @ \\
+evalArcRule~ec~s~ar = \\
+\t1 \IF evalCardinality~sg~ar.min~ar.max \neq \pass \\
+\t2 \THEN evalCardinality~sg~ar.min~ar.max \\
+\t1 \ELSE \IF evalObjectSpecification~ec~ar.valueSpec~sg \neq \pass \\
+\t2 \THEN evalObjectSpecification~ec~ar.valueSpec~sg \\
 \t1 \ELSE \\
-\t2  evalObjectSpecification~ec~ar.valueSpec~sg
+\t2  dispatch~ ar.actions~ sg~ ec 
 \end{gendef}
 
 
@@ -372,6 +358,35 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 \t1 valueRef \ldata Label \rdata
 \end{zed}
 
+\subsubsection{evalCardinality} -- evaluates the cardinality the supplied graph. 
+\begin{itemize}
+\item If the graph has no elements and:
+\begin{itemize}
+\item $min$ value is 0 -- \zc{nomatch} ($\nomatch$)
+\item $min$ value isn't specified or is $>$ 0 -- \zc{dunno} ($\dunno$)
+\end{itemize}
+\item Otherwise:
+\begin{itemize}
+\item If number of elements in graph $<$ $min$ or $>$ $max$ -- \zc{fail} ($\fail$)
+\item Otherwise -- \zc{pass} ($\pass$)
+\end{itemize}
+\end{itemize}
+
+
+\begin{gendef}
+   evalCardinality: Graph \fun \optional[\nat] \fun \optional[\nat] \fun OptValidity
+\where
+   \forall g: Graph; min, max: \optional[\nat] @ evalCardinality~g~min~max = \\
+   \t1 \IF \# min = 1 \land \# g = 0 \land  value~ min = 0 \\
+\t2 \THEN \nomatch \\
+\t1 \ELSE \IF \# g = 0 \\
+\t2 \THEN \dunno \\
+\t1 \ELSE \IF (\# min = 1 \land \# g < value~ min) \lor \\
+\t3 (\# max = 1 \land \# g > value~ max) \\
+\t2 \THEN \fail \\
+\t1 \ELSE \pass
+\end{gendef}
+
 
 \paragraph{evalObjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
 match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
@@ -387,16 +402,16 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
    evalObjectSpecificationTriple: EvalContext \fun ObjectSpecification \fun \\
 \t1 RDFTerm \fun OptValidity
 \where
-   \forall ec:EvalContext; os: ObjectSpecification; t: RDFTerm @ \\
-  evalObjectSpecificationTriple~ec~os~t = \\
+   \forall ec:EvalContext; os: ObjectSpecification; n: RDFTerm @ \\
+  evalObjectSpecificationTriple~ec~os~n = \\
 \t1 \IF os \in \ran valueType \THEN \\
-\t2 evalValueType~(valueType \entryFor os)~t \\
+\t2 evalValueType~(valueType \entryFor os)~n \\
 \t1 \ELSE \IF os \in \ran valueSet \THEN \\
-\t2 evalValueSet~(valueSet \entryFor os)~t \\
+\t2 evalValueSet~(valueSet \entryFor os)~n \\
 \t1 \ELSE \IF os \in \ran osWild \THEN \\
-\t2 evalValueWild~(osWild \entryFor os)~t \\
+\t2 evalValueWild~(osWild \entryFor os)~n \\
 \t1 \ELSE \\
-\t2 evalValueReference~ec~(valueRef \entryFor os)~t
+\t2 evalValueReference~ec~(valueRef \entryFor os)~n
 \end{gendef}
 
 
@@ -408,9 +423,9 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \begin{gendef}
    evalValueType: IRI \pfun RDFTerm \pfun OptValidity
 \where
-   \forall vt: IRI; t: RDFTerm; l: RDFLiteral @ evalValueType~vt~ t = \\
-\t1 \IF vt = RDF\_Resource \land  t \in \ran iri \THEN \pass \\
-\t1 \ELSE \IF t \in \ran literal \land l = (literal \entryFor t) \land \\
+   \forall vt: IRI; n: RDFTerm; l: RDFLiteral @ evalValueType~vt~ n = \\
+\t1 \IF vt = RDF\_Resource \land  n \in \ran iri \THEN \pass \\
+\t1 \ELSE \IF n \in \ran literal \land l = (literal \entryFor n) \land \\
 \t2 ((l \in \ran pl \land (pl \entryFor l).dataType = vt) \lor \\
 \t2  (l \in \ran tl \land (tl \entryFor l).dataType = vt)) \THEN \pass \\
 \t1 \ELSE \fail
@@ -420,11 +435,11 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \begin{gendef}
    evalValueSet: \power MatchValue \pfun RDFTerm \pfun OptValidity
 \where
-   \forall mvs: \power MatchValue; t: RDFTerm @ evalValueSet~mvs~t = \\
+   \forall mvs: \power MatchValue; n: RDFTerm @ evalValueSet~mvs~n = \\
 \t1	\IF \exists mv: mvs @ \\
-\t2 ((mv \in \ran mviri \land (iri \entryFor t) = mviri \entryFor mv) \lor \\
-\t2  (mv \in \ran mviris \land (iri \entryFor t) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
-\t2  (mvlit \entryFor mv = literal \entryFor t)) \\
+\t2 ((mv \in \ran mviri \land (iri \entryFor n) = mviri \entryFor mv) \lor \\
+\t2  (mv \in \ran mviris \land (iri \entryFor n) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
+\t2  (mvlit \entryFor mv = literal \entryFor n)) \\
 \t1 \THEN \pass \\
 \t1 \ELSE \fail
 \end{gendef}
@@ -435,8 +450,8 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \begin{gendef}
    evalValueWild: \power MatchValue \fun RDFTerm \fun OptValidity
 \where
-   \forall mvs: \power MatchValue; t: RDFTerm @ evalValueWild~mvs~t = \\
-\t1 \IF evalValueSet~ mvs~ t = \pass \THEN \fail \ELSE \pass
+   \forall mvs: \power MatchValue; n: RDFTerm @ evalValueWild~mvs~n = \\
+\t1 \IF evalValueSet~ mvs~ n = \pass \THEN \fail \ELSE \pass
 \end{gendef}
 
 \paragraph{evalValueReference} -- return $\pass$ if the subgraph of the \zc{EvalContext} graph whose subjects match the supplied \zc{RDFTerm} satisfies the \zc{ValueReference} rule.
@@ -444,11 +459,83 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \begin{gendef}
    evalValueReference: EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
 \where
-	\forall ec: EvalContext; vr: Label; t: RDFTerm @ \\ evalValueReference~ec~vr~t = \\
-\t1 \IF t \notin \ran literal \THEN evalRuleLabel~ec~(subjects~t~ec.graph)~vr \\
+	\forall ec: EvalContext; vr: Label; n: RDFTerm @ \\ evalValueReference~ec~vr~n = \\
+\t1 \IF n \notin \ran literal \THEN evalRule'~ec~n~vr \\
 \t1 \ELSE \fail
 \end{gendef}
 
+
+\subsection{RevArcRule evaluation}
+The \zc{RevArcRule} is used to select the subset of the graph having a given predicate or
+predicates and to determine whether the cardinality and/or ``type'' of this subset matches
+a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to select the triples,
+ an \zc{SubjectSpecification} to evaluate the result, a optional \zc{min} and \zc{max}
+ cardinality and a (possibly empty) set of \zc{Actions}:
+\begin{schema}{RevArcRule}
+   filter: PredicateFilter \\
+   valueSpec: SubjectSpecification \\
+   min, max: \optional[\nat] \\
+   actions: \power Action
+\where
+   (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
+\end{schema}
+\zc{RevArcRule} evaluation consists of:
+\begin{enumerate}
+\item Select the subset of the \zc{EvalContext} \zc{Graph} with the supplied object and predicates matching  \zc{PredicateFilter}
+\item Evaluate the cardinality and return the result if it doesn't pass
+\item Evaluate the object of each of the triples in the set against \zc{SubjectSpecification}.  If any of the evaluations fail, return \zc{fail} ($\fail$).
+\item Return the result of evaluating \zc{actions} against the matching triples.
+\end{enumerate}
+\begin{gendef}
+   evalRevArcRule: EvalContext \fun RDFTerm \fun RevArcRule \fun OptValidity
+\where
+   \forall ec: EvalContext; o: RDFTerm; rar: RevArcRule; og: Graph  | \\ 
+\t1 og = evalPredicateFilter~rar.filter~(triplesForObject~ o~ ec.graph) @ \\
+evalRevArcRule~ec~o~rar = \\
+\t1 \IF evalCardinality~og~rar.min~rar.max \neq \pass \\
+\t2 \THEN evalCardinality~og~rar.min~rar.max \\
+\t1 \ELSE \IF evalSubjectSpecification~ec~rar.valueSpec~og \neq \pass \\
+\t2 \THEN evalSubjectSpecification~ec~rar.valueSpec~og \\
+\t1 \ELSE \\
+\t2  dispatch~ rar.actions~ og~ ec 
+\end{gendef}
+
+\subsubsection{SubjectSpecification evaluation}
+\zc{SubjectSpecification} specifies a set of possible values for an \zc{RDFTerm} and takes one of the following forms:
+\begin{itemize}
+\item \zc{SubjectSet} - matches \zc{IRIs} or \zc{IRIstems} that match one or more of the expressions in the specified set
+\item \zc{SubjectWild} - matches any target \emph{except} those matching the (possibly empty) set of \zc{IRIstems}
+\item \zc{subjectRef} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
+\end{itemize}
+\begin{zed}
+SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
+\t1 ssWild \ldata \power MatchValue \rdata | \\
+\t1 subjectRef \ldata Label \rdata
+\end{zed}
+
+paragraph{evalSubjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
+match the supplied \zc{SubjectSpecification}, otherwise \zc{fail} ($\fail$)
+\begin{gendef}
+   evalSubjectSpecification: EvalContext \fun SubjectSpecification \fun Graph \fun \\
+\t1 OptValidity
+\where
+   \forall ec: EvalContext; ss: SubjectSpecification; g: Graph @ \\ evalSubjectSpecification~ec~ss~g = \\
+\t1 \IF \forall t: g @ evalSubjectSpecificationTriple~ec~ss~t.o = \pass \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+\begin{gendef}
+   evalSubjectSpecificationTriple: EvalContext \fun SubjectSpecification \fun \\
+\t1 RDFTerm \fun OptValidity
+\where
+   \forall ec:EvalContext; ss: SubjectSpecification; n: RDFTerm @ \\
+  evalSubjectSpecificationTriple~ec~ss~n = \\
+\t1 \IF ss \in \ran subjectSet \THEN \\
+\t2 evalValueSet~(subjectSet \entryFor ss)~n \\
+\t1 \ELSE \IF ss \in \ran ssWild \THEN \\
+\t2 evalValueWild~(ssWild \entryFor ss)~n \\
+\t1 \ELSE \\
+\t2 evalValueReference~ec~(subjectRef \entryFor ss)~n
+\end{gendef}
 
 \subsection{GroupRule evaluation}
 A \zc{GroupRule} serves two purposes.  The first is to declare that a referenced rule is to be
@@ -469,16 +556,16 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
 \end{zed}
 \zc{evalGroupRule} evaluates \zc{Rule}, applies \zc{opt} and,if the result is \zc{pass} ($\pass$) evaluates the actions with respect the passing \zc{Graph} 
 \begin{gendef}
-   evalGroupRule: EvalContext \fun Graph \fun GroupRule \fun OptValidity
+   evalGroupRule: EvalContext \fun RDFTerm \fun GroupRule \fun OptValidity
 \where
-   \forall ec: EvalContext; g: Graph; gr: GroupRule @ evalGroupRule~ ec~ g ~ gr = \\
-\t1 \IF evalRuleLabel~ec~g~gr.rule = \dunno \land gr.opt = OPTIONAL \\
+   \forall ec: EvalContext; i: RDFTerm; gr: GroupRule @ evalGroupRule~ ec~ i ~ gr = \\
+\t1 \IF evalRule'~ec~i~gr.rule = \dunno \land gr.opt = OPTIONAL \\
 \t2 \THEN \nomatch \\
-\t1 \ELSE \IF evalRuleLabel~ec~g~gr.rule = \error \land gr.opt = OPTIONAL \\
+\t1 \ELSE \IF evalRule'~ec~i~gr.rule = \error \land gr.opt = OPTIONAL \\
 \t2 \THEN \fail \\
-\t1 \ELSE \IF evalRuleLabel~ec~g~gr.rule = \pass \\
-\t2 \THEN dispatch~ gr.actions~ g~ ec \\
-\t1 \ELSE evalRuleLabel~ec~g~gr.rule
+\t1 \ELSE \IF evalRule'~ec~i~gr.rule = \pass \\
+\t2 \THEN dispatch~ gr.actions~ \emptyset ~ ec \\
+\t1 \ELSE evalRule'~ec~i~gr.rule
 \end{gendef}
 
 \subsection{AndRule evaluation}
@@ -507,11 +594,11 @@ element, \zc{evalAndRule} can be applied using the standard functional pattern:
 AndRule == \seq_1 Label
 \end{zed}
 \begin{gendef}
-   evalAndRule: EvalContext \fun Graph \fun AndRule \fun OptValidity
+   evalAndRule: EvalContext \fun RDFTerm \fun AndRule \fun OptValidity
 \where
-   \forall ec: EvalContext; g: Graph; r: AndRule  @ \\
-	evalAndRule~ec~g~r = \\
-\t1	foldr~ And~ \nomatch ~ (map~(evalRuleLabel~ec~g)~r)
+   \forall ec: EvalContext; i: RDFTerm; r: AndRule  @ \\
+	evalAndRule~ec~i~r = \\
+\t1	foldr~ And~ \nomatch ~ (map~(evalRule'~ec~i)~r)
 \end{gendef}
 
 \subsection{XorRule evaluation}
@@ -539,23 +626,26 @@ resulting in the following definition for \zc{evalXorRule}
 XorRule == \seq_1 Label
 \end{zed}
 \begin{gendef}
-   evalXorRule: EvalContext \fun Graph \fun XorRule \fun OptValidity
+   evalXorRule: EvalContext \fun RDFTerm \fun XorRule \fun OptValidity
 \where
-   \forall ec: EvalContext; g: Graph; r: XorRule  @ \\
-	evalXorRule~ec~g~r = \\
-\t1	foldr~ Xor~ \fail ~ (map~(evalRuleLabel~ ec ~g)~ r)
+   \forall ec: EvalContext; i: RDFTerm; r: XorRule  @ \\
+	evalXorRule~ec~i~r = \\
+\t1	foldr~ Xor~ \fail ~ (map~(evalRule'~ ec ~i)~ r)
 \end{gendef}
+
+
 
 \section{Action evaluation}
 The \zc{dispatch} function allows the evaluation / execution of arbitrary external ``\zc{Actions}''.  While the evaluation of an \zc{Action} can (obviously) have side effects
 outside the context of the $ShEx$ environment, it must be side effect free within the 
 execution context.  In particular, an \zc{Action} may not change anything in the 
-\zc{EvalContext} or passing \zc{Graph}
+\zc{EvalContext} 
 The action dispatcher exists to allow external events to happen. Parameters:
 \begin{itemize}
-\item \zc{EvalContext} - the evaluation context
-\item \zc{Actions} - the set of \zc{Actions} associated with the associated \zc{GroupRule} or \zc{ArcRule}
-\item \zc{Graph} - the \zc{Graph} that passed the associated Rule.
+\item \zc{g} - the \zc{Graph} that passed the associated Rule.
+\item \zc{ec} - the evaluation context
+\item \zc{as} - the set of \zc{Actions} associated with the associated \zc{GroupRule} or \zc{ArcRule}
+
 \end{itemize}
 
 The dispatch function usually returns pass ($\pass$) or fail ($\fail$), although there may also be cases for other \zc{OptValidity} values in certain circumstances. The dispatch function
