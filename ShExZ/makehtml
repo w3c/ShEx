@@ -1,1 +1,7 @@
+mkdir -p html 
+rm html/*
 "/usr/texbin/htlatex" "/Users/mrf7578/git/w3c/ShEx/ShExZ/ShExZ.tex" "css,2,sections+" " " " " -dhtml -interaction=nonstopmode
+mv *.png html
+mv *.4* html
+mv *.html html
+mv *.css html
