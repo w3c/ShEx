@@ -166,7 +166,9 @@ that is referenced within the \zc{Schema} is also itself a member of the \zc{Sch
 \t1 (r \in \ran and \implies \ran (and \entryFor r) \subseteq \dom rules) \land \\
 \t1 (r \in \ran xor \implies \ran (xor \entryFor r) \subseteq \dom rules) \land \\ 
 \t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran valueRef \implies \\
-\t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules)
+\t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules) \land \\
+\t1 (r \in \ran rarc \land (rarc \entryFor r).valueSpec \in \ran subjectRef \implies \\
+\t2 (subjectRef \entryFor (rarc \entryFor r).valueSpec) \in \dom rules)
 \end{schema}
 
 
