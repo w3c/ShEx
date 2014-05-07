@@ -165,10 +165,10 @@ that is referenced within the \zc{Schema} is also itself a member of the \zc{Sch
 \t1 (r \in \ran group \implies (group \entryFor r).rule \in \dom rules) \land \\
 \t1 (r \in \ran and \implies \ran (and \entryFor r) \subseteq \dom rules) \land \\
 \t1 (r \in \ran xor \implies \ran (xor \entryFor r) \subseteq \dom rules) \land \\ 
-\t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran valueRef \implies \\
-\t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules) \land \\
-\t1 (r \in \ran rarc \land (rarc \entryFor r).valueSpec \in \ran subjectRef \implies \\
-\t2 (subjectRef \entryFor (rarc \entryFor r).valueSpec) \in \dom rules)
+\t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran osShape \implies \\
+\t2 (osShape \entryFor (arc \entryFor r).valueSpec) \in \dom rules) \land \\
+\t1 (r \in \ran rarc \land (rarc \entryFor r).valueSpec \in \ran ssShape \implies \\
+\t2 (ssShape \entryFor (rarc \entryFor r).valueSpec) \in \dom rules)
 \end{schema}
 
 
@@ -299,13 +299,13 @@ evalArcRule~ec~s~ar = \\
 \subsubsection{\zc{PredicateFilter} Validation}
 A \zc{PredicateFilter} can be one of:
 \begin{itemize}
-\item \zc{pfIRI} - the IRI of a specific predicate or the IRIstem that defines a set of
+\item \zc{inclusion} - the IRI of a specific predicate or the IRIstem that defines a set of
 predicates
-\item \zc{pfWild} - an expression that matches any predicate \emph{except} those matching the (possibly empty) set of \zc{IRIorStems} 
+\item \zc{exclusion} - an expression that matches any predicate \emph{except} those matching the (possibly empty) set of \zc{IRIorStems} 
 \end{itemize}
 \begin{zed}
-IRIorStem ::= iosi \ldata IRI \rdata | ioss \ldata IRIstem \rdata \\
-PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorStem \rdata
+IRIorStem ::= term \ldata IRI \rdata | stem \ldata IRIstem \rdata \\
+PredicateFilter ::= inclusion \ldata IRIorStem \rdata | exclusion \ldata \power IRIorStem \rdata
 \end{zed}
 An \zc{IRIstem} matches any \zc{IRI} whose stringified representation begins with the stringified
 representation of \zc{IRIstem} according to standard IRI matching rules \cite{RFC3987}. This is represented by the function:
@@ -321,8 +321,8 @@ matches the supplied \zc{PredicateFilter}:
    evalPredicateFilter : PredicateFilter \pfun Graph \pfun Graph
 \where
    \forall f: PredicateFilter; g: Graph @ evalPredicateFilter~ f ~g = \\
-\t1 \IF f \in \ran pfIRI \THEN evalIRIorStem~ (pfIRI \entryFor f)~ g \\
-\t1 \ELSE evalWild~ (pfWild \entryFor f)~ g
+\t1 \IF f \in \ran inclusion \THEN evalIRIorStem~ (inclusion \entryFor f)~ g \\
+\t1 \ELSE evalWild~ (exclusion \entryFor f)~ g
 \end{gendef}
 \zc{evalIRIorStem} returns all of the triples in a \zc{Graph} matching the supplied 
 \zc{IRIorStem}
@@ -330,8 +330,8 @@ matches the supplied \zc{PredicateFilter}:
    evalIRIorStem: IRIorStem \pfun Graph \pfun Graph
 \where
    \forall e: IRIorStem; g: Graph @ evalIRIorStem~ e ~g = \\
-\t1 \IF e \in \ran iosi \THEN \{t : g | iri \entryFor t.p = iosi \entryFor e \} \\
-\t1 \ELSE \{t: g | iri \entryFor t.p \in IRIstemRange~ (ioss \entryFor e) \}
+\t1 \IF e \in \ran term \THEN \{t : g | iri \entryFor t.p = term \entryFor e \} \\
+\t1 \ELSE \{t: g | iri \entryFor t.p \in IRIstemRange~ (stem \entryFor e) \}
 \end{gendef}
 \zc{evalWild} returns all of the triples in a \zc{Graph} that do \emph{not} match an entry
 in the set of \zc{IRIorStems}.
@@ -376,17 +376,17 @@ in the set of \zc{IRIorStems}.
 \zc{ObjectSpecification} specifies a set of possible values for an \zc{RDFTerm} and takes one of the following forms:
 \begin{itemize}
 \item \zc{valueType} - matches \zc{Literals} having a specified data type
-\item \zc{valueSet} - matches \zc{IRIs} or \zc{Literals} that match one or more of the expressions in the specified set
-\item \zc{valueWild} - matches any target \emph{except} those matching the (possibly empty) set of \zc{IRIstems}
-\item \zc{valueRef} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
+\item \zc{osInclusion} - matches \zc{IRIs} or \zc{Literals} that match one or more of the expressions in the specified set
+\item \zc{osExclusion} - matches any target \emph{except} those matching the (possibly empty) set of \zc{IRIstems}
+\item \zc{osShape} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
 \end{itemize}
 \begin{zed}
 MatchValue ::= mviri \ldata IRI \rdata | mviris \ldata IRIstem \rdata | \\
 \t2 mvlit \ldata RDFLiteral \rdata \\
 ObjectSpecification ::= valueType \ldata IRI \rdata | \\
-\t1 valueSet \ldata \power MatchValue \rdata | \\
-\t1 valueWild \ldata \power MatchValue \rdata | \\
-\t1 valueRef \ldata Label \rdata
+\t1 osInclusion \ldata \power MatchValue \rdata | \\
+\t1 osExclusion \ldata \power MatchValue \rdata | \\
+\t1 osShape \ldata Label \rdata
 \end{zed}
 
 
@@ -409,12 +409,12 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
   evalObjectSpecificationTriple~ec~os~n = \\
 \t1 \IF os \in \ran valueType \THEN \\
 \t2 evalValueType~(valueType \entryFor os)~n \\
-\t1 \ELSE \IF os \in \ran valueSet \THEN \\
-\t2 evalTermSet~(valueSet \entryFor os)~n \\
-\t1 \ELSE \IF os \in \ran valueWild \THEN \\
-\t2 evalTermWild~(valueWild \entryFor os)~n \\
+\t1 \ELSE \IF os \in \ran osInclusion \THEN \\
+\t2 evalInclusion~(osInclusion \entryFor os)~n \\
+\t1 \ELSE \IF os \in \ran osExclusion \THEN \\
+\t2 evalExclusion~(osExclusion \entryFor os)~n \\
 \t1 \ELSE \\
-\t2 evalTermReference~ec~(valueRef \entryFor os)~n
+\t2 evalShape~ec~(osShape \entryFor os)~n
 \end{gendef}
 
 
@@ -434,11 +434,11 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \t1 \ELSE \fail
 \end{gendef}
 
-\paragraph{evalTermSet} -- return $\pass$ if the supplied \zc{RDFTerm} is a member of \zc{MatchValue}
+\paragraph{evalInclusion} -- return $\pass$ if the supplied \zc{RDFTerm} is a member of \zc{MatchValue}
 \begin{gendef}
-   evalTermSet: \power MatchValue \pfun RDFTerm \pfun OptValidity
+   evalInclusion: \power MatchValue \pfun RDFTerm \pfun OptValidity
 \where
-   \forall mvs: \power MatchValue; n: RDFTerm @ evalTermSet~mvs~n = \\
+   \forall mvs: \power MatchValue; n: RDFTerm @ evalInclusion~mvs~n = \\
 \t1	\IF \exists mv: mvs @ \\
 \t2 ((mv \in \ran mviri \land n \in \ran iri \land (iri \entryFor n) = mviri \entryFor mv) \lor \\
 \t2  (mv \in \ran mviris \land n \in \ran iri \land  \\
@@ -449,21 +449,21 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \end{gendef}
 
 
-\paragraph{evalTermWild} -- return pass ($\pass$) if the supplied \zc{RDFTerm} is \textit{not} a member of \zc{MatchValue}.
+\paragraph{evalExclusion} -- return pass ($\pass$) if the supplied \zc{RDFTerm} is \textit{not} a member of \zc{MatchValue}.
 
 \begin{gendef}
-   evalTermWild: \power MatchValue \fun RDFTerm \fun OptValidity
+   evalExclusion: \power MatchValue \fun RDFTerm \fun OptValidity
 \where
-   \forall mvs: \power MatchValue; n: RDFTerm @ evalTermWild~mvs~n = \\
-\t1 \IF evalTermSet~ mvs~ n = \pass \THEN \fail \ELSE \pass
+   \forall mvs: \power MatchValue; n: RDFTerm @ evalExclusion~mvs~n = \\
+\t1 \IF evalInclusion~ mvs~ n = \pass \THEN \fail \ELSE \pass
 \end{gendef}
 
-\paragraph{evalTermReference} -- return $\pass$ if the subgraph of the \zc{EvalContext} graph whose subjects match the supplied \zc{RDFTerm} satisfies the \zc{ValueReference} rule.
+\paragraph{evalShape} -- return $\pass$ if the subgraph of the \zc{EvalContext} graph whose subjects match the supplied \zc{RDFTerm} satisfies the \zc{ValueReference} rule.
 
 \begin{gendef}
-   evalTermReference: EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
+   evalShape: EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
 \where
-	\forall ec: EvalContext; vr: Label; n: RDFTerm @ \\ evalTermReference~ec~vr~n = \\
+	\forall ec: EvalContext; vr: Label; n: RDFTerm @ \\ evalShape~ec~vr~n = \\
 \t1 \IF n \notin \ran literal \THEN evalRule'~ec~n~vr \\
 \t1 \ELSE \fail
 \end{gendef}
@@ -509,12 +509,12 @@ evalRevArcRule~ec~o~rar = \\
 \begin{itemize}
 \item \zc{SubjectSet} - matches \zc{IRIs} or \zc{IRIstems} that match one or more of the expressions in the specified set
 \item \zc{SubjectWild} - matches any target \emph{except} those matching the (possibly empty) set of \zc{IRIstems}
-\item \zc{subjectRef} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
+\item \zc{ssShape} - matches any target that is considered valid according the \zc{Rule} identified by \zc{Label}.
 \end{itemize}
 \begin{zed}
-SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
-\t1 ssWild \ldata \power MatchValue \rdata | \\
-\t1 subjectRef \ldata Label \rdata
+SubjectSpecification ::=  ssInclusion \ldata \power MatchValue \rdata | \\
+\t1 ssExclusion \ldata \power MatchValue \rdata | \\
+\t1 ssShape \ldata Label \rdata
 \end{zed}
 
 paragraph{evalSubjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
@@ -533,12 +533,12 @@ match the supplied \zc{SubjectSpecification}, otherwise \zc{fail} ($\fail$)
 \where
    \forall ec:EvalContext; ss: SubjectSpecification; n: RDFTerm @ \\
   evalSubjectSpecificationTriple~ec~ss~n = \\
-\t1 \IF ss \in \ran subjectSet \THEN \\
-\t2 evalTermSet~(subjectSet \entryFor ss)~n \\
-\t1 \ELSE \IF ss \in \ran ssWild \THEN \\
-\t2 evalTermWild~(ssWild \entryFor ss)~n \\
+\t1 \IF ss \in \ran ssInclusion \THEN \\
+\t2 evalInclusion~(ssInclusion \entryFor ss)~n \\
+\t1 \ELSE \IF ss \in \ran ssExclusion \THEN \\
+\t2 evalExclusion~(ssExclusion \entryFor ss)~n \\
 \t1 \ELSE \\
-\t2 evalTermReference~ec~(subjectRef \entryFor ss)~n
+\t2 evalShape~ec~(ssShape \entryFor ss)~n
 \end{gendef}
 
 \subsection{GroupRule evaluation}

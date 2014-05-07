@@ -7,7 +7,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
 <!-- 2,sections+,html --> 
 <meta name="src" content="ShExZ.tex"> 
-<meta name="date" content="2014-05-06 14:07:00"> 
+<meta name="date" content="2014-05-07 08:39:00"> 
 <link rel="stylesheet" type="text/css" href="ShExZ.css"> 
 </head><body 
 >
@@ -293,10 +293,10 @@ src="ShExZ9x.png" alt="--Schema ------------------------------------------------
 |     (r &#x2208; rangroup &#x21D2; (group &#x22C5;r).rule &#x2208; dom rules) &#x2227;
 |     (r &#x2208; ranand &#x21D2; ran(and &#x22C5;r) &#x2286; domrules) &#x2227;
 |     (r &#x2208; ranxor &#x21D2; ran (xor &#x22C5;r) &#x2286; dom rules) &#x2227;
-|     (r &#x2208; ranarc &#x2227; (arc &#x22C5;r).valueSpec &#x2208; ranvalueRef &#x21D2;
-|         (valueRef &#x22C5;(arc &#x22C5;r).valueSpec) &#x2208; dom rules) &#x2227;
-|     (r &#x2208; ranrarc &#x2227; (rarc &#x22C5;r).valueSpec &#x2208; ran subjectRef &#x21D2;
-----------(subjectRef &#x22C5;(rarc &#x22C5;r).valueSpec) &#x2208;-dom-rules)---------  " class="math-display" ></center>
+|     (r &#x2208; ranarc &#x2227; (arc &#x22C5;r).valueSpec &#x2208; ranosShape &#x21D2;
+|         (osShape &#x22C5;(arc &#x22C5;r).valueSpec) &#x2208; dom rules) &#x2227;
+|     (r &#x2208; ranrarc &#x2227; (rarc &#x22C5;r).valueSpec &#x2208; ran ssShape &#x21D2;
+----------(ssShape &#x22C5;(rarc-&#x22C5;r).valueSpec) &#x2208;-dom-rules)------------  " class="math-display" ></center>
 <!--l. 175--><p class="indent" >   While existing <span 
 class="cmti-10">ShEx </span>implementations define a rule <span 
 class="cmti-10">Label </span>as being either an <span 
@@ -550,19 +550,19 @@ class="cmti-10">PredicateFilter </span>Validation</a></h5>
 class="cmti-10">PredicateFilter </span>can be one of:
    <ul class="itemize1">
    <li class="itemize"><span 
-class="cmti-10">pfIRI  </span>- the IRI of a specific predicate or the IRIstem that defines a set of
-   predicates
+class="cmti-10">inclusion </span>- the IRI of a specific predicate or the IRIstem that defines a set
+   of predicates
    </li>
    <li class="itemize"><span 
-class="cmti-10">pfWild </span>- an expression that matches any predicate <span 
+class="cmti-10">exclusion </span>- an expression that matches any predicate <span 
 class="cmti-10">except </span>those matching
    the (possibly empty) set of <span 
 class="cmti-10">IRIorStems</span></li></ul>
 <!--l. 306--><p class="noindent" >
    <center class="math-display" >
 <img 
-src="ShExZ19x.png" alt="IRIorStem ::= iosi&#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; | ioss&#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9;
-PredicateFilter ::= pfIRI &#x27E8;&#x27E8;IRIorStem &#x27E9;&#x27E9; | pfWild&#x27E8;&#x27E8;&#x2119; IRIorStem &#x27E9;&#x27E9;
+src="ShExZ19x.png" alt="IRIorStem ::= term &#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; | stem&#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9;
+PredicateFilter ::= inclusion &#x27E8;&#x27E8;IRIorStem &#x27E9;&#x27E9; | exclusion&#x27E8;&#x27E8;&#x2119; IRIorStem &#x27E9;&#x27E9;
 " class="math-display" ></center>
 An <span 
 class="cmti-10">IRIstem </span>matches any <span 
@@ -591,8 +591,8 @@ src="ShExZ22x.png" alt="|-------------------------------------------------------
 | evalPredicateFilter : PredicateFilter&#x2192;&#x21A6; Graph&#x2192;&#x21A6; Graph
 |-----------
 | &#x2200;f : PredicateFilter;g : Graph &#x2219; evalPredicateFilterfg =
-|     iff &#x2208; ran pfIRI then evalIRIorStem (pfIRI &#x22C5;f)g
-------else-evalWild(pfWild-&#x22C5;f)g--------------------------------
+|     iff &#x2208; ran inclusion then evalIRIorStem (inclusion &#x22C5;f)g
+------else-evalWild(exclusion-&#x22C5;f)g------------------------------
 " class="math-display" ></center>
 <span 
 class="cmti-10">evalIRIorStem </span>returns all of the triples in a <span 
@@ -605,8 +605,8 @@ class="cmti-10">IRIorStem</span>
 src="ShExZ23x.png" alt="|-----------------------------------------------------------
 --evalIRIorStem  : IRIorStem &#x2192;&#x21A6; Graph&#x2192;&#x21A6; Graph
 | &#x2200;e : IRIorStem; g : Graph &#x2219; evalIRIorStemeg =
-|     ife &#x2208; ran iosi then {t : g | iri &#x22C5;t.p = iosi &#x22C5;e}
-|     else {t : g | iri &#x22C5;t.p &#x2208; IRIstemRange (ioss &#x22C5;e)}
+|     ife &#x2208; ran term then {t : g | iri &#x22C5;t.p = term &#x22C5;e}
+|     else {t : g | iri &#x22C5;t.p &#x2208; IRIstemRange (stem &#x22C5;e)}
 ------------------------------------------------------------
 " class="math-display" ></center>
 <span 
@@ -720,19 +720,19 @@ class="cmti-10">valueType </span>- matches <span
 class="cmti-10">Literals </span>having a specified data type
    </li>
    <li class="itemize"><span 
-class="cmti-10">valueSet </span>- matches <span 
-class="cmti-10">IRIs </span>or <span 
-class="cmti-10">Literals </span>that match one or more of the expressions
-   in the specified set
+class="cmti-10">osInclusion  </span>-  matches  <span 
+class="cmti-10">IRIs  </span>or  <span 
+class="cmti-10">Literals  </span>that  match  one  or  more  of  the
+   expressions in the specified set
    </li>
    <li class="itemize"><span 
-class="cmti-10">valueWild </span>- matches any target <span 
+class="cmti-10">osExclusion </span>- matches any target <span 
 class="cmti-10">except </span>those matching the (possibly empty)
    set of <span 
 class="cmti-10">IRIstems</span>
    </li>
    <li class="itemize"><span 
-class="cmti-10">valueRef  </span>- matches any target that is considered valid according the <span 
+class="cmti-10">osShape </span>- matches any target that is considered valid according the <span 
 class="cmti-10">Rule</span>
    identified by <span 
 class="cmti-10">Label</span>.</li></ul>
@@ -743,9 +743,9 @@ class="cmti-10">Label</span>.</li></ul>
 src="ShExZ26x.png" alt="MatchValue ::= mviri&#x27E8;&#x27E8;IRI &#x27E9;&#x27E9; | mviris&#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9; |
         mvlit&#x27E8;&#x27E8;RDFLiteral&#x27E9;&#x27E9;
 ObjectSpecification ::= valueType &#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; |
-    valueSet&#x27E8;&#x27E8;&#x2119; MatchValue&#x27E9;&#x27E9; |
-    valueWild&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
-    valueRef&#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
+    osInclusion&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
+    osExclusion &#x27E8;&#x27E8;&#x2119; MatchValue&#x27E9;&#x27E9; |
+    osShape&#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
 <!--l. 394--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-130004.1" id="x1-130004.1"><span 
 class="cmbx-10">evalObjectSpecification</span></a></span>
@@ -776,12 +776,12 @@ src="ShExZ28x.png" alt="|-------------------------------------------------------
 | evalObjectSpecificationTripleecosn =
 |     ifos &#x2208; ran valueType then
 |         evalValueType(valueType &#x22C5;os)n
-|     else ifos &#x2208; ran valueSet then
-|         evalTermSet(valueSet &#x22C5;os)n
-|     else ifos &#x2208; ran valueWild then
-|         evalTermWild(valueWild &#x22C5;os)n
+|     else ifos &#x2208; ran osInclusion then
+|         evalInclusion (osInclusion &#x22C5;os)n
+|     else ifos &#x2208; ran osExclusion then
+|         evalExclusion(osExclusion &#x22C5;os)n
 |     else
-|         evalTermReferenceec(valueRef &#x22C5;os)n
+|         evalShapeec(osShape &#x22C5;os)n
 ------------------------------------------------------------  " class="math-display" ></center>
 <!--l. 421--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-140004.1" id="x1-140004.1"><span 
@@ -813,7 +813,7 @@ src="ShExZ29x.png" alt="|-------------------------------------------------------
 
 <!--l. 437--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-150004.1" id="x1-150004.1"><span 
-class="cmbx-10">evalTermSet</span></a></span>
+class="cmbx-10">evalInclusion</span></a></span>
    &#8211; return <span 
 class="cmbxti-10">p</span> if the supplied <span 
 class="cmti-10">RDFTerm </span>is a member of <span 
@@ -821,9 +821,9 @@ class="cmti-10">MatchValue</span>
    <center class="math-display" >
 <img 
 src="ShExZ30x.png" alt="|-----------------------------------------------------------
-| evalTermSet : &#x2119;MatchValue &#x2192;&#x21A6;RDFTerm  &#x21A6;&#x2192; OptValidity
+| evalInclusion : &#x2119;MatchValue&#x2192;&#x21A6; RDFTerm &#x2192;&#x21A6; OptValidity
 |-----------
-| &#x2200;mvs : &#x2119; MatchValue;n : RDFTerm &#x2219; evalTermSetmvsn =
+| &#x2200;mvs : &#x2119; MatchValue;n : RDFTerm &#x2219; evalInclusionmvsn =
 |     if &#x2203;mv : mvs &#x2219;
 |         ((mv &#x2208; ranmviri &#x2227; n &#x2208; ran iri &#x2227; (iri &#x22C5;n ) = mviri &#x22C5;mv ) &#x2228;
 |         (mv  &#x2208; ranmviris &#x2227; n &#x2208; ran iri &#x2227;
@@ -833,7 +833,7 @@ src="ShExZ30x.png" alt="|-------------------------------------------------------
 ------else-f-------------------------------------------------  " class="math-display" ></center>
 <!--l. 452--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-160004.1" id="x1-160004.1"><span 
-class="cmbx-10">evalTermWild</span></a></span>
+class="cmbx-10">evalExclusion</span></a></span>
    &#8211; return pass (<span 
 class="cmbxti-10">p</span>) if the supplied <span 
 class="cmti-10">RDFTerm </span>is <span 
@@ -843,13 +843,13 @@ class="cmti-10">MatchValue</span>.
    <center class="math-display" >
 <img 
 src="ShExZ31x.png" alt="|-----------------------------------------------------------
-|-evalTermWild : &#x2119; MatchValue &#x2192; RDFTerm &#x2192; OptValidity
-| &#x2200;mvs : &#x2119; MatchValue;n : RDFTerm &#x2219; evalTermWildmvsn =
-|     ifevalTermSetmvsn  = p then f else p
+|-evalExclusion : &#x2119;MatchValue &#x2192; RDFTerm &#x2192;  OptValidity
+| &#x2200;mvs : &#x2119; MatchValue;n : RDFTerm &#x2219; evalExclusionmvsn =
+|     ifevalInclusionmvsn = p then f else p
 ------------------------------------------------------------  " class="math-display" ></center>
 <!--l. 461--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-170004.1" id="x1-170004.1"><span 
-class="cmbx-10">evalTermReference</span></a></span>
+class="cmbx-10">evalShape</span></a></span>
    &#8211; return <span 
 class="cmbxti-10">p</span> if the subgraph of the <span 
 class="cmti-10">EvalContext </span>graph whose subjects match the
@@ -860,10 +860,10 @@ class="cmti-10">ValueReference </span>rule.
    <center class="math-display" >
 <img 
 src="ShExZ32x.png" alt="|-----------------------------------------------------------
-| evalTermReference : EvalContext&#x2192;&#x21A6; Label&#x2192;&#x21A6; RDFTerm &#x2192;&#x21A6; OptValidity
+| evalShape : EvalContext&#x2192;&#x21A6; Label&#x2192;&#x21A6;RDFTerm &#x2192;&#x21A6; OptValidity
 |-----------
 | &#x2200;ec : EvalContext;vr : Label;n : RDFTerm &#x2219;
-| evalTermReferenceecvrn =
+| evalShapeecvrn =
 |     ifn &#x2215;&#x2208; ranliteral then evalRule&#x2032;ecnvr
 ------else-f-------------------------------------------------  " class="math-display" ></center>
 <!--l. 472--><p class="noindent" >
@@ -949,16 +949,16 @@ class="cmti-10">except </span>those matching the (possibly empty)
 class="cmti-10">IRIstems</span>
    </li>
    <li class="itemize"><span 
-class="cmti-10">subjectRef  </span>- matches any target that is considered valid according the <span 
+class="cmti-10">ssShape </span>- matches any target that is considered valid according the <span 
 class="cmti-10">Rule</span>
    identified by <span 
 class="cmti-10">Label</span>.</li></ul>
 <!--l. 514--><p class="noindent" >
    <center class="math-display" >
 <img 
-src="ShExZ35x.png" alt="SubjectSpecification ::= subjectSet&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
-    ssWild &#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
-    subjectRef &#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
+src="ShExZ35x.png" alt="SubjectSpecification ::= ssInclusion&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
+    ssExclusion&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
+    ssShape&#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
 
 <!--l. 520--><p class="indent" >   paragraphevalSubjectSpecification &#8211; returns <span 
 class="cmti-10">pass </span>(<span 
@@ -986,12 +986,12 @@ src="ShExZ37x.png" alt="|-------------------------------------------------------
 |-----------
 | &#x2200;ec : EvalContext;ss : SubjectSpecification;n : RDFTerm &#x2219;
 | evalSubjectSpecificationTripleecssn =
-|     ifss &#x2208; ransubjectSet then
-|         evalTermSet(subjectSet &#x22C5;ss)n
-|     else ifss &#x2208; ranssWild then
-|         evalTermWild(ssWild &#x22C5;ss)n
+|     ifss &#x2208; ranssInclusion then
+|         evalInclusion (ssInclusion &#x22C5;ss)n
+|     else ifss &#x2208; ranssExclusion then
+|         evalExclusion(ssExclusion &#x22C5;ss)n
 |     else
-----------evalTermReferenceec(subjectRef-&#x22C5;ss)n-------------------  " class="math-display" ></center>
+----------evalShapeec(ssShape &#x22C5;ss)n---------------------------  " class="math-display" ></center>
 
 <!--l. 544--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.3   </span> <a 

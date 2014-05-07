@@ -15,9 +15,9 @@
 \doTocEntry\tocsubsubsection{}{\csname a:TocLink\endcsname{1}{x1-120004.1}{QQ2-1-14}{ObjectSpecification evaluation}}{19}\relax 
 \doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-130004.1}{QQ2-1-15}{evalObjectSpecification}}{20}\relax 
 \doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-140004.1}{QQ2-1-16}{evalValueType}}{21}\relax 
-\doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-150004.1}{QQ2-1-17}{evalTermSet}}{22}\relax 
-\doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-160004.1}{QQ2-1-18}{evalTermWild}}{22}\relax 
-\doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-170004.1}{QQ2-1-19}{evalTermReference}}{23}\relax 
+\doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-150004.1}{QQ2-1-17}{evalInclusion}}{22}\relax 
+\doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-160004.1}{QQ2-1-18}{evalExclusion}}{22}\relax 
+\doTocEntry\tocparagraph{}{\csname a:TocLink\endcsname{1}{x1-170004.1}{QQ2-1-19}{evalShape}}{23}\relax 
 \doTocEntry\tocsubsection{4.2}{\csname a:TocLink\endcsname{1}{x1-180004.2}{QQ2-1-20}{RevArcRule evaluation}}{23}\relax 
 \doTocEntry\tocsubsubsection{}{\csname a:TocLink\endcsname{1}{x1-190004.2}{QQ2-1-21}{SubjectSpecification evaluation}}{25}\relax 
 \doTocEntry\tocsubsection{4.3}{\csname a:TocLink\endcsname{1}{x1-200004.3}{QQ2-1-22}{GroupRule evaluation}}{27}\relax 
