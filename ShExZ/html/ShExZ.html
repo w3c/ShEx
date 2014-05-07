@@ -7,7 +7,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
 <!-- 2,sections+,html --> 
 <meta name="src" content="ShExZ.tex"> 
-<meta name="date" content="2014-05-07 08:39:00"> 
+<meta name="date" content="2014-05-07 10:48:00"> 
 <link rel="stylesheet" type="text/css" href="ShExZ.css"> 
 </head><body 
 >
@@ -157,7 +157,7 @@ class="cmti-10">ShEx </span>language treats <span
 class="cmbx-10">IRI</span>s and <span 
 class="cmbx-10">blank nodes </span>as primitive types, so we can
 formally define them as <span 
-class="cmti-10">Z </span>free types:
+class="cmti-10">Z </span>basic types:
    <center class="math-display" >
 <img 
 src="ShExZ1x.png" alt="[IRI ,BlankNode ]  " class="math-display" ></center>
@@ -187,7 +187,7 @@ href="#XBCP47">3</a>]</span>.&#8221;</li></ul>
    </div>
 <!--l. 100--><p class="noindent" >We model this by defining <span 
 class="cmti-10">String </span>and <span 
-class="cmti-10">LanguageTag </span>as free types:
+class="cmti-10">LanguageTag </span>as basic types:
    <center class="math-display" >
 <img 
 src="ShExZ2x.png" alt="[String,LanguageTag ]
@@ -299,12 +299,13 @@ src="ShExZ9x.png" alt="--Schema ------------------------------------------------
 ----------(ssShape &#x22C5;(rarc-&#x22C5;r).valueSpec) &#x2208;-dom-rules)------------  " class="math-display" ></center>
 <!--l. 175--><p class="indent" >   While existing <span 
 class="cmti-10">ShEx </span>implementations define a rule <span 
-class="cmti-10">Label </span>as being either an <span 
-class="cmti-10">IRI </span>or
-a <span 
+class="cmti-10">Label </span>as being either
+an <span 
+class="cmti-10">IRI </span>or a <span 
 class="cmti-10">BlankNode</span>, the type of <span 
-class="cmti-10">Label </span>does not impact the evaluation semantics. For our
-purposes, we can simply define it as a separate free type:
+class="cmti-10">Label </span>does not impact the evaluation
+semantics. For our purposes, we can simply define it as a separate basic
+type:
 
    <center class="math-display" >
 <img 
@@ -1413,7 +1414,7 @@ src="ShExZ49x.png" alt="|-[A,B]-------------------------------------------------
 href="#x1-27000A.3" id="x1-27000A.3">Helper Functions</a></h4>
 <!--l. 690--><p class="noindent" ><span 
 class="cmti-10">Z </span>uses the notion of <span 
-class="cmti-10">free type definitions </span>in the form:
+class="cmti-10">Free type definitions </span>in the form:
    <center class="math-display" >
 <img 
 src="ShExZ50x.png" alt="FreeType ::= constructor&#x27E8;&#x27E8;source&#x27E9;&#x27E9;

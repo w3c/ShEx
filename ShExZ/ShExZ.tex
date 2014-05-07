@@ -81,7 +81,7 @@ The specification then defines the notion of \textbf{Triple}:
 ```... \textbf{IRI}s, \textbf{literal}s and \textbf{blank nodes} are distinct and distinguishable.''
 \end{quote} 
 
-The $ShEx$ language treats \textbf{IRI}s and \textbf{blank nodes} as primitive types, so we can formally define them as $Z$ free types:
+The $ShEx$ language treats \textbf{IRI}s and \textbf{blank nodes} as primitive types, so we can formally define them as $Z$ basic types:
 \begin{zed}
 [IRI, BlankNode]
 \end{zed}
@@ -97,7 +97,7 @@ The $ShEx$ language can express constraints on both the type and content of \tex
 \verb|http://www.w3.org/1999/02/22-rdf-syntax-ns#langString|, a non-empty language tag as defined in [BCP47]\cite{BCP47}. The language tag MUST be well-formed according to section 2.2.9 of [BCP47]\cite{BCP47}.''
 \end{itemize}
 \end{quote}
-We model this by defining $String$ and $LanguageTag$ as free types:
+We model this by defining $String$ and $LanguageTag$ as basic types:
 \begin{zed}
 [String, LanguageTag]
 \end{zed}
@@ -174,7 +174,7 @@ that is referenced within the \zc{Schema} is also itself a member of the \zc{Sch
 
 While existing $ShEx$ implementations define a rule \zc{Label} as being either an \zc{IRI} or
 a \zc{BlankNode}, the type of \zc{Label} does not impact the evaluation semantics.  For our 
-purposes, we can simply define it as a separate free type:
+purposes, we can simply define it as a separate basic type:
 \begin{zed}
 [Label]
 \end{zed}
@@ -687,7 +687,7 @@ all members in the supplied sequence
 \end{gendef}
 
 \subsection{Helper Functions}
-${Z}$ uses the notion of \textit{free type definitions} in the form: 
+${Z}$ uses the notion of \textit{Free type definitions} in the form: 
 %%unchecked
 \begin{syntax}
 FreeType ::= constructor \ldata source \rdata
