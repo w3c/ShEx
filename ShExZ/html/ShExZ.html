@@ -7,7 +7,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
 <!-- 2,sections+,html --> 
 <meta name="src" content="ShExZ.tex"> 
-<meta name="date" content="2014-05-22 11:34:00"> 
+<meta name="date" content="2014-05-22 12:05:00"> 
 <link rel="stylesheet" type="text/css" href="ShExZ.css"> 
 </head><body 
 >
@@ -270,9 +270,9 @@ class="cmti-10">Schema </span>and an RDF graph.
    <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
 href="#QQ2-1-9" id="x1-70003">Shape Expression Evaluation</a></h3>
 <!--l. 155--><p class="noindent" >A Shape Expression <span 
-class="cmti-10">Schema </span>is a collection of labeled rules where exactly one rule in
-the collection is identified as the outermost or &#8220;starting&#8221; rule. In addition, any rule
-that is referenced within the <span 
+class="cmti-10">Schema </span>is a collection of labelled shapes where exactly one shape
+in the collection is identified as the outermost or &#8220;starting&#8221; shape. In addition, any
+shape that is referenced within the <span 
 class="cmti-10">Schema </span>is also itself a member of the <span 
 class="cmti-10">Schema</span>
 Formally:
@@ -280,18 +280,18 @@ Formally:
    <center class="math-display" >
 <img 
 src="ShExZ9x.png" alt="--Schema ---------------------------------------------------
-| rules : Label &#x21A6;&#x2192; Rule
+| shapes : Label&#x2192;&#x21A6;Rule
 | start : Label
 |-----------
-| start &#x2208; dom rules
-| &#x2200;r : ranrules &#x2219;
-|     (r &#x2208; rangroup &#x21D2; (group &#x22C5;r).rule &#x2208; dom rules) &#x2227;
-|     (r &#x2208; ranand &#x21D2; ran(and &#x22C5;r) &#x2286; domrules) &#x2227;
-|     (r &#x2208; ranxor &#x21D2; ran (xor &#x22C5;r) &#x2286; dom rules) &#x2227;
-|     (r &#x2208; ranarc &#x2227; (arc &#x22C5;r).valueSpec &#x2208; ranosShape &#x21D2;
-|         (osShape &#x22C5;(arc &#x22C5;r).valueSpec) &#x2208; dom rules) &#x2227;
-|     (r &#x2208; ranrarc &#x2227; (rarc &#x22C5;r).valueSpec &#x2208; ran ssShape &#x21D2;
-----------(ssShape &#x22C5;(rarc-&#x22C5;r).valueSpec) &#x2208;-dom-rules)------------  " class="math-display" ></center>
+| start &#x2208; dom shapes
+| &#x2200;r : ranshapes &#x2219;
+|     (r &#x2208; rangroup &#x21D2; (group &#x22C5;r).rule &#x2208; dom shapes) &#x2227;
+|     (r &#x2208; ranand &#x21D2; ran(and &#x22C5;r) &#x2286; domshapes) &#x2227;
+|     (r &#x2208; ranxor &#x21D2; ran (xor &#x22C5;r) &#x2286; dom shapes) &#x2227;
+|     (r &#x2208; ranarc &#x2227; (arc &#x22C5;r).o &#x2208; ran osShape &#x21D2;
+|         (osShape &#x22C5;(arc &#x22C5;r).o ) &#x2208; dom shapes) &#x2227;
+|     (r &#x2208; ranrarc &#x2227; (rarc &#x22C5;r).s &#x2208; ran ssShape &#x21D2;
+----------(ssShape &#x22C5;(rarc-&#x22C5;r).s) &#x2208;-dom-shapes)------------------  " class="math-display" ></center>
 <!--l. 174--><p class="indent" >   While <span 
 class="cmti-10">ShEx </span>implementations define a rule <span 
 class="cmti-10">Label </span>as being either an <span 
@@ -306,41 +306,44 @@ be treated as a basic type:
 src="ShExZ10x.png" alt="[Label]  " class="math-display" ></center>
 <!--l. 180--><p class="indent" >   The validity of a given RDF <span 
 class="cmti-10">Graph </span>is determined by taking the <span 
-class="cmti-10">start Rule </span>of a
+class="cmti-10">start Label </span>of a
 <span 
 class="cmti-10">ShEx Schema </span>and a reference <span 
-class="cmti-10">IRI </span>and evaluating the validity of the <span 
-class="cmti-10">Rule </span>against the
-supplied graph.
+class="cmti-10">IRI </span>and evaluating the validity of the corresponding
+<span 
+class="cmti-10">shape </span>against the supplied graph.
 <!--l. 183--><p class="indent" >   Formally, the <span 
 class="cmti-10">evaluate </span>function takes a <span 
 class="cmti-10">Schema</span>, a <span 
 class="cmti-10">Graph </span>and a reference <span 
 class="cmti-10">IRI </span>and,
 if the <span 
-class="cmti-10">start Rule </span>in the <span 
-class="cmti-10">Schema</span>, in the context of the starting <span 
+class="cmti-10">Rule </span>associated with the <span 
+class="cmti-10">start Label </span>in the <span 
+class="cmti-10">Schema</span>, in the context
+of the starting <span 
 class="cmti-10">Schema </span>and <span 
-class="cmti-10">graph</span>,
-returns either <span 
+class="cmti-10">graph</span>, returns either <span 
 class="cmti-10">nomatch </span>(<span 
 class="cmbxti-10">z</span>) or <span 
 class="cmti-10">pass </span>(<span 
-class="cmbxti-10">p</span>) then the function returns <span 
-class="cmti-10">pass</span>. In all other
-cases, the function returns <span 
-class="cmti-10">fail </span>(<span 
+class="cmbxti-10">p</span>)
+then the function returns <span 
+class="cmti-10">pass</span>. In all other cases, the function returns <span 
+class="cmti-10">fail</span>
+(<span 
 class="cmbxti-10">f</span> ).
    <center class="math-display" >
 <img 
-src="ShExZ11x.png" alt="|-----------------------------------------------------------
+src="ShExZ11x.png" alt="------------------------------------------------------------
 | evaluate : Schema &#x2192; Graph &#x2192; IRI &#x2192; OptValidity
 |-----------
 | &#x2200;s : Schema;g : Graph;i : IRI;v : OptValidity;ec : EvalContext |
 |     ec.graph = g &#x2227; ec.schema = s &#x2219;
 | evaluatesgi =
-|     ifevalRuleec(irii)(s.ruless.start) &#x2208; {z ,p }
-------then-p else f-----------------------------------------  " class="math-display" ></center>
+|     ifevalRuleec(irii)(s.shapess.start) &#x2208; {z,p}
+|     then p else f
+------------------------------------------------------------  " class="math-display" ></center>
 <!--l. 198--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
 href="#QQ2-1-10" id="x1-80004">Rule Evaluation</a></h3>
@@ -478,7 +481,7 @@ class="cmti-10">EvalContext</span>
 src="ShExZ16x.png" alt="|-----------------------------------------------------------
 | evalRule&#x2032; : EvalContext &#x2192; RDFTerm &#x2192; Label &#x2192; OptValidity
 |-----------
---&#x2200;ec-: EvalContext;l : Label &#x2219;-l &#x2208;-domec.schema.rules--------  " class="math-display" ></center>
+--&#x2200;ec-: EvalContext;l : Label &#x2219;-l &#x2208;-domec.schema.shapes-------  " class="math-display" ></center>
 <!--l. 262--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
 href="#x1-90004.1" id="x1-90004.1">ArcRule evaluation</a></h4>
@@ -497,8 +500,8 @@ class="cmti-10">Actions</span>:
    <center class="math-display" >
 <img 
 src="ShExZ17x.png" alt="--ArcRule---------------------------------------------------
-| filter : PredicateFilter
-| valueSpec : ObjectSpecification
+| p : PredicateFilter
+| o : ObjectSpecification
 | min,max : &#x2115; [0 ..1]
 | actions : &#x2119;Action
 |-----------
@@ -532,12 +535,12 @@ class="cmti-10">actions </span>against the matching triples.</li></ol>
 src="ShExZ18x.png" alt="|-----------------------------------------------------------
 |-evalArcRule : EvalContext &#x2192; RDFTerm &#x2192; ArcRule &#x2192; OptValidity
 | &#x2200;ec : EvalContext;s : RDFTerm; ar : ArcRule;sg : Graph |
-|     sg = evalPredicateFilterar.filter(triplesForSubjectsec.graph) &#x2219;
+|     sg = evalPredicateFilterar.p(triplesForSubjectsec.graph) &#x2219;
 | evalArcRuleecsar =
 |     ifevalCardinalitysgar.minar .max &#x2044;= p
 |         then evalCardinalitysgar.minar .max
-|     else ifevalObjectSpecificationecar.valueSpecsg &#x2044;= p
-|         then evalObjectSpecificationecar.valueSpecsg
+|     else ifevalObjectSpecificationecar.osg &#x2044;= p
+|         then evalObjectSpecificationecar.osg
 |     else
 |         dispatchar.actionssgec
 ------------------------------------------------------------  " class="math-display" ></center>
@@ -559,7 +562,7 @@ class="cmti-10">IRIorStems</span></li></ul>
 <!--l. 305--><p class="noindent" >
    <center class="math-display" >
 <img 
-src="ShExZ19x.png" alt="IRIorStem ::= term &#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; | stem&#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9;
+src="ShExZ19x.png" alt="IRIorStem ::= iosIRI&#x27E8;&#x27E8;IRI &#x27E9;&#x27E9; | stem &#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9;
 PredicateFilter ::= inclusion &#x27E8;&#x27E8;IRIorStem &#x27E9;&#x27E9; | exclusion&#x27E8;&#x27E8;&#x2119; IRIorStem &#x27E9;&#x27E9;
 " class="math-display" ></center>
 An <span 
@@ -603,7 +606,7 @@ class="cmti-10">IRIorStem</span>
 src="ShExZ23x.png" alt="|-----------------------------------------------------------
 --evalIRIorStem  : IRIorStem &#x2192;&#x21A6; Graph&#x2192;&#x21A6; Graph
 | &#x2200;e : IRIorStem; g : Graph &#x2219; evalIRIorStemeg =
-|     ife &#x2208; ran term then {t : g | iri &#x22C5;t.p = term &#x22C5;e}
+|     ife &#x2208; ran iosIRI then {t : g | iri &#x22C5;t.p = iosIRI &#x22C5;e}
 |     else {t : g | iri &#x22C5;t.p &#x2208; IRIstemRange (stem &#x22C5;e)}
 ------------------------------------------------------------
 " class="math-display" ></center>
@@ -883,8 +886,8 @@ class="cmti-10">Actions</span>:
    <center class="math-display" >
 <img 
 src="ShExZ33x.png" alt="--RevArcRule------------------------------------------------
-| filter : PredicateFilter
-| valueSpec : SubjectSpecification
+| p : PredicateFilter
+| s : SubjectSpecification
 | min,max : &#x2115; [0 ..1]
 | actions : &#x2119;Action
 |-----------
@@ -918,12 +921,12 @@ class="cmti-10">actions </span>against the matching triples.</li></ol>
 src="ShExZ34x.png" alt="|-----------------------------------------------------------
 |-evalRevArcRule : EvalContext &#x2192; RDFTerm &#x2192; RevArcRule &#x2192; OptValidity
 | &#x2200;ec : EvalContext;o : RDFTerm; rar : RevArcRule;og : Graph |
-|     og = evalPredicateFilterrar.filter(triplesForObjectoec.graph) &#x2219;
+|     og = evalPredicateFilterrar.p(triplesForObjectoec.graph) &#x2219;
 | evalRevArcRuleecorar =
 |     ifevalCardinalityograr.minrar.max &#x2044;= p
 |         then evalCardinalityograr.minrar.max
-|     else ifevalSubjectSpecificationecrar.valueSpecog &#x2044;= p
-|         then evalSubjectSpecificationecrar.valueSpecog
+|     else ifevalSubjectSpecificationecrar.sog &#x2044;= p
+|         then evalSubjectSpecificationecrar.sog
 |     else
 |         dispatchrar.actionsogec
 ------------------------------------------------------------  " class="math-display" ></center>
