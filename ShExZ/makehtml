@@ -1,6 +1,7 @@
 mkdir -p html 
 rm html/*
-"/usr/texbin/htlatex" "/Users/mrf7578/git/w3c/ShEx/ShExZ/ShExZ.tex" "css,2,sections+" " " " " -dhtml -interaction=nonstopmode
+# htlatex filename "text4ht.sty" "text4ht postprocessor" "t4ht postprocessor" "LaTeX compiler"
+/usr/texbin/htlatex /Users/mrf7578/git/w3c/ShEx/ShExZ/ShExZ.tex "css,2,sections+" " " " " "-interaction=nonstopmode"
 mv *.png html
 mv *.4* html
 mv *.html html

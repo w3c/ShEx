@@ -63,13 +63,12 @@ The Shape Expressions Language ($ShEx$) is used to specify formal constraints on
 Information about the use, grammar and syntax of $ShEx$ can be found at \verb#http://www.w3.org/2013/ShEx#. The purpose of this document is to describe the formal \textit{semantics} of the $ShEx$ language using the $Z$ specification language.  We begin with a formal specification of the characteristics of an \textit{RDF Graph} that are referenced by $ShEx$.
 
 \section{The RDF Data Model}
-Using the formal definitions in \textit{RDF 1.1 Concepts and Abstract Syntax}\cite{RDF11}, we begin with:
+Starting with the definitions in \textit{RDF 1.1 Concepts and Abstract Syntax}\cite{RDF11}:
 \begin{quote}``An \textbf{RDF graph} is a set of \textbf{RDF Triples}''\end{quote}
 Formally:
 \begin{zed}
 Graph == \power Triple
 \end{zed}
-The specification then defines the notion of \textbf{Triple}:
 \begin{quote}``An \textbf{RDF triple} consists of three components:
 \begin{itemize}
 \item the \textit{subject}, which is an \textbf{IRI} or a \textbf{blank node}
@@ -81,12 +80,12 @@ The specification then defines the notion of \textbf{Triple}:
 ```... \textbf{IRI}s, \textbf{literal}s and \textbf{blank nodes} are distinct and distinguishable.''
 \end{quote} 
 
-The $ShEx$ language treats \textbf{IRI}s and \textbf{blank nodes} as primitive types, so we can formally define them as $Z$ basic types:
+The $ShEx$ language treats \textbf{IRI}s and \textbf{blank nodes} as primitive types, which are reflected as the $Z$ basic types:
 \begin{zed}
 [IRI, BlankNode]
 \end{zed}
 
-The $ShEx$ language can express constraints on both the type and content of \textbf{literals}, so we need to model these separately.  Starting with:
+The $ShEx$ language can express constraints on both the type and content of RDF literals:
 
 \begin{quote}
 ``A \textbf{literal} in an RDF graph consists of two or three elements:
@@ -97,18 +96,18 @@ The $ShEx$ language can express constraints on both the type and content of \tex
 \verb|http://www.w3.org/1999/02/22-rdf-syntax-ns#langString|, a non-empty language tag as defined in [BCP47]\cite{BCP47}. The language tag MUST be well-formed according to section 2.2.9 of [BCP47]\cite{BCP47}.''
 \end{itemize}
 \end{quote}
-We model this by defining $String$ and $LanguageTag$ as basic types:
+This can be modelled by $String$ and $LanguageTag$ as basic types:
 \begin{zed}
 [String, LanguageTag]
 \end{zed}
-And then use them in the definition the two flavors of $RDFLiteral$,  plain literal and typed literal::
+and using them in the definition the two flavours of $RDFLiteral$,  plain literal and typed literal::
 \begin{zed}
 TypedLiteral \defs [lexicalForm:String ; dataType : IRI | dataType \neq XSD\_String] \\
 PlainLiteral \defs [lexicalForm:String ; dataType : IRI; langTag : LanguageTag | \\
 \t3 dataType = XSD\_String] \\
 RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata \\ 
 \end{zed}
-The RDF 1.1 specification the defines $RDFTerm$ as:
+$RDFTerm$ is defined as:
 \begin{quote}
 ``\textbf{IRI}s, \textbf{literal}s and \textbf{blank nodes} are collectively known as \textbf{RDF terms}
 \end{quote}
@@ -116,7 +115,7 @@ The RDF 1.1 specification the defines $RDFTerm$ as:
 \begin{zed}
 RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ldata BlankNode \rdata
 \end{zed}
-We are now in the position to complete the definition of $Triple$ as a tuple consisting of three constrained $RDFTerm$s:
+The definition of RDF $Triple$ is modelled as a tuple consisting of three constrained $RDFTerm$s:
 \begin{schema}{Triple}
    s,p,o : RDFTerm
 \where
@@ -126,7 +125,7 @@ We are now in the position to complete the definition of $Triple$ as a tuple con
 \end{schema}
 \subsection{RDF Access Functions}
 
-The $ShEx$ language uses the following functions:
+The $ShEx$ language requires the following basic functions:
 
 \subsubsection{\zc{triplesForSubject}} -- return set of triples in a graph triples whose subject is a given \zc{RDFTerm}
 \begin{gendef}
@@ -172,9 +171,8 @@ that is referenced within the \zc{Schema} is also itself a member of the \zc{Sch
 \end{schema}
 
 
-While existing $ShEx$ implementations define a rule \zc{Label} as being either an \zc{IRI} or
-a \zc{BlankNode}, the type of \zc{Label} does not impact the evaluation semantics.  For our 
-purposes, we can simply define it as a separate basic type:
+While $ShEx$ implementations define a rule \zc{Label} as being either an \zc{IRI} or
+a \zc{BlankNode}, the type of \zc{Label} does not impact the evaluation semantics, allowing it to be treated as a basic type:
 \begin{zed}
 [Label]
 \end{zed}
@@ -250,10 +248,11 @@ Rule ::= arc \ldata ArcRule \rdata | \\
 \t1 \ELSE \\
 \t2 evalXorRule~ec~i~(xor \entryFor r)
 \end{gendef}
-The function below de-references the supplied \zc{Label} and
-invoke \zc{evalRule} with the result.  This is not explicitly represented because
-the $Z$ specification language does not allow cyclic dependencies. Note that this function
+The $evalRule'$ function  de-references the supplied \zc{Label} and
+invokes \zc{evalRule} with the result.  This is not explicitly represented because
+the $Z$ specification language does not allow cyclic dependencies. This function
 is undefined if \zc{Label} is not in \zc{EvalContext}
+
 \begin{gendef}
    evalRule': EvalContext \fun RDFTerm \fun Label \fun OptValidity
 \where
@@ -524,7 +523,7 @@ match the supplied \zc{SubjectSpecification}, otherwise \zc{fail} ($\fail$)
 \t1 OptValidity
 \where
    \forall ec: EvalContext; ss: SubjectSpecification; g: Graph @ \\ evalSubjectSpecification~ec~ss~g = \\
-\t1 \IF \forall t: g @ evalSubjectSpecificationTriple~ec~ss~t.o = \pass \THEN \pass \\
+\t1 \IF \forall t: g @ evalSubjectSpecificationTriple~ec~ss~t.s = \pass \THEN \pass \\
 \t1 \ELSE \fail
 \end{gendef}
 \begin{gendef}

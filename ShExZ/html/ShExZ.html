@@ -7,7 +7,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
 <!-- 2,sections+,html --> 
 <meta name="src" content="ShExZ.tex"> 
-<meta name="date" content="2014-05-07 10:48:00"> 
+<meta name="date" content="2014-05-22 11:34:00"> 
 <link rel="stylesheet" type="text/css" href="ShExZ.css"> 
 </head><body 
 >
@@ -111,10 +111,9 @@ class="cmti-10">ShEx</span>.
 <!--l. 65--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
 href="#QQ2-1-4" id="x1-20002">The RDF Data Model</a></h3>
-<!--l. 66--><p class="noindent" >Using the formal definitions in <span 
+<!--l. 66--><p class="noindent" >Starting with the definitions in <span 
 class="cmti-10">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<a 
-href="#XRDF11">1</a>]</span>, we begin
-with:
+href="#XRDF11">1</a>]</span>:
    <div class="quote">
    <!--l. 67--><p class="noindent" >&#8220;An <span 
 class="cmbx-10">RDF graph </span>is a set of <span 
@@ -122,14 +121,11 @@ class="cmbx-10">RDF Triples</span>&#8221;</div>
 <!--l. 68--><p class="noindent" >Formally:
    <center class="math-display" >
 <img 
-src="ShExZ0x.png" alt="Graph == &#x2119; Triple
-" class="math-display" ></center>
-The specification then defines the notion of <span 
-class="cmbx-10">Triple</span>:
-
+src="ShExZ0x.png" alt="Graph == &#x2119; Triple  " class="math-display" ></center>
    <div class="quote">
-   <!--l. 73--><p class="noindent" >&#8220;An <span 
+   <!--l. 72--><p class="noindent" >&#8220;An <span 
 class="cmbx-10">RDF triple </span>consists of three components:
+
    <ul class="itemize1">
    <li class="itemize">the <span 
 class="cmti-10">subject</span>, which is an <span 
@@ -146,28 +142,27 @@ class="cmbx-10">IRI</span>, a <span
 class="cmbx-10">literal </span>or a <span 
 class="cmbx-10">blank node</span>&#8221;</li></ul>
    </div>
-<!--l. 80--><p class="noindent" >
+<!--l. 79--><p class="noindent" >
    <div class="quote">
-   <!--l. 81--><p class="noindent" >&#8220;&#8216;... <span 
+   <!--l. 80--><p class="noindent" >&#8220;&#8216;... <span 
 class="cmbx-10">IRI</span>s, <span 
 class="cmbx-10">literal</span>s and <span 
 class="cmbx-10">blank nodes </span>are distinct and distinguishable.&#8221;</div>
-<!--l. 84--><p class="indent" >   The <span 
+<!--l. 83--><p class="indent" >   The <span 
 class="cmti-10">ShEx </span>language treats <span 
 class="cmbx-10">IRI</span>s and <span 
-class="cmbx-10">blank nodes </span>as primitive types, so we can
-formally define them as <span 
+class="cmbx-10">blank nodes </span>as primitive types, which are
+reflected as the <span 
 class="cmti-10">Z </span>basic types:
    <center class="math-display" >
 <img 
 src="ShExZ1x.png" alt="[IRI ,BlankNode ]  " class="math-display" ></center>
-<!--l. 89--><p class="indent" >   The <span 
-class="cmti-10">ShEx </span>language can express constraints on both the type and content of
-<span 
-class="cmbx-10">literals</span>, so we need to model these separately. Starting with:
-<!--l. 91--><p class="indent" >
+<!--l. 88--><p class="indent" >   The <span 
+class="cmti-10">ShEx </span>language can express constraints on both the type and content of RDF
+literals:
+<!--l. 90--><p class="indent" >
    <div class="quote">
-   <!--l. 92--><p class="noindent" >&#8220;A <span 
+   <!--l. 91--><p class="noindent" >&#8220;A <span 
 class="cmbx-10">literal </span>in an RDF graph consists of two or three elements:
    <ul class="itemize1">
    <li class="itemize">a <span 
@@ -183,16 +178,16 @@ class="cmtt-10">http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</span></sp
 href="#XBCP47">3</a>]</span>. The language tag
    MUST be well-formed according to section 2.2.9 of [BCP47]<span class="cite">[<a 
 href="#XBCP47">3</a>]</span>.&#8221;</li></ul>
-
    </div>
-<!--l. 100--><p class="noindent" >We model this by defining <span 
+
+<!--l. 99--><p class="noindent" >This can be modelled by <span 
 class="cmti-10">String </span>and <span 
 class="cmti-10">LanguageTag </span>as basic types:
    <center class="math-display" >
 <img 
 src="ShExZ2x.png" alt="[String,LanguageTag ]
 " class="math-display" ></center>
-And then use them in the definition the two flavors of <span 
+and using them in the definition the two flavours of <span 
 class="cmti-10">RDFLiteral</span>, plain literal and
 typed literal::
    <center class="math-display" >
@@ -202,22 +197,22 @@ PlainLiteral ^= [lexicalForm : String;dataType : IRI ;langTag : LanguageTag |
            dataType = XSD -String]
 RDFLiteral ::= pl&#x27E8;&#x27E8;PlainLiteral&#x27E9;&#x27E9; | tl&#x27E8;&#x27E8;TypedLiteral&#x27E9;&#x27E9;
 " class="math-display" ></center>
-The RDF 1.1 specification the defines <span 
-class="cmti-10">RDFTerm </span>as:
+<span 
+class="cmti-10">RDFTerm </span>is defined as:
    <div class="quote">
-   <!--l. 113--><p class="noindent" >&#8220;<span 
+   <!--l. 112--><p class="noindent" >&#8220;<span 
 class="cmbx-10">IRI</span>s, <span 
 class="cmbx-10">literal</span>s and <span 
 class="cmbx-10">blank nodes </span>are collectively known as <span 
 class="cmbx-10">RDF terms</span></div>
-<!--l. 116--><p class="indent" >
+<!--l. 115--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ4x.png" alt="RDFTerm  ::= iri&#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; | literal&#x27E8;&#x27E8;RDFLiteral&#x27E9;&#x27E9; | bnode&#x27E8;&#x27E8;BlankNode &#x27E9;&#x27E9;
 " class="math-display" ></center>
-We are now in the position to complete the definition of <span 
-class="cmti-10">Triple </span>as a tuple consisting of
-three constrained <span 
+The definition of RDF <span 
+class="cmti-10">Triple </span>is modelled as a tuple consisting of three constrained
+<span 
 class="cmti-10">RDFTerm</span>s:
    <center class="math-display" >
 <img 
@@ -229,12 +224,12 @@ src="ShExZ5x.png" alt="--Triple-------------------------------------------------
 --iri-&#x22C5;o &#x2208;-IRI-&#x2228; bnode-&#x22C5;o &#x2208;-BlankNode-&#x2228; literal &#x22C5;o &#x2208;-RDFLiteral  " class="math-display" ></center>
    <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
 href="#x1-30002.1" id="x1-30002.1">RDF Access Functions</a></h4>
-<!--l. 129--><p class="noindent" >The <span 
-class="cmti-10">ShEx </span>language uses the following functions:
+<!--l. 128--><p class="noindent" >The <span 
+class="cmti-10">ShEx </span>language requires the following basic functions:
    <h5 class="subsubsectionHead"><a 
 href="#x1-40002.1" id="x1-40002.1"><span 
 class="cmti-10">triplesForSubject</span></a></h5>
-<!--l. 131--><p class="noindent" >&#8211; return set of triples in a graph triples whose subject is a given <span 
+<!--l. 130--><p class="noindent" >&#8211; return set of triples in a graph triples whose subject is a given <span 
 class="cmti-10">RDFTerm</span>
    <center class="math-display" >
 <img 
@@ -245,7 +240,7 @@ src="ShExZ6x.png" alt="|--------------------------------------------------------
    <h5 class="subsubsectionHead"><a 
 href="#x1-50002.1" id="x1-50002.1"><span 
 class="cmti-10">triplesForObject</span></a></h5>
-<!--l. 138--><p class="noindent" >&#8211; return set of triples in a graph triples whose object is a given <span 
+<!--l. 137--><p class="noindent" >&#8211; return set of triples in a graph triples whose object is a given <span 
 class="cmti-10">RDFTerm</span>
    <center class="math-display" >
 <img 
@@ -253,17 +248,17 @@ src="ShExZ7x.png" alt="|--------------------------------------------------------
 |-triplesForObject : RDFTerm &#x2192; Graph &#x2192; Graph
 | &#x2200;obj : RDFTerm; g : Graph &#x2219; triplesForObjectobjg = {t : g | t.o = obj}
 ------------------------------------------------------------ " class="math-display" ></center>
-<!--l. 145--><p class="noindent" >
+<!--l. 144--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
 href="#x1-60002.2" id="x1-60002.2">Well Known URIs</a></h4>
-<!--l. 147--><p class="noindent" >The following URI&#8217;s are referenced explicitly in the <span 
+<!--l. 146--><p class="noindent" >The following URI&#8217;s are referenced explicitly in the <span 
 class="cmti-10">ShEx </span>implementation:
-<!--l. 149--><p class="indent" >
+<!--l. 148--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ8x.png" alt="| XSD -String,RDF -Resource : IRI  " class="math-display" ></center>
 
-<!--l. 153--><p class="indent" >   This completes the formal definition of <span 
+<!--l. 152--><p class="indent" >   This completes the formal definition of <span 
 class="cmti-10">Graph</span>, <span 
 class="cmti-10">Triple</span>, <span 
 class="cmti-10">RDFTerm </span>and their
@@ -271,17 +266,17 @@ components, which we can now use to describe the relationship between an <span
 class="cmti-10">ShEx</span>
 <span 
 class="cmti-10">Schema </span>and an RDF graph.
-<!--l. 155--><p class="noindent" >
+<!--l. 154--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
 href="#QQ2-1-9" id="x1-70003">Shape Expression Evaluation</a></h3>
-<!--l. 156--><p class="noindent" >A Shape Expression <span 
+<!--l. 155--><p class="noindent" >A Shape Expression <span 
 class="cmti-10">Schema </span>is a collection of labeled rules where exactly one rule in
 the collection is identified as the outermost or &#8220;starting&#8221; rule. In addition, any rule
 that is referenced within the <span 
 class="cmti-10">Schema </span>is also itself a member of the <span 
 class="cmti-10">Schema</span>
 Formally:
-<!--l. 160--><p class="indent" >
+<!--l. 159--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ9x.png" alt="--Schema ---------------------------------------------------
@@ -297,20 +292,19 @@ src="ShExZ9x.png" alt="--Schema ------------------------------------------------
 |         (osShape &#x22C5;(arc &#x22C5;r).valueSpec) &#x2208; dom rules) &#x2227;
 |     (r &#x2208; ranrarc &#x2227; (rarc &#x22C5;r).valueSpec &#x2208; ran ssShape &#x21D2;
 ----------(ssShape &#x22C5;(rarc-&#x22C5;r).valueSpec) &#x2208;-dom-rules)------------  " class="math-display" ></center>
-<!--l. 175--><p class="indent" >   While existing <span 
+<!--l. 174--><p class="indent" >   While <span 
 class="cmti-10">ShEx </span>implementations define a rule <span 
-class="cmti-10">Label </span>as being either
-an <span 
-class="cmti-10">IRI </span>or a <span 
+class="cmti-10">Label </span>as being either an <span 
+class="cmti-10">IRI </span>or a
+<span 
 class="cmti-10">BlankNode</span>, the type of <span 
-class="cmti-10">Label </span>does not impact the evaluation
-semantics. For our purposes, we can simply define it as a separate basic
-type:
+class="cmti-10">Label </span>does not impact the evaluation semantics, allowing it to
+be treated as a basic type:
 
    <center class="math-display" >
 <img 
 src="ShExZ10x.png" alt="[Label]  " class="math-display" ></center>
-<!--l. 182--><p class="indent" >   The validity of a given RDF <span 
+<!--l. 180--><p class="indent" >   The validity of a given RDF <span 
 class="cmti-10">Graph </span>is determined by taking the <span 
 class="cmti-10">start Rule </span>of a
 <span 
@@ -318,7 +312,7 @@ class="cmti-10">ShEx Schema </span>and a reference <span
 class="cmti-10">IRI </span>and evaluating the validity of the <span 
 class="cmti-10">Rule </span>against the
 supplied graph.
-<!--l. 185--><p class="indent" >   Formally, the <span 
+<!--l. 183--><p class="indent" >   Formally, the <span 
 class="cmti-10">evaluate </span>function takes a <span 
 class="cmti-10">Schema</span>, a <span 
 class="cmti-10">Graph </span>and a reference <span 
@@ -347,10 +341,10 @@ src="ShExZ11x.png" alt="|-------------------------------------------------------
 | evaluatesgi =
 |     ifevalRuleec(irii)(s.ruless.start) &#x2208; {z ,p }
 ------then-p else f-----------------------------------------  " class="math-display" ></center>
-<!--l. 200--><p class="noindent" >
+<!--l. 198--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
 href="#QQ2-1-10" id="x1-80004">Rule Evaluation</a></h3>
-<!--l. 201--><p class="noindent" >A <span 
+<!--l. 199--><p class="noindent" >A <span 
 class="cmti-10">ShEx Rule </span>is a set of constraints that can be evaluated against a reference
 <span 
 class="cmti-10">RDFTerm</span> in the context of a given <span 
@@ -360,7 +354,7 @@ class="cmti-10">Graph</span>:
    <center class="math-display" >
 <img 
 src="ShExZ12x.png" alt="EvalContext ^= [schema : Schema;graph : Graph]  " class="math-display" ></center>
-<!--l. 208--><p class="indent" >   Formally, the <span 
+<!--l. 206--><p class="indent" >   Formally, the <span 
 class="cmti-10">evalRule </span>function takes an <span 
 class="cmti-10">EvalContext</span>, a reference <span 
 class="cmti-10">RDFTerm </span>and a
@@ -401,7 +395,7 @@ class="cmmi-10">&#x03B5;</span><span
 class="cmbx-10">) </span>- an <span 
 class="cmti-10">XorRule </span>was evaluated and two or more components passed
    the evaluation.</li></ul>
-<!--l. 216--><p class="noindent" >
+<!--l. 214--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ13x.png" alt="OptValidity ::= p | f | z | &#x2205; | &#x03B5;
@@ -442,7 +436,7 @@ class="cmti-10">Rules</span>, exactly one of which must pass when
    evaluated against the supplied <span 
 class="cmti-10">Graph </span>and <span 
 class="cmti-10">EvalContext</span></li></ul>
-<!--l. 231--><p class="noindent" >
+<!--l. 229--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ14x.png" alt="Rule ::= arc&#x27E8;&#x27E8;ArcRule&#x27E9;&#x27E9; |
@@ -467,25 +461,28 @@ src="ShExZ15x.png" alt="|-------------------------------------------------------
 |         evalXorRuleeci(xor &#x22C5;r)
 ------------------------------------------------------------
 " class="math-display" ></center>
-The function below de-references the supplied <span 
-class="cmti-10">Label </span>and invoke <span 
+The <span 
+class="cmti-10">evalRule</span><span 
+class="cmsy-10">&#x2032; </span>function de-references the supplied <span 
+class="cmti-10">Label </span>and invokes <span 
 class="cmti-10">evalRule </span>with the
 result. This is not explicitly represented because the <span 
-class="cmti-10">Z </span>specification language does not
-allow cyclic dependencies. Note that this function is undefined if <span 
+class="cmti-10">Z </span>specification language does
+not allow cyclic dependencies. This function is undefined if <span 
 class="cmti-10">Label </span>is not in
 <span 
 class="cmti-10">EvalContext</span>
-<center class="math-display" >
+<!--l. 257--><p class="indent" >
+   <center class="math-display" >
 <img 
-src="ShExZ16x.png" alt="|--------&#x2032;--------------------------------------------------
-|-evalRule-: EvalContext &#x2192; RDFTerm &#x2192; Label &#x2192; OptValidity
-| &#x2200;ec : EvalContext;l : Label &#x2219; l &#x2208; domec.schema.rules
-------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 263--><p class="noindent" >
+src="ShExZ16x.png" alt="|-----------------------------------------------------------
+| evalRule&#x2032; : EvalContext &#x2192; RDFTerm &#x2192; Label &#x2192; OptValidity
+|-----------
+--&#x2200;ec-: EvalContext;l : Label &#x2219;-l &#x2208;-domec.schema.rules--------  " class="math-display" ></center>
+<!--l. 262--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
 href="#x1-90004.1" id="x1-90004.1">ArcRule evaluation</a></h4>
-<!--l. 264--><p class="noindent" >The <span 
+<!--l. 263--><p class="noindent" >The <span 
 class="cmti-10">ArcRule </span>is used to select the subset of the graph having a given predicate or
 predicates and to determine whether the cardinality and/or &#8220;type&#8221; of this subset
 matches a supplied criteria. The rule itself consists of a <span 
@@ -529,7 +526,7 @@ class="cmbxti-10">f</span> ).
    <li 
   class="enumerate" id="x1-9008x4">Return the result of evaluating <span 
 class="cmti-10">actions </span>against the matching triples.</li></ol>
-<!--l. 285--><p class="noindent" >
+<!--l. 284--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ18x.png" alt="|-----------------------------------------------------------
@@ -547,7 +544,7 @@ src="ShExZ18x.png" alt="|-------------------------------------------------------
    <h5 class="subsubsectionHead"><a 
 href="#x1-100004.1" id="x1-100004.1"><span 
 class="cmti-10">PredicateFilter </span>Validation</a></h5>
-<!--l. 300--><p class="noindent" >A <span 
+<!--l. 299--><p class="noindent" >A <span 
 class="cmti-10">PredicateFilter </span>can be one of:
    <ul class="itemize1">
    <li class="itemize"><span 
@@ -559,7 +556,7 @@ class="cmti-10">exclusion </span>- an expression that matches any predicate <spa
 class="cmti-10">except </span>those matching
    the (possibly empty) set of <span 
 class="cmti-10">IRIorStems</span></li></ul>
-<!--l. 306--><p class="noindent" >
+<!--l. 305--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ19x.png" alt="IRIorStem ::= term &#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; | stem&#x27E8;&#x27E8;IRIstem &#x27E9;&#x27E9;
@@ -626,7 +623,7 @@ src="ShExZ24x.png" alt="|-------------------------------------------------------
 ------------------------------------------------------------ " class="math-display" ></center>
    <h5 class="subsubsectionHead"><a 
 href="#x1-110004.1" id="x1-110004.1">evalCardinality</a></h5>
-<!--l. 345--><p class="noindent" >&#8211; evaluates the cardinality the supplied graph. Rules:
+<!--l. 344--><p class="noindent" >&#8211; evaluates the cardinality the supplied graph. Rules:
    <div class="tabular"> <table id="TBL-1" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
 ><colgroup id="TBL-1-1g"><col 
@@ -693,7 +690,7 @@ class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
  style="vertical-align:baseline;" id="TBL-1-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-1"  
 class="td11">             </td> </tr></table></div><br 
 class="newline" />
-<!--l. 361--><p class="indent" >
+<!--l. 360--><p class="indent" >
 
    <center class="math-display" >
 <img 
@@ -711,7 +708,7 @@ src="ShExZ25x.png" alt="|-------------------------------------------------------
 ------else-p-------------------------------------------------  " class="math-display" ></center>
    <h5 class="subsubsectionHead"><a 
 href="#x1-120004.1" id="x1-120004.1">ObjectSpecification evaluation</a></h5>
-<!--l. 376--><p class="noindent" ><span 
+<!--l. 375--><p class="noindent" ><span 
 class="cmti-10">ObjectSpecification </span>specifies a set of possible values for an <span 
 class="cmti-10">RDFTerm </span>and takes one of
 the following forms:
@@ -737,7 +734,7 @@ class="cmti-10">osShape </span>- matches any target that is considered valid acc
 class="cmti-10">Rule</span>
    identified by <span 
 class="cmti-10">Label</span>.</li></ul>
-<!--l. 383--><p class="noindent" >
+<!--l. 382--><p class="noindent" >
    <center class="math-display" >
 
 <img 
@@ -747,7 +744,7 @@ ObjectSpecification ::= valueType &#x27E8;&#x27E8;IRI&#x27E9;&#x27E9; |
     osInclusion&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
     osExclusion &#x27E8;&#x27E8;&#x2119; MatchValue&#x27E9;&#x27E9; |
     osShape&#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
-<!--l. 394--><p class="noindent" ><span class="paragraphHead"><a 
+<!--l. 393--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-130004.1" id="x1-130004.1"><span 
 class="cmbx-10">evalObjectSpecification</span></a></span>
    &#8211; returns <span 
@@ -784,7 +781,7 @@ src="ShExZ28x.png" alt="|-------------------------------------------------------
 |     else
 |         evalShapeec(osShape &#x22C5;os)n
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 421--><p class="noindent" ><span class="paragraphHead"><a 
+<!--l. 420--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-140004.1" id="x1-140004.1"><span 
 class="cmbx-10">evalValueType</span></a></span>
    &#8211; returns pass if the supplied <span 
@@ -799,7 +796,7 @@ class="cmti-10">IRI </span>and <span
 class="cmti-10">ValueType </span>is type <span 
 class="cmti-10">RDF</span>_<span 
 class="cmti-10">Literal</span></li></ul>
-<!--l. 427--><p class="noindent" >
+<!--l. 426--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ29x.png" alt="|-----------------------------------------------------------
@@ -812,7 +809,7 @@ src="ShExZ29x.png" alt="|-------------------------------------------------------
 |     else f
 ------------------------------------------------------------  " class="math-display" ></center>
 
-<!--l. 437--><p class="noindent" ><span class="paragraphHead"><a 
+<!--l. 436--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-150004.1" id="x1-150004.1"><span 
 class="cmbx-10">evalInclusion</span></a></span>
    &#8211; return <span 
@@ -832,7 +829,7 @@ src="ShExZ30x.png" alt="|-------------------------------------------------------
 |         (n &#x2208; ranliteral &#x2227; mvlit &#x22C5;mv = literal &#x22C5;n ))
 |     then p
 ------else-f-------------------------------------------------  " class="math-display" ></center>
-<!--l. 452--><p class="noindent" ><span class="paragraphHead"><a 
+<!--l. 451--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-160004.1" id="x1-160004.1"><span 
 class="cmbx-10">evalExclusion</span></a></span>
    &#8211; return pass (<span 
@@ -840,7 +837,7 @@ class="cmbxti-10">p</span>) if the supplied <span
 class="cmti-10">RDFTerm </span>is <span 
 class="cmti-10">not </span>a member of <span 
 class="cmti-10">MatchValue</span>.
-<!--l. 455--><p class="indent" >
+<!--l. 454--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ31x.png" alt="|-----------------------------------------------------------
@@ -848,7 +845,7 @@ src="ShExZ31x.png" alt="|-------------------------------------------------------
 | &#x2200;mvs : &#x2119; MatchValue;n : RDFTerm &#x2219; evalExclusionmvsn =
 |     ifevalInclusionmvsn = p then f else p
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 461--><p class="noindent" ><span class="paragraphHead"><a 
+<!--l. 460--><p class="noindent" ><span class="paragraphHead"><a 
 href="#x1-170004.1" id="x1-170004.1"><span 
 class="cmbx-10">evalShape</span></a></span>
    &#8211; return <span 
@@ -857,7 +854,7 @@ class="cmti-10">EvalContext </span>graph whose subjects match the
 supplied <span 
 class="cmti-10">RDFTerm </span>satisfies the <span 
 class="cmti-10">ValueReference </span>rule.
-<!--l. 464--><p class="indent" >
+<!--l. 463--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ32x.png" alt="|-----------------------------------------------------------
@@ -867,10 +864,10 @@ src="ShExZ32x.png" alt="|-------------------------------------------------------
 | evalShapeecvrn =
 |     ifn &#x2215;&#x2208; ranliteral then evalRule&#x2032;ecnvr
 ------else-f-------------------------------------------------  " class="math-display" ></center>
-<!--l. 472--><p class="noindent" >
+<!--l. 471--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.2   </span> <a 
 href="#x1-180004.2" id="x1-180004.2">RevArcRule evaluation</a></h4>
-<!--l. 473--><p class="noindent" >The <span 
+<!--l. 472--><p class="noindent" >The <span 
 class="cmti-10">RevArcRule </span>is used to select the subset of the graph having a given
 predicate or predicates and to determine whether the cardinality and/or
 &#8220;type&#8221; of this subset matches a supplied criteria. The rule itself consists of a
@@ -915,7 +912,7 @@ class="cmbxti-10">f</span> ).
    <li 
   class="enumerate" id="x1-18008x4">Return the result of evaluating <span 
 class="cmti-10">actions </span>against the matching triples.</li></ol>
-<!--l. 494--><p class="noindent" >
+<!--l. 493--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ34x.png" alt="|-----------------------------------------------------------
@@ -932,7 +929,7 @@ src="ShExZ34x.png" alt="|-------------------------------------------------------
 ------------------------------------------------------------  " class="math-display" ></center>
    <h5 class="subsubsectionHead"><a 
 href="#x1-190004.2" id="x1-190004.2">SubjectSpecification evaluation</a></h5>
-<!--l. 508--><p class="noindent" ><span 
+<!--l. 507--><p class="noindent" ><span 
 class="cmti-10">SubjectSpecification </span>specifies a set of possible values for an <span 
 class="cmti-10">RDFTerm </span>and takes one
 of the following forms:
@@ -954,14 +951,14 @@ class="cmti-10">ssShape </span>- matches any target that is considered valid acc
 class="cmti-10">Rule</span>
    identified by <span 
 class="cmti-10">Label</span>.</li></ul>
-<!--l. 514--><p class="noindent" >
+<!--l. 513--><p class="noindent" >
    <center class="math-display" >
 <img 
 src="ShExZ35x.png" alt="SubjectSpecification ::= ssInclusion&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
     ssExclusion&#x27E8;&#x27E8;&#x2119;MatchValue&#x27E9;&#x27E9; |
     ssShape&#x27E8;&#x27E8;Label&#x27E9;&#x27E9; " class="math-display" ></center>
 
-<!--l. 520--><p class="indent" >   paragraphevalSubjectSpecification &#8211; returns <span 
+<!--l. 519--><p class="indent" >   paragraphevalSubjectSpecification &#8211; returns <span 
 class="cmti-10">pass </span>(<span 
 class="cmbxti-10">p</span>) if all of the triples in a
 <span 
@@ -976,7 +973,7 @@ src="ShExZ36x.png" alt="|-------------------------------------------------------
 ------OptValidity
 | &#x2200;ec : EvalContext;ss : SubjectSpecification;g : Graph &#x2219;
 | evalSubjectSpecificationecssg =
-|     if &#x2200;t : g &#x2219; evalSubjectSpecificationTripleecsst.o = p then p
+|     if &#x2200;t : g &#x2219; evalSubjectSpecificationTripleecsst.s = p then p
 |     else f
 ------------------------------------------------------------  " class="math-display" ></center>
    <center class="math-display" >
@@ -994,10 +991,10 @@ src="ShExZ37x.png" alt="|-------------------------------------------------------
 |     else
 ----------evalShapeec(ssShape &#x22C5;ss)n---------------------------  " class="math-display" ></center>
 
-<!--l. 544--><p class="noindent" >
+<!--l. 543--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.3   </span> <a 
 href="#x1-200004.3" id="x1-200004.3">GroupRule evaluation</a></h4>
-<!--l. 545--><p class="noindent" >A <span 
+<!--l. 544--><p class="noindent" >A <span 
 class="cmti-10">GroupRule </span>serves two purposes. The first is to declare that a referenced rule is to
 be treated as &#8220;optional&#8221;, which, in this case means that if (a) the referenced rule
 returned <span 
@@ -1012,13 +1009,13 @@ class="cmti-10">GroupRule </span>also treats an error situation as a <span
 class="cmti-10">fail</span>
 (<span 
 class="cmbxti-10">f</span> ).
-<!--l. 552--><p class="indent" >   The second purpose of a group rule is to allow a set of external <span 
+<!--l. 551--><p class="indent" >   The second purpose of a group rule is to allow a set of external <span 
 class="cmti-10">actions </span>to be
 evaluated whenever the referenced <span 
 class="cmti-10">rule </span>returns <span 
 class="cmti-10">pass </span>(<span 
 class="cmbxti-10">p</span>).
-<!--l. 556--><p class="indent" >
+<!--l. 555--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ38x.png" alt="OPT  ::= OPTIONAL   | REQUIRED
@@ -1043,10 +1040,10 @@ src="ShExZ39x.png" alt="|-------------------------------------------------------
 |         then dispatchgr.actions&#x2205;ec
 |     else evalRule&#x2032;ecigr.rule
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 572--><p class="noindent" >
+<!--l. 571--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.4   </span> <a 
 href="#x1-210004.4" id="x1-210004.4">AndRule evaluation</a></h4>
-<!--l. 573--><p class="noindent" >An <span 
+<!--l. 572--><p class="noindent" >An <span 
 class="cmti-10">AndRule </span>consists of a set of one or more <span 
 class="cmti-10">Rules</span>, whose evaluation is determined by
 the following table: <br 
@@ -1154,13 +1151,13 @@ class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td><
 class="td11"> </td> </tr></table>
 </div> <br 
 class="newline" />
-<!--l. 587--><p class="indent" >   The formal implementation of which will be realized in the corresponding
+<!--l. 586--><p class="indent" >   The formal implementation of which will be realized in the corresponding
 function:
    <center class="math-display" >
 <img 
 src="ShExZ40x.png" alt="|-----------------------------------------------------------
 --And-: OptValidity &#x2192;-OptValidity-&#x2192;-OptValidity-----------------  " class="math-display" ></center>
-<!--l. 592--><p class="indent" >   Observing that the above table is a monoid with <span 
+<!--l. 591--><p class="indent" >   Observing that the above table is a monoid with <span 
 class="cmti-10">nomatch </span>(<span 
 class="cmbxti-10">z</span>) as an identity
 element, <span 
@@ -1177,10 +1174,10 @@ src="ShExZ42x.png" alt="|-------------------------------------------------------
 | &#x2200;ec : EvalContext;i : RDFTerm; r : AndRule &#x2219;
 | evalAndRuleecir =
 ------foldrAndz-(map-(evalRule&#x2032;eci)r)---------------------------  " class="math-display" ></center>
-<!--l. 605--><p class="noindent" >
+<!--l. 604--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">4.5   </span> <a 
 href="#x1-220004.5" id="x1-220004.5">XorRule evaluation</a></h4>
-<!--l. 606--><p class="noindent" >An <span 
+<!--l. 605--><p class="noindent" >An <span 
 class="cmti-10">XorRule </span>consists of a set of one or more <span 
 class="cmti-10">Rules</span>, whose evaluation is determined by
 the following table: <br 
@@ -1314,10 +1311,10 @@ src="ShExZ45x.png" alt="|-------------------------------------------------------
 | evalXorRuleecir =
 ------foldrXorf(map-(evalRule&#x2032;eci)r)----------------------------  " class="math-display" ></center>
 
-<!--l. 639--><p class="noindent" >
+<!--l. 638--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
 href="#QQ2-1-25" id="x1-230005">Action evaluation</a></h3>
-<!--l. 640--><p class="noindent" >The <span 
+<!--l. 639--><p class="noindent" >The <span 
 class="cmti-10">dispatch </span>function allows the evaluation / execution of arbitrary external
 &#8220;<span 
 class="cmti-10">Actions</span>&#8221;. While the evaluation of an <span 
@@ -1352,7 +1349,7 @@ class="cmti-10">EvalContext </span>containing the <span
 class="cmti-10">Schema </span>and <span 
 class="cmti-10">Graph</span>
    </li></ul>
-<!--l. 652--><p class="indent" >   The dispatch function usually returns pass (<span 
+<!--l. 651--><p class="indent" >   The dispatch function usually returns pass (<span 
 class="cmbxti-10">p</span>) or fail (<span 
 class="cmbxti-10">f</span> ), although there may also
 be cases for other <span 
@@ -1370,13 +1367,13 @@ src="ShExZ47x.png" alt="|-------------------------------------------------------
 | &#x2200;as : &#x2119;Action;g : Graph; ec : EvalContext &#x2219;
 |     as = &#x2205; &#x21D2; dispatchasgec = p
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 665--><p class="noindent" >
+<!--l. 664--><p class="noindent" >
    <h3 class="sectionHead"><span class="titlemark">A   </span> <a 
 href="#QQ2-1-26" id="x1-24000A">Appendix</a></h3>
-<!--l. 666--><p class="noindent" >
+<!--l. 665--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">A.1   </span> <a 
 href="#x1-25000A.1" id="x1-25000A.1">Foldr</a></h4>
-<!--l. 667--><p class="noindent" >The <span 
+<!--l. 666--><p class="noindent" >The <span 
 class="cmti-10">foldr </span>function is the standard functional pattern, which takes a binary
 function of type <span 
 class="cmti-10">T</span>, an identity function for type <span 
@@ -1392,10 +1389,10 @@ src="ShExZ48x.png" alt="|-[T]---------------------------------------------------
 |     ifxs = &#x27E8;&#x27E9; then id
 |     else f(headxs)(foldrfid (tailxs))
 ------------------------------------------------------------  " class="math-display" ></center>
-<!--l. 678--><p class="noindent" >
+<!--l. 677--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">A.2   </span> <a 
 href="#x1-26000A.2" id="x1-26000A.2">Map</a></h4>
-<!--l. 679--><p class="noindent" >The <span 
+<!--l. 678--><p class="noindent" >The <span 
 class="cmti-10">map </span>function takes a function from type <span 
 class="cmti-10">A </span>to type <span 
 class="cmti-10">B </span>and applies it to all
@@ -1409,10 +1406,10 @@ src="ShExZ49x.png" alt="|-[A,B]-------------------------------------------------
 | &#x2200;f : A &#x2192; B; xs : seqA &#x2219; mapf xs =
 |     ifxs = &#x27E8;&#x27E9; then &#x27E8;&#x27E9;&#x2322;
 ------else-&#x27E8;f(headxs)&#x27E9;--mapf(tailxs)---------------------------  " class="math-display" ></center>
-<!--l. 689--><p class="noindent" >
+<!--l. 688--><p class="noindent" >
    <h4 class="subsectionHead"><span class="titlemark">A.3   </span> <a 
 href="#x1-27000A.3" id="x1-27000A.3">Helper Functions</a></h4>
-<!--l. 690--><p class="noindent" ><span 
+<!--l. 689--><p class="noindent" ><span 
 class="cmti-10">Z </span>uses the notion of <span 
 class="cmti-10">Free type definitions </span>in the form:
    <center class="math-display" >
@@ -1449,19 +1446,19 @@ type by:
 src="ShExZ53x.png" alt="x : TravelDirections
 |-----------
 ifx &#x2208; ranbus then bus &#x22C5;x else walking &#x22C5;x  " class="math-display" ></center>
-<!--l. 714--><p class="indent" >
+<!--l. 713--><p class="indent" >
    <center class="math-display" >
 <img 
 src="ShExZ54x.png" alt="--[X,Y ]----------------------------------------------------
 | -&#x22C5;- : (X &#x21A3; Y ) &#x00D7; Y &#x2192;&#x21A6;X
 |-----------
 --&#x2200;y-: Y-;f : X-&#x21A3;-Y-&#x2219;-f &#x22C5;y-=-(&#x03BC;x-: dom-f | fx-=-y)----------  " class="math-display" ></center>
-<!--l. 722--><p class="indent" >   One way to represent optional values is a set with one member. We take that
+<!--l. 721--><p class="indent" >   One way to represent optional values is a set with one member. We take that
 route here and introduce a bit of syntactic sugar to show our intent:
    <center class="math-display" >
 <img 
 src="ShExZ55x.png" alt="T [0 ..1] == {s : &#x2119; T | #s &#x2264; 1} " class="math-display" ></center>
-<!--l. 728--><p class="indent" >   And a shorthand for addressing the content:
+<!--l. 727--><p class="indent" >   And a shorthand for addressing the content:
    <center class="math-display" >
 <img 
 src="ShExZ56x.png" alt="|-[T]-------------------------------------------------------
