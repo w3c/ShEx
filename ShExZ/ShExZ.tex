@@ -9,7 +9,7 @@
 
 \def\pass{\textbf{\textit{p}}}
 \def\fail{\textbf{\textit{f}}}
-\def\dunno{\varnothing}
+\def\none{\varnothing}
 \def\error{\varepsilon}
 \def\nomatch{\textbf{\textit{z}}}
 
@@ -63,13 +63,12 @@ The Shape Expressions Language ($ShEx$) is used to specify formal constraints on
 Information about the use, grammar and syntax of $ShEx$ can be found at \verb#http://www.w3.org/2013/ShEx#. This document describes the formal \textit{semantics} of the $ShEx$ language using the $Z$ specification language, beginning with a $Z$ specification of the characteristics of an \textit{RDF Graph} that are referenced by $ShEx$.
 
 \section{The RDF Data Model in Z}
-Using the formal definitions in \textit{RDF 1.1 Concepts and Abstract Syntax}\cite{RDF11}, we begin with:
+Using the formal definitions in \textit{RDF 1.1 Concepts and Abstract Syntax}\cite{RDF11}:
 \begin{quote}``An \textbf{RDF graph} is a set of \textbf{RDF Triples}''\end{quote}
 Formally:
 \begin{zed}
 Graph == \power Triple
 \end{zed}
-The specification then defines the notion of \textbf{Triple}:
 \begin{quote}``An \textbf{RDF triple} consists of three components:
 \begin{itemize}
 \item the \textit{subject}, which is an \textbf{IRI} or a \textbf{blank node}
@@ -81,12 +80,12 @@ The specification then defines the notion of \textbf{Triple}:
 ```... \textbf{IRI}s, \textbf{literal}s and \textbf{blank nodes} are distinct and distinguishable.''
 \end{quote} 
 
-The $ShEx$ language treats \textbf{IRI}s and \textbf{blank nodes} as primitive types, so we can formally define them as $Z$ free types:
+The $ShEx$ language treats \textbf{IRI}s and \textbf{blank nodes} as primitive types, which are defined as $Z$ free types:
 \begin{zed}
 [IRI, BlankNode]
 \end{zed}
 
-The $ShEx$ language can express constraints on both the type and content of \textbf{literals}, so we need to model these separately.  Starting with:
+The $ShEx$ language can express constraints on both the type and content of \textbf{literals}, which are modeled separately:
 
 \begin{quote}
 ``A \textbf{literal} in an RDF graph consists of two or three elements:
@@ -97,18 +96,18 @@ The $ShEx$ language can express constraints on both the type and content of \tex
 \verb|http://www.w3.org/1999/02/22-rdf-syntax-ns#langString|, a non-empty language tag as defined in [BCP47]\cite{BCP47}. The language tag MUST be well-formed according to section 2.2.9 of [BCP47]\cite{BCP47}.''
 \end{itemize}
 \end{quote}
-We model this by defining $String$ and $LanguageTag$ as free types:
+This is modelled by $String$ and $LanguageTag$ as free types:
 \begin{zed}
 [String, LanguageTag]
 \end{zed}
-And then use them in the definition the two flavors of $RDFLiteral$,  plain literal and typed literal::
+and using them in the definition the two flavors of $RDFLiteral$,  plain literal and typed literal::
 \begin{zed}
 TypedLiteral \defs [lexicalForm:String ; dataType : IRI | dataType \neq XSD\_String] \\
 PlainLiteral \defs [lexicalForm:String ; dataType : IRI; langTag : LanguageTag | \\
 \t3 dataType = XSD\_String] \\
 RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata \\ 
 \end{zed}
-The RDF 1.1 specification the defines $RDFTerm$ as:
+$RDFTerm$ is defined as:
 \begin{quote}
 ``\textbf{IRI}s, \textbf{literal}s and \textbf{blank nodes} are collectively known as \textbf{RDF terms}
 \end{quote}
@@ -116,7 +115,7 @@ The RDF 1.1 specification the defines $RDFTerm$ as:
 \begin{zed}
 RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ldata BlankNode \rdata
 \end{zed}
-We are now in the position to complete the definition of $Triple$ as a tuple consisting of three constrained $RDFTerm$s:
+The definition of RDF $Triple$ is modelled as a tuple consisting of three constrained $RDFTerm$s:
 \begin{schema}{Triple}
    s,p,o : RDFTerm
 \where
@@ -147,7 +146,7 @@ The $ShEx$ language uses the following functions:
 The following URI's are referenced explicitly in the $ShEx$ implementation:
 
 \begin{axdef}
-XSD\_String, RDF\_Resource : IRI
+SHEX\_IRI, SHEX\_BNODE : IRI, SHEX\_LITERAL : IRI, SHEX\_NONLITERAL : IRI
 \end{axdef}
 
 This completes the formal definition of \zc{Graph}, \zc{Triple}, \zc{RDFTerm} and their components, which we can now use to describe the relationship between an $ShEx$ $Schema$ and an RDF graph.
@@ -208,11 +207,11 @@ Formally, the \zc{evalRule} function takes an \zc{EvalContext}, a reference \zc{
 \item \textbf{Pass ($\pass$)} - the supplied \zc{Graph} satisfied the evaluation \zc{Rule}
 \item \textbf{Fail ($\fail$)} - the supplied \zc{Graph} did not satisfy the evaluation \zc{Rule}
 \item \textbf{Nomatch ($\nomatch$)} - an \zc{optional} \zc{GroupRule} was encountered and there were no matching triples
-\item \textbf{Dunno ($\dunno$)} - an \zc{ArcRule} was encountered with a minimum cardinality of 0 and there were no matching triples
+\item \textbf{None ($\none$)} - an \zc{ArcRule} was encountered with a minimum cardinality of 0 and there were no matching triples
 \item \textbf{Error($\error$)} - an \zc{XorRule} was evaluated and two or more components passed the evaluation.
 \end{itemize}
 \begin{zed}
-OptValidity ::= \pass | \fail | \nomatch | \dunno | \error \\
+OptValidity ::= \pass | \fail | \nomatch | \none | \error \\
 \end{zed}
 A  \zc{Rule} can take one of five forms. Each will be formally described later in this
 document, but informally they are:
@@ -248,9 +247,9 @@ Rule ::= arc \ldata ArcRule \rdata | \\
 \t1 \ELSE \\
 \t2 evalXorRule~ec~i~(xor \entryFor r)
 \end{gendef}
-The function below de-references the supplied \zc{Label} and
-invoke \zc{evalRule} with the result.  This is not explicitly represented because
-the $Z$ specification language does not allow cyclic dependencies. Note that this function
+The $evalRule'$ function  de-references the supplied \zc{Label} and
+invokes \zc{evalRule} with the result.  This is not explicitly represented because
+the $Z$ specification language does not allow cyclic dependencies. This function
 is undefined if \zc{Label} is not in \zc{EvalContext}
 \begin{gendef}
    evalRule': EvalContext \fun RDFTerm \fun Label \fun OptValidity
@@ -262,7 +261,7 @@ is undefined if \zc{Label} is not in \zc{EvalContext}
 The \zc{ArcRule} is used to select the subset of the graph having a given predicate or
 predicates and to determine whether the cardinality and/or ``type'' of this subset matches
 a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to select the triples,
- an \zc{ObjectSpecification} to evaluate the result, a optional \zc{min} and \zc{max}
+ an \zc{ObjectSpecification} to evaluate the result, an optional \zc{min} and \zc{max}
  cardinality and a (possibly empty) set of \zc{Actions}:
 \begin{schema}{ArcRule}
    filter: PredicateFilter \\
@@ -363,7 +362,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 \item If the graph has no elements and:
 \begin{itemize}
 \item $min$ value is 0 -- \zc{nomatch} ($\nomatch$)
-\item $min$ value isn't specified or is $>$ 0 -- \zc{dunno} ($\dunno$)
+\item $min$ value isn't specified or is $>$ 0 -- \zc{none} ($\none$)
 \end{itemize}
 \item Otherwise:
 \begin{itemize}
@@ -380,7 +379,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
    \t1 \IF \# min = 1 \land \# g = 0 \land  value~ min = 0 \\
 \t2 \THEN \nomatch \\
 \t1 \ELSE \IF \# g = 0 \\
-\t2 \THEN \dunno \\
+\t2 \THEN \none \\
 \t1 \ELSE \IF (\# min = 1 \land \# g < value~ min) \lor \\
 \t3 (\# max = 1 \land \# g > value~ max) \\
 \t2 \THEN \fail \\
@@ -424,7 +423,10 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
    evalValueType: IRI \pfun RDFTerm \pfun OptValidity
 \where
    \forall vt: IRI; n: RDFTerm; l: RDFLiteral @ evalValueType~vt~ n = \\
-\t1 \IF vt = RDF\_Resource \land  n \in \ran iri \THEN \pass \\
+\t1 \IF vt = SHEX\_IRI \land  n \in \ran iri \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_BNODE \land  n \in \ran bnode \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_NONLITERAL \land  (n \in \ran iri \lor n \in \ran bnode) \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_LITERAL \land  n \in \ran literal \THEN \pass \\
 \t1 \ELSE \IF n \in \ran literal \land l = (literal \entryFor n) \land \\
 \t2 ((l \in \ran pl \land (pl \entryFor l).dataType = vt) \lor \\
 \t2  (l \in \ran tl \land (tl \entryFor l).dataType = vt)) \THEN \pass \\
@@ -541,7 +543,7 @@ match the supplied \zc{SubjectSpecification}, otherwise \zc{fail} ($\fail$)
 \subsection{GroupRule evaluation}
 A \zc{GroupRule} serves two purposes.  The first is to declare that a referenced rule is to be
 treated as ``optional'', which, in this case means that if (a) the referenced rule returned
-\zc{dunno} ($\dunno$), (meaning an \zc{ArcRule} was encountered that had no matching
+\zc{none} ($\none$), (meaning an \zc{ArcRule} was encountered that had no matching
 predicates and a non-zero minimum cardinality) the group rule returns \zc{nomatch} 
 ($\nomatch$).  An optional \zc{GroupRule} also treats an error situation as a \zc{fail} 
 ($\fail$).
@@ -560,7 +562,7 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
    evalGroupRule: EvalContext \fun RDFTerm \fun GroupRule \fun OptValidity
 \where
    \forall ec: EvalContext; i: RDFTerm; gr: GroupRule @ evalGroupRule~ ec~ i ~ gr = \\
-\t1 \IF evalRule'~ec~i~gr.rule = \dunno \land gr.opt = OPTIONAL \\
+\t1 \IF evalRule'~ec~i~gr.rule = \none \land gr.opt = OPTIONAL \\
 \t2 \THEN \nomatch \\
 \t1 \ELSE \IF evalRule'~ec~i~gr.rule = \error \land gr.opt = OPTIONAL \\
 \t2 \THEN \fail \\
@@ -575,10 +577,10 @@ by the following table: \\
 
 \begin{tabular}{c || c | c | c | c | c |}
    \hline 
-   \zcb{And} & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\
+   \zcb{And} & $\none$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\
    \hline \hline
-   $\dunno$ & $\dunno$ & $\dunno$ & $\fail$ & $\fail$ & $\error$ \\ \hline
-   $\nomatch$ & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\ \hline
+   $\none$ & $\none$ & $\none$ & $\fail$ & $\fail$ & $\error$ \\ \hline
+   $\nomatch$ & $\none$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\ \hline
    $\fail$ & $\fail$ & $\fail$ & $\fail$ & $\fail$ & $\error$ \\ \hline
    $\pass$ & $\fail$ & $\pass$ & $\fail$ & $\pass$ & $\error$ \\ \hline
    $\error$ & $\error$ & $\error$ & $\error$ & $\error$ & $\error$ \\ \hline 
@@ -608,11 +610,11 @@ by the following table: \\
 
 \begin{tabular}{c || c | c | c | c | c |}
    \hline
-   \zcb{Xor} & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\
+   \zcb{Xor} & $\none$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\
    \hline \hline
-   $\dunno$ & $\dunno$ & $\nomatch$ & $\dunno$ & $\pass$ & $\error$ \\ \hline
+   $\none$ & $\none$ & $\nomatch$ & $\none$ & $\pass$ & $\error$ \\ \hline
    $\nomatch$ & $\nomatch$ & $\nomatch$ & $\nomatch$ & $\pass$ & $\error$ \\ \hline
-   $\fail$ & $\dunno$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\ \hline
+   $\fail$ & $\none$ & $\nomatch$ & $\fail$ & $\pass$ & $\error$ \\ \hline
    $\pass$ & $\pass$ & $\pass$ & $\pass$ & $\error$ & $\error$ \\ \hline
    $\error$ & $\error$ & $\error$ & $\error$ & $\error$ & $\error$ \\ \hline 
 \end{tabular}
