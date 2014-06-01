@@ -1,0 +1,315 @@
+/* 
+	Version: $Id: zml.css,v 1.1 2014-03-21 16:02:58 eric Exp $
+
+	CSS for Z Markup Language (ZML) 
+	Author: Arthur Ryman  <ryman@ca.ibm.com> 
+	Date Created: 2004-09-23 
+
+	This stylesheet is copyright (c) 2004 by its authors.  Free
+	distribution and modification is permitted, including adding to
+	the list of authors and copyright holders, as long as this
+	copyright notice is maintained. 
+
+	This CSS formats Z Notation as HTML.
+	It is used in conjuction with an XSLT that
+	transform XML source to HTML.
+	The document must be marked up using ZML
+	which is in the namespace http://www.w3.org/2004/zml.
+	These tags correspond closely to the LaTeX commands
+	defined in the fuzz 2000 document style developed
+	by Mike Spivey and which is available at
+	http://spivey.oriel.ox.ac.uk/~mike/fuzz/.
+
+	ChangeLog:
+	
+	2005-03-20: Arthur Ryman <ryman@ca.ibm.com>
+	- make Z Notation initially visible in non-normative version
+	since it is now hidden in normative version
+	
+	2004-12-26: Arthur Ryman <ryman@ca.ibm.com>
+	- added div.twisty-head, div.twisty-body, img.twisty-icon
+		for use in interactive version of spec
+
+	2004-10-24: Arthur Ryman <ryman@ca.ibm.com>
+	- added div.zsee
+	
+	2004-09-23: Arthur Ryman <ryman@ca.ibm.com>
+	- created
+	
+*/
+span.zi { color:black;
+	font-family: serif;
+	font-style: italic
+}
+
+span.zbig {
+	font-size: 150%;
+}
+
+span.zsmall {
+	font-size: 80%;
+}
+
+span.zarrow1 {
+	font-family: "Math C";
+	font-size: 120%;
+}
+
+span.zarrow2 {
+	font-family: "Math C";
+	font-size: 110%;
+}
+
+span.zarrow3 {
+	font-family: "Math C";
+	font-size: 100%;
+}
+
+span.ztick {
+	font-family: "Math B";
+	font-size: 80%;
+	position: relative;
+	right: .8em;
+	bottom: .05em
+}
+
+span.matha {
+	font-family: "Math A";
+}
+
+span.mathb {
+	font-family: "Math B";
+}
+
+span.mathc {
+	font-family: "Math C";
+}
+
+span.symbol {
+	font-family: Symbol;
+}
+
+span.zdefa {
+	padding-left: .25em;
+	padding-right: .25em;
+	letter-spacing: .1em;
+}
+
+span.zinfix { color:black;
+	padding-left: .25em;
+	padding-right: .25em;
+}
+
+span.zprefix { color:black;
+	padding-right: .25em;
+}
+
+span.zpostfix {
+	padding-left: .25em;
+}
+
+table.zzed {
+	width: 30em;
+	margin-left: 2em;
+	margin-top: 2ex;
+	margin-bottom: 2ex;
+}
+
+col.zzed1 {
+	width: 30em;
+}
+
+table.zschema {
+	width: 40em;
+	margin-left: 2em;
+	margin-top: 2ex;
+	margin-bottom: 2ex;
+	border-collapse: collapse;
+}
+
+p.zschema { color:red;
+	margin-left: 2em;
+	margin-top: 2ex;
+	margin-bottom: 2ex;
+}
+
+col.zschema1 {
+	width: 5em;
+}
+
+col.zschema2 {
+	width: 20em;
+}
+
+col.zschema3 {
+	width: 5em;
+}
+
+td999 { color: red; } /* !! debugging - turn stuff red by default */
+td.zschemaname {
+	padding-left: .75em;
+	border-bottom: 1px solid black;
+}
+
+td.zschemadname {
+	padding-left: .75em;
+	border-bottom: 5px double black;
+}
+
+td.zgendeftop {
+	padding-left: .75em;
+	border-bottom: 3px solid black;
+}
+
+span.zschemaname { color:black;
+	position: relative;
+	top: .7ex;
+	background-color: white;
+	padding-left: .25em;
+	padding-right: .25em;
+}
+
+td.zschematext {
+	padding-left: 1em;
+	border-left: 1px solid black;
+}
+
+td.zschemalasttext {
+	padding-left: 1em;
+	padding-bottom: 1.4ex;
+	border-left: 1px solid black;
+}
+
+.noborder {
+	border-left: none !important; /* @@ failed for zschemalasttext noborder */
+	padding-left: .1em !important;
+}
+
+span.zschematext {
+	position: relative;
+	top: .7ex;
+}
+
+table.zaxdef {
+	width: 30em;
+	margin-left: 2em;
+	margin-top: 2ex;
+	margin-bottom: 2ex;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+col.zaxdef1 {
+	width: 5em;
+}
+
+col.zaxdef2 {
+	width: 25em;
+}
+
+td.zaxdeftext {
+	padding-left: 1em;
+	border-left: 1px solid black;
+}
+
+td.zaxdefabovewheretext {
+	padding-left: 1em;
+	padding-bottom: 1ex;
+	border-left: 1px solid black;
+}
+
+td.zaxdefbelowwheretext {
+	padding-left: 1em;
+	padding-top: 1ex;
+	border-left: 1px solid black;
+}
+
+td.text {
+	padding-left: .5em;
+	padding-right: .5em
+}
+
+td.lasttext {
+	padding-left: .5em;
+	padding-right: .5em;
+	padding-bottom: .8em
+}
+
+td.b {
+	border-bottom: 1px solid black;
+}
+
+td.l {
+	border-left: 1px solid black;
+}
+
+td.hanger { border-left: 1px solid black; font-size: .7ex; }
+
+td.bl {
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+}
+
+td.box {
+	border: 1px solid black;
+	background: fuchsia;
+}
+
+dt {
+	font-weight: bold;
+}
+
+span.doublestruck {
+	font-family: sans-serif;
+	font-weight: bold;
+}
+
+span.zss {
+	font-family: sans-serif;
+	font-weight: 500;
+}
+
+span.zs { color:black;
+	font-family: serif;
+}
+
+span.zbs { color:black;
+	font-family: serif;
+	font-weight: bold;
+	font-stretch: expanded;
+}
+
+span.shiftright {
+	position: relative;
+	right: .8em;
+}
+
+.zedtext {
+	position: relative;
+	top: .8ex;
+}
+
+div.zsee {
+	width: 30em;
+	margin-left: 2em;
+	margin-top: 0;
+	margin-bottom: 2ex;
+}
+
+/* twisty head is initially hidden */
+div.twisty-head {
+	display: none;
+}
+
+/* twist body is initially displayed */
+div.twisty-body {
+	display: block;
+}
+
+/* twisty icon */
+img.twisty-icon {
+	width: 13px;
+	height: 13px;
+	border: 0;
+	margin-right: 4px;
+}
