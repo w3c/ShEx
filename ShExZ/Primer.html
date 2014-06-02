@@ -130,25 +130,24 @@ table.simple {
 
       <dl>        
         <dt>This version:</dt>
-        <dd><a class="u-url" href=".">http://www.w3.org/Submission/2014/SUBM-shex-primer-20140602/</a></dd>
+        <dd><a class="u-url" href="http://www.w3.org/Submission/2014/SUBM-shex-primer-20140602/">http://www.w3.org/Submission/2014/SUBM-shex-primer-20140602/</a></dd>
         <dt>Latest published version:</dt>
-        <dd><a href=".">http://www.w3.org/Submission/shex-primer/</a></dd>
+        <dd><a href="http://www.w3.org/Submission/shex-primer/">http://www.w3.org/Submission/shex-primer/</a></dd>
         <dt>Previous version:</dt>
         <dd><a href=""></a></dd>
         <dt>Editor:</dt>
         <dd class="p-author h-card vcard"><span class="p-name fn">Eric Prud'hommeaux</span>, <span class="ed_mailto"><a class="u-email email" href="mailto:eric@w3.org">eric@w3.org</a></span></dd>
       </dl>
       
-      
-      
-      
-      
-      <p class="copyright">Copyright © 2014 W3C.This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document License</a>. See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notice and Legal Disclaimers</a>for additional information.</p>
-      
-      
+		<p class="copyright">
+			Copyright © W3C 2014.
+            This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document License</a>.
+            See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notice and Legal Disclaimers</a> for additional information.
+		</p>
+
     </div>
+    <hr/>
     <div>
-      <hr/>
       <h2><a name="abstract" id="abstract" shape="rect"></a>Abstract</h2>
       <p>
         Shape Expressions associate RDF graphs with labeled patterns called "shapes".
@@ -156,9 +155,35 @@ table.simple {
       </p>
       <p>
         Shape Expressions Primer is a general introduction to the Shape Expressions language.
-        The concepts in this document are linked to the normative definitions in <a href="shex-defn">Shape Expressions Definition</a>.
+        The concepts in this document are linked to the normative definitions in <a href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/">Shape Expressions Definition</a>.
       </p>
     </div>
+
+	<h2 id="status">Status of This Document</h2>
+	<div>
+      <p>
+        <em>
+          This section describes the status of this document at the time of its publication.
+          Other documents may supersede this document.
+          A list of current W3C publications can be found in the </em><a href="http://www.w3.org/TR/"><i>W3C technical reports index</i></a><em> at http://www.w3.org/TR/.
+        </em>
+      </p>
+
+      <p>
+        This document describes the Shape Expressions langauge developed as a community effort.
+        It is being submitted to W3C so that it can inform the development of a future RDF Data Shape specification.
+      </p>
+
+      <p>
+        By publishing this document, W3C acknowledges that the <a href="http://www.w3.org/Submission/2014/01/">Submitting Members</a> have made a formal Submission request to W3C for discussion.
+        Publication of this document by W3C indicates no endorsement of its content by W3C, nor that W3C has, is, or will be allocating any resources to the issues addressed by it.
+        This document is not the product of a chartered W3C group, but is published as potential input to the <a href="http://www.w3.org/Consortium/Process">W3C Process</a>.
+        A <a href="http://www.w3.org/Submission/2014/01/Comment/">W3C Team Comment</a> has been published in conjunction with this Member Submission.
+        Publication of acknowledged Member Submissions at the W3C site is one of the benefits of <a href="http://www.w3.org/Consortium/Prospectus/Joining">W3C Membership</a>.
+        Please consult the requirements associated with Member Submissions of <a href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section 3.3 of the W3C Patent Policy</a>.
+        Please consult the complete <a href="http://www.w3.org/Submission">list of acknowledged W3C Member Submissions</a>.
+      </p>
+	</div>
 
     <h2><a name="intro" id="intro" shape="rect"></a>Introduction</h2>
     <p>
@@ -179,8 +204,8 @@ table.simple {
     <p class="demotext">
         The examples in this document can be used in an online demo.
         Links to the demo are indicated with a <span class="demoref">demoref class</span>.
-        Most of the document will focus on an <a class="demoref" href="FancyShExDemo?schemaURL=Examples/Issue-simple-annotated.shex&amp;dataURL=test/Issue-pass-date.ttl&amp;colorize=1">annotated issue tracking example</a>.
-        An accompanying <a href="Examples/">Examples</a> document lists the pre-built examples and <a href="Examples/#demoFeatures">describes the demo user interface</a>.
+        Most of the document will focus on an <a class="demoref" href="http://www.w3.org/2013/ShEx/FancyShExDemo?schemaURL=Examples/Issue-simple-annotated.shex&amp;dataURL=test/Issue-pass-date.ttl&amp;colorize=1">annotated issue tracking example</a>.
+        An accompanying <a href="http://www.w3.org/2013/ShEx/Examples/">Examples</a> document lists the pre-built examples and <a href="http://www.w3.org/2013/ShEx/Examples/#demoFeatures">describes the demo user interface</a>.
     </p>
 
 
@@ -235,7 +260,7 @@ PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
 
     <div>
-      <h2 id="labShEx">Labeled Shape Expression <a class="defn" href="Definition#shex">(defn)</a></h2>
+      <h2 id="labShEx">Labeled Shape Expression <a class="defn" href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/#shex">(defn)</a></h2>
 
       <p>
         A shape expression is a labeled pattern for a set of RDF Triples with a common subject.
@@ -265,7 +290,7 @@ PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
           The first part, <span class="example">ex:state</span>, is called the <code class="keyword">NameClass</code>, and identifies a class of RDF predicates.
           The second part, <span class="example">(ex:unassigned ex:assigned)</span>, is called the <code class="keyword">ValueClass</code>, and identifies a class of RDF objects.
           Together, they form an <code class="keyword">ArcRule</code>.
-          In this <code class="keyword">ArcRule</code>, the <code class="keyword">NameClass</code> is a <code class="keyword">pfIRI</code> <a href="Definition#pfIRI" class="defn">(defn)</a> and the <code class="keyword">ValueClass</code> is a <code class="keyword">ValueSet</code> <a href="Definition#ValueSet" class="defn">(defn)</a>.
+          In this <code class="keyword">ArcRule</code>, the <code class="keyword">NameClass</code> is a <code class="keyword">pfIRI</code> <a href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/#pfIRI" class="defn">(defn)</a> and the <code class="keyword">ValueClass</code> is a <code class="keyword">ValueSet</code> <a href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/#ValueSet" class="defn">(defn)</a>.
         </p>
 
         <p>
@@ -287,7 +312,7 @@ PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 
         <p>
           The second <code class="keyword">ArcRule</code> (constraint) above, <code class="example">ex:reportedBy @&lt;UserShape&gt;</code>, asserts that object of the <code>ex:reportedBy</code> property conforms to another labeled shape expression called <code>&lt;UserShape&gt;</code>.
-          This is a <code id="ValueReference" class="keyword">ValueReference</code> <a href="Definition#ValueReference" class="defn">(defn)</a> to a shape expression <a href="#ex_UserShape">described below</a>.
+          This is a <code id="ValueReference" class="keyword">ValueReference</code> <a href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/#ValueReference" class="defn">(defn)</a> to a shape expression <a href="#ex_UserShape">described below</a>.
           As with <a href="#ex1_state"><code class="example">ex:state</code> above</a>, the cardinality is exactly one.
         </p>
       </div>
@@ -308,7 +333,7 @@ PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
         <h3 id="ex1_reproduced_">example issue <code class="example">(rule1, rule2)?</code></h3>
 
         <p>
-          The fourth constraint above, <code class="example">( ex:reproducedBy @&lt;EmployeeShape&gt;, ex:reproducedOn xsd:dateTime )?</code>, is a <code class="keyword">GroupRule</code> <a href="Definition#GroupRule" class="defn">(defn)</a>.
+          The fourth constraint above, <code class="example">( ex:reproducedBy @&lt;EmployeeShape&gt;, ex:reproducedOn xsd:dateTime )?</code>, is a <code class="keyword">GroupRule</code> <a href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/#GroupRule" class="defn">(defn)</a>.
           The '?' says that the cardinality is 0 or 1.<!-- @@ no semantics for group rule cardinality -->
           Together they assert that there may both an <code>ex:reproducedBy</code> and <code>ex:reproducedOn</code>, or neither.
           The enclosed rules are <code class="keyword">ArcRule</code>s and similar to the <a href="#ex1_reportedBy"><code class="example">ex:reportedBy</code></a> and <a href="#ex1_reportedOn"><code class="example">ex:reportedOn</code></a> <code class="keyword">ArcRule</code>s above.
@@ -463,7 +488,7 @@ PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
         We can signify this by changing <code>&lt;IssueShape&gt;</code> to have <code>ex:reportedBy @&lt;PersonShape&gt;</code> and define sub-shapes of <code>&lt;PersonShape&gt;</code>.
         This is done with an inclusion directive before the shape definition.
         We may not want the base <code>&lt;PersonShape&gt;</code> to satisfy any <a href="#ValueReference">ValueReferences</a> directly, instead requiring only derivates of <code>&lt;PersonShape&gt;</code>.
-        This is accomplished by labeling <code>&lt;PersonShape&gt;</code> <code>VIRTUAL</code> <a class="demoref" href="FancyShExDemo?schemaURL=test/Issue-inheritance/schema.shex&amp;dataURL=test/Issue-inheritance/pass-user-employee.ttl">per the hierarchy example</a>:
+        This is accomplished by labeling <code>&lt;PersonShape&gt;</code> <code>VIRTUAL</code> <a class="demoref" href="http://www.w3.org/2013/ShEx/FancyShExDemo?schemaURL=test/Issue-inheritance/schema.shex&amp;dataURL=test/Issue-inheritance/pass-user-employee.ttl">per the hierarchy example</a>:
       </p>
 
       <pre id="ex_IssueShape-short" class="example">&lt;IssueShape&gt; {
@@ -503,7 +528,7 @@ VIRTUAL &lt;PersonShape&gt; {
         The <a href="#ex_IssueShape">&lt;IssueShape&gt; example above</a> includes both <code>ex:reportedOn</code> and <code>ex:reproducedOn</code> dateTimes.
         It would be reasonable in the interest of data quality to ensure that the <code>ex:reproducedOn</code> dateTime, if present, were temporally after the <code>ex:reportedOn</code> dateTime.
         While ShEx itself has no built-in functionality for comparing dateTimes, specific extensions may offer that functionality.
-        The example below <a class="demoref" href="FancyShExDemo?schemaURL=test/Issue-js-test-date-triple.shex&amp;dataURL=test/Issue-fail-date.ttl&amp;colorize=1">(failed semantic action validation)</a> includes semantic actions to test date order in either Javascript or SPARQL:
+        The example below <a class="demoref" href="http://www.w3.org/2013/ShEx/FancyShExDemo?schemaURL=test/Issue-js-test-date-triple.shex&amp;dataURL=test/Issue-fail-date.ttl&amp;colorize=1">(failed semantic action validation)</a> includes semantic actions to test date order in either Javascript or SPARQL:
       </p>
 
       <pre class="example">    ex:reportedOn xsd:dateTime

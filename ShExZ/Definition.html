@@ -166,13 +166,13 @@
         };
 
         z.prepare();
-        g.prepare();
+        // g.prepare();
         window.onkeypress = function (evt) {
           var code = evt.keyCode ? evt.keyCode : evt.charCode
           if (code == 90 || code == 122)
             z.toggle();
-          else if (code == 71 || code == 103)
-            g.toggle();
+          // else if (code == 71 || code == 103)
+          //   g.toggle();
         }
       }
     </script>
@@ -190,17 +190,20 @@
 
       <dl>        
         <dt>This version:</dt>
-        <dd><a class="u-url" href=".">http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/</a></dd>
+        <dd><a class="u-url" href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/">http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/</a></dd>
         <dt>Latest published version:</dt>
-        <dd><a href=".">http://www.w3.org/Submission/shex-defn/</a></dd>
-        <dt>Previous version:</dt>
-        <dd><a href=""></a></dd>
+        <dd><a href="http://www.w3.org/Submission/shex-defn/">http://www.w3.org/Submission/shex-defn/</a></dd>
         <dt>Author:</dt>
         <dd class="p-author h-card vcard"><span class="p-name fn">Harold Solbrig</span>, <span class="ed_mailto"><a class="u-email email" href="mailto:eric@w3.org">solbrig.harold@mayo.edu</a></span></dd>
         <dd class="p-author h-card vcard"><span class="p-name fn">Eric Prud'hommeaux</span>, <span class="ed_mailto"><a class="u-email email" href="mailto:eric@w3.org">eric@w3.org</a></span></dd>
       </dl>
       
       
+		<p class="copyright">
+			Copyright © W3C 2014.
+            This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document License</a>.
+            See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notice and Legal Disclaimers</a> for additional information.
+		</p>
       
       
       
@@ -208,8 +211,8 @@
       
       
     </div>
-    <div>
       <hr/>
+    <div>
       <h2><a name="abstract" id="abstract" shape="rect"></a>Abstract</h2>
       <p>
         Shape Expressions associate RDF graphs with labeled patterns called "shapes".
@@ -218,10 +221,36 @@
       <p>
         Shape Expressions express formal constraints on the content of RDF graphs and are intended to be used to validate RDF documents, communicate  expected  graph  patterns  for  interfaces  and  to  generate forms and validation code.
         This document describes the formal semantics of the Shape Expressions language through the use of the Z Specification Language.
-        The accompanying <a href="shex-primer">Shape Expressions Primer</a> provides an informal introduction to the language.
+        The accompanying <a href="http://www.w3.org/Submission/2014/SUBM-shex-primer-20140602/">Shape Expressions Primer</a> provides an informal introduction to the language.
       </p>
     </div>
     <hr />
+	<h2 id="status">Status of This Document</h2>
+	<div>
+      <p>
+        <em>
+          This section describes the status of this document at the time of its publication.
+          Other documents may supersede this document.
+          A list of current W3C publications can be found in the </em><a href="http://www.w3.org/TR/"><i>W3C technical reports index</i></a><em> at http://www.w3.org/TR/.
+        </em>
+      </p>
+
+      <p>
+        This document describes the Shape Expressions langauge developed as a community effort.
+        It is being submitted to W3C so that it can inform the development of a future RDF Data Shape specification.
+      </p>
+
+      <p>
+        By publishing this document, W3C acknowledges that the <a href="http://www.w3.org/Submission/2014/01/">Submitting Members</a> have made a formal Submission request to W3C for discussion.
+        Publication of this document by W3C indicates no endorsement of its content by W3C, nor that W3C has, is, or will be allocating any resources to the issues addressed by it.
+        This document is not the product of a chartered W3C group, but is published as potential input to the <a href="http://www.w3.org/Consortium/Process">W3C Process</a>.
+        A <a href="http://www.w3.org/Submission/2014/01/Comment/">W3C Team Comment</a> has been published in conjunction with this Member Submission.
+        Publication of acknowledged Member Submissions at the W3C site is one of the benefits of <a href="http://www.w3.org/Consortium/Prospectus/Joining">W3C Membership</a>.
+        Please consult the requirements associated with Member Submissions of <a href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section 3.3 of the W3C Patent Policy</a>.
+        Please consult the complete <a href="http://www.w3.org/Submission">list of acknowledged W3C Member Submissions</a>.
+      </p>
+	</div>
+
     <div class="tableofcontents">
       <span class="sectionToc" >1 <a href="#intro">Introduction</a></span><br />
       <span class="sectionToc" >2 <a href="#RDFZ">The RDF Data Model in Z</a></span><br />
@@ -274,10 +303,7 @@
         <!--l. 80--><p class="noindent" >“... <span class="bold">IRI</span>s, <span class="bold">literal</span>s and <span class="bold">blank nodes </span>are distinct and distinguishable.”</p></blockquote>
         <!--l. 79-->
         <!--l. 68--><p class="noindent" >provides a definition in Z:</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ0x.png" alt="Graph == ℙ Triple  " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ0x.png" alt="Graph == ℙ Triple  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -292,10 +318,7 @@ Graph == \power Triple
         </pre>
         <!--l. 83--><p class="indent" >   The <span class="cmti-10">ShEx </span>language treats <span class="bold">IRI</span>s and <span class="bold">blank nodes </span>as primitive types, which are
         defined as <span class="cmti-10">Z </span>free types:</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ1x.png" alt="[IRI ,BlankNode ]  " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ1x.png" alt="[IRI ,BlankNode ]  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -326,11 +349,8 @@ Graph == \power Triple
         </blockquote>
 
         <!--l. 99--><p class="noindent" >This is modelled by <span class="cmti-10">String </span>and <span class="cmti-10">LanguageTag </span>as free types:</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ2x.png" alt="[String,LanguageTag ]
-                                     " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ2x.png" alt="[String,LanguageTag ]
+                                     " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -346,14 +366,11 @@ Graph == \power Triple
         </pre>
         and using them in the definition the two flavors of <span class="cmti-10">RDFLiteral</span>, plain literal and typed
         literal::
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ3x.png" alt="TypedLiteral ^= [lexicalForm : String;dataType : IRI | dataType ≠ XSD-String]
+        <!-- img class="math-display" src="Z/ShExZ3x.png" alt="TypedLiteral ^= [lexicalForm : String;dataType : IRI | dataType ≠ XSD-String]
                                      PlainLiteral ^= [lexicalForm : String;dataType : IRI ;langTag : LanguageTag |
                                      dataType = XSD -String]
                                      RDFLiteral ::= pl⟨⟨PlainLiteral⟩⟩ | tl⟨⟨TypedLiteral⟩⟩
-                                     " class="math-display" />
-        </center>
+                                     " /-->
   <table class="zzed" style="width:50em;">
     <col class="zzed1" span="1" />
     <tbody>
@@ -375,11 +392,8 @@ RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata \\
         <blockquote>
         <!--l. 112--><p class="noindent" >“<span class="bold">IRI</span>s, <span class="bold">literal</span>s and <span class="bold">blank nodes </span>are collectively known as <span class="bold">RDF terms</span></p></blockquote>
         <!--l. 115--><p class="indent" ></p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ4x.png" alt="RDFTerm  ::= iri⟨⟨IRI⟩⟩ | literal⟨⟨RDFLiteral⟩⟩ | bnode⟨⟨BlankNode ⟩⟩
-                                     " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ4x.png" alt="RDFTerm  ::= iri⟨⟨IRI⟩⟩ | literal⟨⟨RDFLiteral⟩⟩ | bnode⟨⟨BlankNode ⟩⟩
+                                     " /-->
   <table class="zzed" style="width:50em;">
     <col class="zzed1" span="1" />
     <tbody>
@@ -393,15 +407,12 @@ RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ld
         </pre>
         The definition of RDF <span class="cmti-10">Triple </span>is modelled as a tuple consisting of three constrained
         <span class="cmti-10">RDFTerm</span>s:
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ5x.png" alt="--Triple-----------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ5x.png" alt="──Triple─────────────────────────────────────────────────────
                                      | s,p,o : RDFTerm
-                                     |-----------
+                                     |───────────
                                      | iri ⋅s ∈ IRI ∨ bnode ⋅s ∈ BlankNode
                                      | iri ⋅p ∈ IRI
-                                     --iri-⋅o ∈-IRI-∨ bnode-⋅o ∈-BlankNode-∨ literal ⋅o ∈-RDFLiteral  " class="math-display" />
-        </center>
+                                     ──iri─⋅o ∈─IRI─∨ bnode─⋅o ∈─BlankNode─∨ literal ⋅o ∈─RDFLiteral  " /-->
   <table class="zschema">
     <col class="zschema1" span="1" />
     <col class="zschema2" span="1" />
@@ -447,13 +458,10 @@ RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ld
           <div id="triplesForSubject" class="div3">
             <h4>2.1.1 triplesForSubject</h4>
             <!--l. 130--><p class="noindent" >– return set of triples in a graph triples whose subject is a given <span class="cmti-10">RDFTerm</span></p>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ6x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ6x.png" alt="|───────────────────────────────────────────────────────────
                                          |-triplesForSubject : RDFTerm → Graph → Graph
                                          | ∀subj : RDFTerm; g : Graph ∙ triplesForSubjectsubjg = {t : g | t.s = subj}
-                                         ------------------------------------------------------------ " class="math-display" />
-            </center>
+                                         ───────────────────────────────────────────────────────────- " /-->
   <table class="zschema">
     <col class="zschema1" span="1" />
     <col class="zschema2" span="1" />
@@ -491,13 +499,10 @@ RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ld
           <div id="triplesForObject" class="div3">
             <h4>2.1.2 triplesForObject</h4>
             <!--l. 137--><p class="noindent" >– return set of triples in a graph triples whose object is a given <span class="cmti-10">RDFTerm</span></p>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ7x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ7x.png" alt="|───────────────────────────────────────────────────────────
                                          |-triplesForObject : RDFTerm → Graph → Graph
                                          | ∀obj : RDFTerm; g : Graph ∙ triplesForObjectobjg = {t : g | t.o = obj}
-                                         ------------------------------------------------------------ " class="math-display" />
-            </center>
+                                         ───────────────────────────────────────────────────────────- " /-->
   <table class="zschema">
     <col class="zschema1" span="1" />
     <col class="zschema2" span="1" />
@@ -540,10 +545,7 @@ RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ld
           <h3>2.2 Well Known URIs</h3>
           <!--l. 146--><p class="noindent" >The following URI’s are referenced explicitly in the <span class="cmti-10">ShEx </span>implementation:
           <!--l. 148--></p><p class="indent" ></p>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ8x.png" alt="| SHEX -IRI ,SHEX  -BNODE   : IRI ,SHEX-LITERAL  : IRI,SHEX -NONLITERAL   : IRI" class="math-display" />
-          </center>
+          <!-- img class="math-display" src="Z/ShExZ8x.png" alt="| SHEX -IRI ,SHEX  -BNODE   : IRI ,SHEX-LITERAL  : IRI,SHEX -NONLITERAL   : IRI" /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -574,20 +576,17 @@ XSD\_STRING, SHEX\_IRI, SHEX\_BNODE, SHEX\_LITERAL, SHEX\_NONLITERAL : IRI
         that is referenced within the <span class="cmti-10">Schema </span>is also itself a member of the <span class="cmti-10">Schema</span>
         Formally:
         <!--l. 159--></p><p class="indent" ></p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ9x.png" alt="|-Schema ---------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ9x.png" alt="|-Schema ───────────────────────────────────────────────────
                                      | rules : Label ↦→ Rule
                                      | start : Label
-                                     |-----------
+                                     |───────────
                                      | start ∈ dom rules
                                      | ∀r : ranrules ∙
                                      |     (r ∈ rangroup ⇒ (group ⋅r).rule ∈ dom rules) ∧
                                      |     (r ∈ ranand ⇒ ran(and ⋅r) ⊆ domrules) ∧
                                      |     (r ∈ ranxor ⇒ ran (xor ⋅r) ⊆ dom rules) ∧
                                      |     (r ∈ ranarc ∧ (arc ⋅r).valueSpec ∈ ranvalueRef ⇒
-                                     ----------(valueRef ⋅(arc ⋅r).valueSpec) ∈-dom-rules)-----------  " class="math-display" />
-        </center>
+                                     ──────────(valueRef ⋅(arc ⋅r).valueSpec) ∈─dom─rules)───────────  " /-->
 
     <table class="zschema">
       <col class="zschema1" span="1" />
@@ -639,10 +638,7 @@ XSD\_STRING, SHEX\_IRI, SHEX\_BNODE, SHEX\_LITERAL, SHEX\_NONLITERAL : IRI
         a <span class="cmti-10">BlankNode</span>, the type of <span class="cmti-10">Label </span>does not impact the evaluation semantics. For our
         purposes, we can simply define it as a separate free type:</p>
 
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ10x.png" alt="[Label]  " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ10x.png" alt="[Label]  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -663,17 +659,14 @@ XSD\_STRING, SHEX\_IRI, SHEX\_BNODE, SHEX\_LITERAL, SHEX\_NONLITERAL : IRI
         if the <span class="cmti-10">start Rule </span>in the <span class="cmti-10">Schema</span>, in the context of the starting <span class="cmti-10">Schema </span>and <span class="cmti-10">graph</span>,
         returns either <span class="cmti-10">nomatch </span>(<span class="cmbxti-10">z</span>) or <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>) then the function returns <span class="cmti-10">pass</span>. In all other
         cases, the function returns <span class="cmti-10">fail </span>(<span class="cmbxti-10">f</span> ).</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ11x.png" alt="|-----------------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ11x.png" alt="|───────────────────────────────────────────────────────────
                                       | evaluate : Schema → Graph → IRI → OptValidity
-                                      |-----------
+                                      |───────────
                                       | ∀s : Schema;g : Graph;i : IRI;v : OptValidity;ec : EvalContext |
                                       |     ec.graph = g ∧ ec.schema = s ∙
                                       | evaluatesgi =
                                       |     ifevalRuleec(irii)(s.ruless.start) ∈ {z ,p }
-                                      ------then-p else f-----------------------------------------  " class="math-display" />
-        </center>
+                                      ──────then─p else f─────────────────────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -730,10 +723,7 @@ XSD\_STRING, SHEX\_IRI, SHEX\_BNODE, SHEX\_LITERAL, SHEX\_NONLITERAL : IRI
         <!--l. 198--><p class="noindent" >A <span class="cmti-10">ShEx Rule </span>is a set of constraints that can be evaluated against a reference
         <span class="cmti-10">RDFTerm</span> in the context of a given <span class="cmti-10">Schema </span>and RDF <span class="cmti-10">Graph</span>:</p>
 
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ12x.png" alt="EvalContext ^= [schema : Schema;graph : Graph]  " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ12x.png" alt="EvalContext ^= [schema : Schema;graph : Graph]  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -764,11 +754,8 @@ EvalContext \defs [schema: Schema; graph: Graph] \\
           <li class="itemize"><span class="bold">Error(</span><span class="cmmi-10">ε</span><span class="bold">) </span>- an <span class="cmti-10">XorRule </span>was evaluated and two or more components passed
         the evaluation.</li></ul>
         <!--l. 213-->
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ13x.png" alt="OptValidity ::= p | f | z | ∅ | ε
-                                      " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ13x.png" alt="OptValidity ::= p | f | z | ∅ | ε
+                                      " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -801,14 +788,11 @@ OptValidity ::= \pass | \fail | \nomatch | \none | \error \\
           <li class="itemize"><span class="cmbxti-10">XorRule </span>– identifies a set of <span class="cmti-10">Rules</span>, exactly one of which must pass when
         evaluated against the supplied <span class="cmti-10">Graph </span>and <span class="cmti-10">EvalContext</span></li></ul>
         <!--l. 228-->
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ14x.png" alt="Rule ::= arc⟨⟨ArcRule⟩⟩ |
+        <!-- img class="math-display" src="Z/ShExZ14x.png" alt="Rule ::= arc⟨⟨ArcRule⟩⟩ |
                                       rarc⟨⟨RevArcRule⟩⟩ |
                                       group⟨⟨GroupRule⟩⟩ |
                                       and⟨⟨AndRule⟩⟩ |
-                                      xor⟨⟨XorRule⟩⟩ " class="math-display" />
-        </center>
+                                      xor⟨⟨XorRule⟩⟩ " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -837,9 +821,7 @@ Rule ::= arc \ldata ArcRule \rdata | \\
 \t1 xor \ldata XorRule \rdata \\
 \end{zed}
         </pre>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ15x.png" alt="|-----------------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ15x.png" alt="|───────────────────────────────────────────────────────────
                                       |-evalRule-: EvalContext → RDFTerm →  Rule → OptValidity
                                       | ∀ec : EvalContext;i : RDFTerm; r : Rule ∙ evalRule ec i r =
                                       |     ifr ∈ ran arc
@@ -852,9 +834,8 @@ Rule ::= arc \ldata ArcRule \rdata | \\
                                       |         then evalAndRule ec i(and ⋅r)
                                       |     else
                                       |         evalXorRule ec i(xor ⋅r)
-                                      ------------------------------------------------------------
-                                      " class="math-display" />
-        </center>
+                                      ───────────────────────────────────────────────────────────-
+                                      " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -934,13 +915,10 @@ Rule ::= arc \ldata ArcRule \rdata | \\
         not allow cyclic dependencies. This function is undefined if <span class="cmti-10">Label </span>is not in
         <span class="cmti-10">EvalContext</span>
         <!--l. 256--><p class="indent" ></p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ16x.png" alt="|-----------------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ16x.png" alt="|───────────────────────────────────────────────────────────
                                       | evalRule′ : EvalContext → RDFTerm → Label → OptValidity
-                                      |-----------
-                                      --∀ec-: EvalContext;l : Label ∙-l ∈-domec.schema.shapes-------  " class="math-display" />
-        </center>
+                                      |───────────
+                                      ──∀ec─: EvalContext;l : Label ∙─l ∈─domec.schema.shapes───────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -981,17 +959,14 @@ Rule ::= arc \ldata ArcRule \rdata | \\
           triples, an <span class="cmti-10">ObjectSpecification </span>to evaluate the result, an optional <span class="cmti-10">min </span>and <span class="cmti-10">max</span>
           cardinality and a (possibly empty) set of <span class="cmti-10">Actions</span>:</p>
 
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ17x.png" alt="--ArcRule---------------------------------------------------
+          <!-- img class="math-display" src="Z/ShExZ17x.png" alt="──ArcRule───────────────────────────────────────────────────
                                         | filter : PredicateFilter
                                         | valueSpec : ObjectSpecification
                                         | min,max : ℕ [0 ..1]
                                         | actions : ℙAction
-                                        |-----------
-                                        --(#min-=-1-∧-#max-=-1) ⇒-valuemin-≤-valuemax----------------
-                                        " class="math-display" />
-          </center>
+                                        |───────────
+                                        ──(#min─=─1─∧─#max─=─1) ⇒─valuemin─≤─valuemax────────────────
+                                        " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1045,9 +1020,7 @@ Rule ::= arc \ldata ArcRule \rdata | \\
                 class="enumerate" id="x1-9008x4">Return the result of evaluating <span class="cmti-10">actions </span>against the matching triples.</li>
           </ol>
           <!--l. 283-->
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ18x.png" alt="|-----------------------------------------------------------
+          <!-- img class="math-display" src="Z/ShExZ18x.png" alt="|───────────────────────────────────────────────────────────
                                         |-evalArcRule : EvalContext → RDFTerm → ArcRule → OptValidity
                                         | ∀ec : EvalContext;s : RDFTerm; ar : ArcRule;sg : Graph |
                                         |     sg = evalPredicateFilterar.filter(triplesForSubject s ec.graph) ∙
@@ -1058,8 +1031,7 @@ Rule ::= arc \ldata ArcRule \rdata | \\
                                         |         then evalObjectSpecification ec ar.valueSpec sg
                                         |     else
                                         |         dispatchar.actions sg ec
-                                        ------------------------------------------------------------  " class="math-display" />
-          </center>
+                                        ───────────────────────────────────────────────────────────-  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1133,12 +1105,9 @@ evalArcRule~ec~s~ar = \\
               <li class="itemize"><span class="cmti-10" id="pfWild">pfWild </span>- an expression that matches any predicate <span class="cmti-10">except </span>those matching
             the (possibly empty) set of <span class="cmti-10">IRIorStems</span></li></ul>
             <!--l. 304-->
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ19x.png" alt="IRIorStem ::= iosi⟨⟨IRI⟩⟩ | ioss⟨⟨IRIstem ⟩⟩
+            <!-- img class="math-display" src="Z/ShExZ19x.png" alt="IRIorStem ::= iosi⟨⟨IRI⟩⟩ | ioss⟨⟨IRIstem ⟩⟩
                                           PredicateFilter ::= pfIRI ⟨⟨IRIorStem ⟩⟩ | pfWild⟨⟨ℙ IRIorStem ⟩⟩
-                                          " class="math-display" />
-            </center>
+                                          " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -1160,10 +1129,7 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
             stringified representation of <span class="cmti-10">IRIstem </span>according to standard IRI matching rules <span class="cite">[<a href="#bib-RFC3987">RFC3987</a>]</span>.
             This is represented by the function:
 
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ20x.png" alt="[IRIstem]  " class="math-display" />
-            </center>
+            <!-- img class="math-display" src="Z/ShExZ20x.png" alt="[IRIstem]  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -1176,12 +1142,9 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
 [IRIstem]
 \end{zed}
 </pre>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ21x.png" alt="|-----------------------------------------------------------
-                                          --IRIstemRange-:-IRIstem-→↦ℙ-IRI------------------------------
-                                          " class="math-display" />
-            </center>
+            <!-- img class="math-display" src="Z/ShExZ21x.png" alt="|───────────────────────────────────────────────────────────
+                                          ──IRIstemRange─:─IRIstem─→↦ℙ─IRI──────────────────────────────
+                                          " /-->
 
     <table class="zschema">
       <col class="zschema1" span="1" />
@@ -1206,16 +1169,13 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
 </pre>
             <span class="cmti-10">evalPredicateFilter </span>returns all of the triples in a <span class="cmti-10">Graph </span>whose predicate matches the
             supplied <span class="cmti-10">PredicateFilter</span>:
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ22x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ22x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalPredicateFilter : PredicateFilter→↦ Graph→↦ Graph
-                                          |-----------
+                                          |───────────
                                           | ∀f : PredicateFilter;g : Graph ∙ evalPredicateFilterfg =
                                           |     iff ∈ ran pfIRI then evalIRIorStem (pfIRI ⋅f)g
-                                          ------else-evalWild(pfWild-⋅f)g--------------------------------
-                                          " class="math-display" />
-            </center>
+                                          ──────else─evalWild(pfWild─⋅f)g────────────────────────────────
+                                          " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1259,16 +1219,13 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
             <span class="cmti-10">evalIRIorStem </span>returns all of the triples in a <span class="cmti-10">Graph </span>matching the supplied
             <span class="cmti-10">IRIorStem</span>
 
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ23x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ23x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalIRIorStem  : IRIorStem →↦ Graph→↦ Graph
-                                          |-----------
+                                          |───────────
                                           | ∀e : IRIorStem; g : Graph ∙ evalIRIorStemeg =
                                           |     ife ∈ ran iosi then {t : g | iri ⋅t.p = iosi ⋅e}
-                                          ------else-{t : g-| iri ⋅t.p ∈-IRIstemRange-(ioss ⋅e)}----------
-                                          " class="math-display" />
-            </center>
+                                          ──────else─{t : g─| iri ⋅t.p ∈─IRIstemRange─(ioss ⋅e)}──────────
+                                          " /-->
 
     <table class="zschema">
       <col class="zschema1" span="1" />
@@ -1312,15 +1269,12 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
 </pre>
             <span class="cmti-10">evalWild </span>returns all of the triples in a <span class="cmti-10">Graph </span>that do <span class="cmti-10">not </span>match an entry in the set of
             <span class="cmti-10">IRIorStems</span>.
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ24x.png" alt="|-----------------------------------------------------------
-                                          |-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ24x.png" alt="|───────────────────────────────────────────────────────────
+                                          |───────────────────────────────────────────────────────────
                                           |-evalWild-: ℙIRIorStem →↦Graph →↦ Graph
                                           | ∀es : ℙIRIorStem; g : Graph ∙ evalWildesg =
                                           |     {t : g | t ∕∈ ⋃ {e : es ∙ evalIRIorStemeg }}
-                                          ------------------------------------------------------------ " class="math-display" />
-            </center>
+                                          ──────────────────────────────────────────────────────────── " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1375,15 +1329,12 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
               <li class="itemize"><span class="cmti-10" id="ValueReference">ValueReference </span>- matches any target that is considered valid according the
             <span class="cmti-10">Rule </span>identified by <span class="cmti-10">Label</span>.</li></ul>
             <!--l. 352-->
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ25x.png" alt="MatchValue ::= mviri⟨⟨IRI ⟩⟩ | mviris⟨⟨IRIstem ⟩⟩ |
+            <!-- img class="math-display" src="Z/ShExZ25x.png" alt="MatchValue ::= mviri⟨⟨IRI ⟩⟩ | mviris⟨⟨IRIstem ⟩⟩ |
                                           mvlit⟨⟨RDFLiteral⟩⟩
                                           ObjectSpecification ::= valueType ⟨⟨IRI⟩⟩ |
                                           valueSet⟨⟨ℙ MatchValue⟩⟩ |
                                           osWild⟨⟨ℙ MatchValue⟩⟩ |
-                                          valueRef⟨⟨Label⟩⟩ " class="math-display" />
-            </center>
+                                          valueRef⟨⟨Label⟩⟩ " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -1435,10 +1386,8 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
             </li></ul>
             <!--l. 377--><p class="indent" ></p>
 
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ26x.png" alt="|-----------------------------------------------------------
-                                          |-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ26x.png" alt="|───────────────────────────────────────────────────────────
+                                          |───────────────────────────────────────────────────────────
                                           |-evalCardinality : Graph → ℕ [0 ..1] → ℕ[0..1] → OptValidity
                                           | ∀g : Graph;min,max : ℕ[0 ..1] ∙ evalCardinalitygminmax =
                                           |     if#min  = 1 ∧ #g = 0 ∧ valuemin = 0
@@ -1449,8 +1398,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
                                           |            (#max  = 1 ∧ #g &gt; valuemax)
                                           |         then f
                                           |     else p
-                                          ------------------------------------------------------------  " class="math-display" />
-            </center>
+                                          ───────────────────────────────────────────────────────────-  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1517,17 +1465,14 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
             <!--l. 391--><p class="noindent" ><span class="paragraphHead"><a href="#x1-130004.1" id="x1-130004.1"><span class="bold">evalObjectSpecification</span></a></span>
             – returns <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>) if all of the triples in a <span class="cmti-10">Graph </span>match the supplied
             <span class="cmti-10">ObjectSpecification</span>, otherwise <span class="cmti-10">fail </span>(<span class="cmbxti-10">f</span> )</p>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ27x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ27x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalObjectSpecification : EvalContext → ObjectSpecification → Graph →
                                           |     OptValidity
-                                          |-----------
+                                          |───────────
                                           | ∀ec : EvalContext;os : ObjectSpecification;g : Graph ∙
                                           | evalObjectSpecificationecosg =
                                           |     if ∀t : g ∙ evalObjectSpecificationTripleecost.o = p then p
-                                          ------else-f-------------------------------------------------  " class="math-display" />
-            </center>
+                                          ──────else─f─────────────────────────────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1573,12 +1518,10 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 \t1 \ELSE \fail
 \end{gendef}</pre>
 
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ28x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ28x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalObjectSpecificationTriple : EvalContext → ObjectSpecification →
                                           |     RDFTerm  → OptValidity
-                                          |-----------
+                                          |───────────
                                           | ∀ec : EvalContext;os : ObjectSpecification;n : RDFTerm ∙
                                           | evalObjectSpecificationTripleecosn =
                                           |     ifos ∈ ran valueType then
@@ -1588,8 +1531,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
                                           |     else ifos ∈ ran osWild then
                                           |         evalTermWild(osWild ⋅os)n
                                           |     else
-                                          ----------evalTermReferenceec(valueRef-⋅os)n--------------------  " class="math-display" />
-            </center>
+                                          ──────────evalTermReferenceec(valueRef─⋅os)n────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1666,9 +1608,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
               </li>
             <li class="itemize">type <span class="cmti-10">IRI </span>and <span class="cmti-10">ValueType </span>is type <span class="cmti-10">RDF</span>_<span class="cmti-10">Literal</span></li></ul>
             <!--l. 424-->
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ29x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ29x.png" alt="|───────────────────────────────────────────────────────────
                                           |-evalValueType : IRI →↦ RDFTerm ↦→ OptValidity
                                           | ∀vt : IRI ;n : RDFTerm; l : RDFLiteral ∙ evalValueTypevtn =
                                           |     ifvt = SHEX -IRI ∧ n ∈ raniri then p
@@ -1679,8 +1619,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
                                           |         ((l ∈ ranpl ∧ (pl ⋅l).dataType = vt) ∨
                                           |         (l ∈ rantl ∧ (tl ⋅l).dataType = vt)) then p
                                           |     else f
-                                          ------------------------------------------------------------  " class="math-display" />
-            </center>
+                                          ───────────────────────────────────────────────────────────-  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1749,11 +1688,9 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 \end{gendef}</pre>
             <!--l. 437--><p class="noindent" ><span class="paragraphHead"><a href="#x1-150004.1" id="x1-150004.1"><span class="bold">evalTermSet</span></a></span>
             – return <span class="cmbxti-10">p</span> if the supplied <span class="cmti-10">RDFTerm </span>is a member of <span class="cmti-10">MatchValue</span></p>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ30x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ30x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalTermSet : ℙMatchValue →↦RDFTerm  ↦→ OptValidity
-                                          |-----------
+                                          |───────────
                                           | ∀mvs : ℙ MatchValue;n : RDFTerm ∙ evalTermSetmvsn =
                                           |     if ∃mv : mvs ∙
                                           |         ((mv ∈ ranmviri ∧ n ∈ ran iri ∧ (iri ⋅n ) = mviri ⋅mv ) ∨
@@ -1761,8 +1698,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
                                           |            (iri ⋅n) ∈ IRIstemRange (mviris ⋅mv )) ∨
                                           |         (n ∈ ranliteral ∧ mvlit ⋅mv = literal ⋅n ))
                                           |     then p
-                                          ------else-f-------------------------------------------------  " class="math-display" />
-            </center>
+                                          ──────else─f─────────────────────────────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1826,14 +1762,11 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
             <!--l. 452--><p class="noindent" ><span class="paragraphHead"><a href="#x1-160004.1" id="x1-160004.1"><span class="bold">evalTermWild</span></a></span>
             – return pass (<span class="cmbxti-10">p</span>) if the supplied <span class="cmti-10">RDFTerm </span>is <span class="cmti-10">not </span>a member of <span class="cmti-10">MatchValue</span>.
             <!--l. 455--></p><p class="indent" ></p>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ31x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ31x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalTermWild : ℙ MatchValue → RDFTerm → OptValidity
-                                          |-----------
+                                          |───────────
                                           | ∀mvs : ℙ MatchValue;n : RDFTerm ∙ evalTermWildmvsn =
-                                          ------if evalTermSet mvs n = p then f else p--------------------  " class="math-display" />
-            </center>
+                                          ──────if evalTermSet mvs n = p then f else p────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1873,16 +1806,13 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
             – return <span class="cmbxti-10">p</span> if the subgraph of the <span class="cmti-10">EvalContext </span>graph whose subjects match the
             supplied <span class="cmti-10">RDFTerm </span>satisfies the <span class="cmti-10">ValueReference </span>rule.
             <!--l. 464--></p><p class="indent" ></p>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ32x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ32x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalTermReference : EvalContext→↦ Label→↦ RDFTerm →↦ OptValidity
-                                          |-----------
+                                          |───────────
                                           | ∀ec : EvalContext;vr : Label;n : RDFTerm ∙
                                           | evalTermReferenceecvrn =
                                           |     ifn ∕∈ ranliteral then evalRule′ecnvr
-                                          ------else-f-------------------------------------------------  " class="math-display" />
-            </center>
+                                          ──────else─f─────────────────────────────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -1938,17 +1868,14 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <span class="cmti-10">PredicateFilter </span>to select the triples, an <span class="cmti-10">SubjectSpecification </span>to evaluate the
           result, a optional <span class="cmti-10">min </span>and <span class="cmti-10">max </span>cardinality and a (possibly empty) set of
           <span class="cmti-10">Actions</span>:</p>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ33x.png" alt="--RevArcRule------------------------------------------------
+          <!-- img class="math-display" src="Z/ShExZ33x.png" alt="──RevArcRule────────────────────────────────────────────────
                                         | filter : PredicateFilter
                                         | valueSpec : SubjectSpecification
                                         | min,max : ℕ [0 ..1]
                                         | actions : ℙAction
-                                        |-----------
-                                        --(#min-=-1-∧-#max-=-1) ⇒-valuemin-≤-valuemax----------------
-                                        " class="math-display" />
-          </center>
+                                        |───────────
+                                        ──(#min─=─1─∧─#max─=─1) ⇒─valuemin─≤─valuemax────────────────
+                                        " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2001,10 +1928,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
                 class="enumerate" id="x1-18008x4">Return the result of evaluating <span class="cmti-10">actions </span>against the matching triples.</li>
           </ol>
           <!--l. 494-->
-          <center class="math-display" >
-
-            <img 
-                src="Z/ShExZ34x.png" alt="|-----------------------------------------------------------
+            <!-- img src="Z/ShExZ34x.png" alt="|───────────────────────────────────────────────────────────
                                         |-evalRevArcRule : EvalContext → RDFTerm → RevArcRule → OptValidity
                                         | ∀ec : EvalContext;o : RDFTerm; rar : RevArcRule;og : Graph |
                                         |     og = evalPredicateFilterrar.filter(triplesForObjectoec.graph) ∙
@@ -2015,8 +1939,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
                                         |         then evalSubjectSpecificationecrar.valueSpecog
                                         |     else
                                         |         dispatchrar.actionsogec
-                                        ------------------------------------------------------------  " class="math-display" />
-          </center>
+                                        ───────────────────────────────────────────────────────────-  " class="math-display" /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2093,12 +2016,9 @@ evalRevArcRule~ec~o~rar = \\
               <li class="itemize"><span class="cmti-10">subjectRef  </span>- matches any target that is considered valid according the <span class="cmti-10">Rule</span>
             identified by <span class="cmti-10">Label</span>.</li></ul>
             <!--l. 514-->
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ35x.png" alt="SubjectSpecification ::= subjectSet⟨⟨ℙMatchValue⟩⟩ |
+            <!-- img class="math-display" src="Z/ShExZ35x.png" alt="SubjectSpecification ::= subjectSet⟨⟨ℙMatchValue⟩⟩ |
                                           ssWild ⟨⟨ℙMatchValue⟩⟩ |
-                                          subjectRef ⟨⟨Label⟩⟩ " class="math-display" />
-            </center>
+                                          subjectRef ⟨⟨Label⟩⟩ " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -2121,17 +2041,14 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
 
             <!--l. 520--><p class="indent" >   paragraphevalSubjectSpecification – returns <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>) if all of the triples in a
             <span class="cmti-10">Graph </span>match the supplied <span class="cmti-10">SubjectSpecification</span>, otherwise <span class="cmti-10">fail </span>(<span class="cmbxti-10">f</span> )</p>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ36x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ36x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalSubjectSpecification : EvalContext → SubjectSpecification → Graph →
-                                          ------OptValidity
+                                          ──────OptValidity
                                           | ∀ec : EvalContext;ss : SubjectSpecification;g : Graph ∙
                                           | evalSubjectSpecificationecssg =
                                           |     if ∀t : g ∙ evalSubjectSpecificationTripleecsst.o = p then p
                                           |     else f
-                                          ------------------------------------------------------------  " class="math-display" />
-            </center>
+                                          ────────────────────────────────────────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2176,12 +2093,10 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
 \t1 \IF \forall t: g @ evalSubjectSpecificationTriple~ec~ss~t.o = \pass \THEN \pass \\
 \t1 \ELSE \fail
 \end{gendef}</pre>
-            <center class="math-display" >
-              <img 
-                  src="Z/ShExZ37x.png" alt="|-----------------------------------------------------------
+            <!-- img class="math-display" src="Z/ShExZ37x.png" alt="|───────────────────────────────────────────────────────────
                                           | evalSubjectSpecificationTriple : EvalContext → SubjectSpecification →
                                           |     RDFTerm  → OptValidity
-                                          |-----------
+                                          |───────────
                                           | ∀ec : EvalContext;ss : SubjectSpecification;n : RDFTerm ∙
                                           | evalSubjectSpecificationTriple ec ss n =
                                           |     ifss ∈ ransubjectSet then
@@ -2189,8 +2104,7 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
                                           |     else ifss ∈ ranssWild then
                                           |         evalTermWild(ssWild ⋅ss)n
                                           |     else
-                                          ----------evalTermReferenceec(subjectRef-⋅ss)n-------------------  " class="math-display" />
-            </center>
+                                          ──────────evalTermReferenceec(subjectRef─⋅ss)n───────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2267,12 +2181,9 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
           <!--l. 552--></p><p class="indent" >   The second purpose of a group rule is to allow a set of external <span class="cmti-10">actions </span>to be
           evaluated whenever the referenced <span class="cmti-10">rule </span>returns <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>).
           <!--l. 557--></p><p class="indent" ></p>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ38x.png" alt="OPT  ::= OPTIONAL   | REQUIRED
+          <!-- img class="math-display" src="Z/ShExZ38x.png" alt="OPT  ::= OPTIONAL   | REQUIRED
                                         GroupRule ≙ [rule : Label;opt : OPT ;actions : ℙ Action ]
-                                        " class="math-display" />
-          </center>
+                                        " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -2290,9 +2201,7 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
 \end{zed}</pre>
           <span class="cmti-10">evalGroupRule </span>evaluates <span class="cmti-10">Rule</span>, applies <span class="cmti-10">opt </span>and, if the result is <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>), evaluates the
           actions with respect to the passing <span class="cmti-10">Graph</span>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ39x.png" alt="|-----------------------------------------------------------
+          <!-- img class="math-display" src="Z/ShExZ39x.png" alt="|───────────────────────────────────────────────────────────
                                         |-evalGroupRule : EvalContext → RDFTerm →  GroupRule → OptValidity
                                         | ∀ec : EvalContext;i : RDFTerm; gr : GroupRule ∙ evalGroupRuleecigr =
                                         |     if evalRule′ ec i gr.rule = ∅ ∧ gr.opt = OPTIONAL
@@ -2302,8 +2211,7 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
                                         |     else if evalRule′ ec i gr.rule = p
                                         |         then dispatch gr.actions ∅ ec
                                         |     else evalRule′ ec i gr.rule
-                                        ------------------------------------------------------------  " class="math-display" />
-          </center>
+                                        ───────────────────────────────────────────────────────────-  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2453,11 +2361,8 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
 
           <!--l. 590--><p class="indent" >   The formal implementation of which will be realized in the corresponding
           function:</p>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ40x.png" alt="|-----------------------------------------------------------
-                                        --And-: OptValidity →-OptValidity-→-OptValidity-----------------  " class="math-display" />
-          </center>
+          <!-- img class="math-display" src="Z/ShExZ40x.png" alt="|───────────────────────────────────────────────────────────
+                                        ──And─: OptValidity →─OptValidity─→─OptValidity─────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2483,10 +2388,7 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
           <!--l. 595--><p class="indent" >   Observing that the above table is a monoid with <span class="cmti-10">nomatch </span>(<span class="cmbxti-10">z</span>) as an identity
           element, <span class="cmti-10">evalAndRule </span>can be applied using the standard functional pattern:</p>
 
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ41x.png" alt="AndRule == seq₁Label  " class="math-display" />
-          </center>
+          <!-- img class="math-display" src="Z/ShExZ41x.png" alt="AndRule == seq₁Label  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -2499,15 +2401,12 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
 AndRule == \seq_1 Label
 \end{zed}
 </pre>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ42x.png" alt="|-----------------------------------------------------------
+          <!-- img class="math-display" src="Z/ShExZ42x.png" alt="|───────────────────────────────────────────────────────────
                                         | evalAndRule : EvalContext → RDFTerm → AndRule → OptValidity
-                                        |-----------
+                                        |───────────
                                         | ∀ec : EvalContext;i : RDFTerm; r : AndRule ∙
                                         | evalAndRuleecir =
-                                        ------foldr And z (map (evalRule′ec i) r)---------------------------  " class="math-display" />
-          </center>
+                                        ──────foldr And z (map (evalRule′ec i) r)───────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2634,12 +2533,9 @@ AndRule == \seq_1 Label
 The formal implementation of which will be realized in the corresponding
           function:
 
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ43x.png" alt="|-----------------------------------------------------------
-                                        --Xor-: OptValidity →-OptValidity-→-OptValidity-----------------
-                                        " class="math-display" />
-          </center>
+          <!-- img class="math-display" src="Z/ShExZ43x.png" alt="|───────────────────────────────────────────────────────────
+                                        ──Xor─: OptValidity →─OptValidity─→─OptValidity─────────────────
+                                        " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2664,10 +2560,7 @@ The formal implementation of which will be realized in the corresponding
 \end{gendef}</pre>
           As with the <span class="cmti-10">And </span>function above, <span class="cmti-10">Xor </span>is a monoid whose identity is <span class="cmti-10">fail </span>(<span class="cmbxti-10">f</span> ) resulting
           in the following definition for <span class="cmti-10">evalXorRule</span>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ44x.png" alt="XorRule == seq₁Label  " class="math-display" />
-          </center>
+          <!-- img class="math-display" src="Z/ShExZ44x.png" alt="XorRule == seq₁Label  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -2679,15 +2572,12 @@ The formal implementation of which will be realized in the corresponding
           <pre class="Z-source">\begin{zed}
 XorRule == \seq_1 Label
 \end{zed}</pre>
-          <center class="math-display" >
-            <img 
-                src="Z/ShExZ45x.png" alt="|-----------------------------------------------------------
+          <!-- img class="math-display" src="Z/ShExZ45x.png" alt="|───────────────────────────────────────────────────────────
                                         | evalXorRule : EvalContext → RDFTerm →  XorRule → OptValidity
-                                        |-----------
+                                        |───────────
                                         | ∀ec : EvalContext;i : RDFTerm; r : XorRule ∙
                                         | evalXorRuleecir =
-                                        ------foldrXorf(map-(evalRule′eci)r)----------------------------  " class="math-display" />
-          </center>
+                                        ──────foldrXorf(map─(evalRule′eci)r)────────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -2751,10 +2641,7 @@ XorRule == \seq_1 Label
         <!--l. 655--><p class="indent" >   The dispatch function usually returns pass (<span class="cmbxti-10">p</span>) or fail (<span class="cmbxti-10">f</span> ), although there may also
         be cases for other <span class="cmti-10">OptValidity </span>values in certain circumstances. The dispatch function
         always returns <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>) if the set of actions is empty.</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ46x.png" alt="[Action]  " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ46x.png" alt="[Action]  " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -2767,14 +2654,11 @@ XorRule == \seq_1 Label
 [Action]
 \end{zed}
 </pre>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ47x.png" alt="|-----------------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ47x.png" alt="|───────────────────────────────────────────────────────────
                                       |-dispatch : ℙ-Action → Graph → EvalContext → OptValidity
                                       | ∀as : ℙAction;g : Graph; ec : EvalContext ∙
                                       |     as = ∅ ⇒ dispatchasgec = p
-                                      ------------------------------------------------------------  " class="math-display" />
-        </center>
+                                      ───────────────────────────────────────────────────────────-  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -3199,15 +3083,12 @@ XorRule == \seq_1 Label
         function of type <span class="cmti-10">T</span>, an identity function for type <span class="cmti-10">T</span>, a sequence of type <span class="cmti-10">T </span>and
         returns the result of applying the function to the right to left pairs of the
         sequence.</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ48x.png" alt="|-[T]-------------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ48x.png" alt="|─[T]───────────────────────────────────────────────────────
                                       |-foldr-: (T-→ T →  T) → T → seqT →  T
                                       | ∀f : T → T → T ;id : T ;xs : seq T ∙ foldrfidxs =
                                       |     ifxs = ⟨⟩ then id
                                       |     else f(headxs)(foldrfid (tailxs))
-                                      ------------------------------------------------------------  " class="math-display" />
-        </center>
+                                      ───────────────────────────────────────────────────────────-  " /-->
         <pre class="Z-source">\begin{gendef}[T]
    foldr: (T \fun T \fun T) \fun T \fun \seq T \fun T
 \where
@@ -3223,15 +3104,12 @@ XorRule == \seq_1 Label
         <!--l. 682--><p class="noindent" >The <span class="cmti-10">map </span>function takes a function from type <span class="cmti-10">A </span>to type <span class="cmti-10">B </span>and applies it to all
         members in the supplied sequence</p>
 
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ49x.png" alt="|-[A,B]-----------------------------------------------------
+        <!-- img class="math-display" src="Z/ShExZ49x.png" alt="|─[A,B]─────────────────────────────────────────────────────
                                       | map : (A → B ) → seqA → seq B
-                                      |-----------
+                                      |───────────
                                       | ∀f : A → B; xs : seqA ∙ mapf xs =
                                       |     ifxs = ⟨⟩ then ⟨⟩⌢
-                                      ------else-⟨f(headxs)⟩--mapf(tailxs)---------------------------  " class="math-display" />
-        </center>
+                                      ──────else─⟨f(headxs)⟩──mapf(tailxs)───────────────────────────  " /-->
     <table class="zschema">
       <col class="zschema1" span="1" />
       <col class="zschema2" span="1" />
@@ -3276,11 +3154,8 @@ XorRule == \seq_1 Label
         <div id="HelperFunctions" class="div2">
         <h3>6.3 Helper Functions</h3>
         <!--l. 693--><p class="noindent" ><span class="cmti-10">Z </span>uses the notion of <span class="cmti-10">free type definitions </span>in the form:</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ50x.png" alt="FreeType ::= constructor⟨⟨source⟩⟩
-                                      " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ50x.png" alt="FreeType ::= constructor⟨⟨source⟩⟩
+                                      " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -3296,11 +3171,8 @@ FreeType ::= constructor \ldata source \rdata
         which introduces a collection of constants of type <span class="cmti-10">FreeType</span>, one for each
         element of the set <span class="cmti-10">source</span>. <span class="cmti-10">constructor </span>is an injective function from <span class="cmti-10">source </span>to
         <span class="cmti-10">FreeType</span>:
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ51x.png" alt="constructor ::= source ↣ FreeType
-                                      " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ51x.png" alt="constructor ::= source ↣ FreeType
+                                      " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -3315,11 +3187,8 @@ constructor ::= source \inj FreeType
         In the models that follow, there is a need to reverse this – to find the <span class="cmti-10">source </span>for a
         given <span class="cmti-10">FreeType </span>instance. The <span class="cmsy-10">⋅ </span>function exists for this purpose. As an example, if one
         were to define:
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ52x.png" alt="TravelDirections ::= bus⟨⟨BusDirections⟩⟩ | walking⟨⟨WalkingDirections⟩⟩
-                                      " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ52x.png" alt="TravelDirections ::= bus⟨⟨BusDirections⟩⟩ | walking⟨⟨WalkingDirections⟩⟩
+                                      " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -3333,12 +3202,9 @@ TravelDirections ::= bus \ldata BusDirections \rdata | \ walking \ldata WalkingD
 \end{syntax}</pre>
         If one is supplied with an instance of <span class="cmti-10">Travel </span>, one can convert it to the appropriate
         type by:
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ53x.png" alt="x : TravelDirections
-                                      |-----------
-                                      ifx ∈ ranbus then bus ⋅x else walking ⋅x  " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ53x.png" alt="x : TravelDirections
+                                      |───────────
+                                      ifx ∈ ranbus then bus ⋅x else walking ⋅x  " /-->
   <table class="zschema">
     <col class="zschema1" span="1" />
     <col class="zschema2" span="1" />
@@ -3355,13 +3221,10 @@ x : TravelDirections
 \IF x \in \ran bus \THEN bus \entryFor x \ELSE walking \entryFor x
 \end{syntax}</pre>
         <!--l. 717--><p class="indent" ></p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ54x.png" alt="--[X,Y ]----------------------------------------------------
-                                      | -⋅- : (X ↣ Y ) × Y →↦X
-                                      |-----------
-                                      --∀y-: Y-;f : X-↣-Y-∙-f ⋅y-=-(μx-: dom-f | fx-=-y)----------  " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ54x.png" alt="──[X,Y ]────────────────────────────────────────────────────
+                                      | ─⋅─ : (X ↣ Y ) × Y →↦X
+                                      |───────────
+                                      ──∀y─: Y─;f : X─↣─Y─∙─f ⋅y─=─(μx─: dom─f | fx─=─y)──────────  " /-->
   <table class="zschema">
     <col class="zschema1" span="1" />
     <col class="zschema2" span="1" />
@@ -3397,10 +3260,7 @@ x : TravelDirections
 \end{gendef}</pre>
         <!--l. 725--><p class="indent" >   One way to represent optional values is a set with one member. We take that
         route here and introduce a bit of syntactic sugar to show our intent:</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ55x.png" alt="T [0 ..1] == {s : ℙ T | #s ≤ 1} " class="math-display" />
-        </center>
+        <!-- img class="math-display" src="Z/ShExZ55x.png" alt="T [0 ..1] == {s : ℙ T | #s ≤ 1} " /-->
     <table class="zzed" style="width:50em;">
       <col class="zzed1" span="1" />
       <tbody>
@@ -3413,13 +3273,10 @@ x : TravelDirections
   \optional[T] == \{ s : \power T \mid \# s \leq 1 \} \\
 \end{zed}</pre>
         <!--l. 731--><p class="indent" >   And a shorthand for addressing the content:</p>
-        <center class="math-display" >
-          <img 
-              src="Z/ShExZ56x.png" alt="|-[T]-------------------------------------------------------
-                                      |-value-: ℙT-↦→ T
+        <!-- img class="math-display" src="Z/ShExZ56x.png" alt="|─[T]───────────────────────────────────────────────────────
+                                      |─value─: ℙT─↦→ T
                                       | ∀s : ℙT ∙ values = (μe : T | e ∈ s)
-                                      ------------------------------------------------------------  " class="math-display" />
-        </center>
+                                      ────────────────────────────────────────────────────────────  " /-->
   <table class="zschema">
     <col class="zschema1" span="1" />
     <col class="zschema2" span="1" />
