@@ -109,44 +109,71 @@
       /**/
     </style>
     <script type="text/javascript">
-      var DisplayLaTeX = null;
-      var LatexControl = null;
-      var Zsources = null;
-      var zlabel = " LaTeX for Z notation (or press 'z')";
       function setClass (elements, display) {
         for (var i in elements)
           try {
             elements[i].style.display = display;
           } catch (err) {  }
       }
-      function toggle (evt) {
-        if (!DisplayLaTeX) {
-          setClass(Zsources, "block");
-          LatexControl.removeChild(LatexControl.childNodes[0]);
-          LatexControl.appendChild(document.createTextNode("Hide"+zlabel));
-          DisplayLaTeX = true;
-        } else {
-          setClass(Zsources, "none");
-          LatexControl.removeChild(LatexControl.childNodes[0]);
-          LatexControl.appendChild(document.createTextNode("Display"+zlabel));
-          DisplayLaTeX = false;
+
+      var Z = {
+        display: null, control: null, sources: null,
+        label: " LaTeX for Z notation (or press 'z')",
+        toggle: function () {
+          if (!this.display) {
+            setClass(this.sources, "block");
+            this.control.removeChild(this.control.childNodes[0]);
+            this.control.appendChild(document.createTextNode("Hide"+this.label));
+            this.display = true;
+          } else {
+            setClass(this.sources, "none");
+            this.control.removeChild(this.control.childNodes[0]);
+            this.control.appendChild(document.createTextNode("Display"+this.label));
+            this.display = false;
+          }
+        },
+        prepare: function () {
+          var intro = document.getElementById("intro");
+          var p = document.createElement("p");
+          this.control = document.createElement("button");
+          this.control.appendChild(document.createTextNode("Display"+this.label));
+          p.appendChild(this.control);
+          intro.appendChild(p);
+          this.control.addEventListener("click", function () { Z.toggle(); }, false);
+          this.sources = document.getElementsByClassName("Z-source");
+          this.display = false;
+          setClass(this.sources, "none");
         }
-      }
+      };
+
+      var G = {
+        display: null, sources: null,
+        toggle: function () {
+          if (!this.display) {
+            setClass(this.sources, "block");
+            this.display = true;
+          } else {
+            setClass(this.sources, "none");
+            this.display = false;
+          }
+        },
+        prepare: function () {
+          this.sources = document.getElementsByClassName("math-display");
+          this.display = false;
+          setClass(this.sources, "none");
+        }
+      };
+
       function paintButton () {
-        var intro = document.getElementById("intro");
-        var p = document.createElement("p");
-        LatexControl = document.createElement("button");
-        LatexControl.appendChild(document.createTextNode("Display"+zlabel));
-        p.appendChild(LatexControl);
-        intro.appendChild(p);
-        LatexControl.addEventListener("click", toggle, false);
+        Z.prepare();
+        G.prepare();
         window.onkeypress = function (evt) {
-          if (evt.keyCode == 90 || evt.keyCode == 122)
-            toggle();
+          var code = evt.keyCode ? evt.keyCode : evt.charCode
+          if (code == 90 || code == 122)
+            Z.toggle();
+          else if (code == 71 || code == 103)
+            G.toggle();
         }
-        Zsources = document.getElementsByClassName("Z-source");
-        DisplayLaTeX = false;
-        setClass(Zsources, "none");
       }
     </script>
     <link type="text/css" rel="stylesheet" href="zml.css" />
@@ -230,10 +257,24 @@
 
       <div id="RDFZ" class="div1">
         <h2>2 The RDF Data Model in Z</h2>
-        <!--l. 66--><p class="noindent" >Using the formal definitions in <span class="cmti-10">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<a href="#bib-RDF11-CONCEPTS">RDF11-CONCEPTS</a>]</span>:</p>
+        <!--l. 66--><p class="noindent" >The formal definition for an RDF graph in <span class="cmti-10">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<a href="#bib-RDF11-CONCEPTS">RDF11-CONCEPTS</a>]</span>:</p>
         <blockquote>
         <!--l. 67--><p class="noindent" >“An <span class="bold">RDF graph </span>is a set of <span class="bold">RDF Triples</span>”</p></blockquote>
-        <!--l. 68--><p class="noindent" >Formally:</p>
+
+        <blockquote>
+          <!--l. 72--><p class="noindent" >“An <span class="bold">RDF triple </span>consists of three components:</p>
+
+          <ul class="itemize1">
+            <li class="itemize">the <span class="cmti-10">subject</span>, which is an <span class="bold">IRI </span>or a <span class="bold">blank node</span>
+            </li>
+            <li class="itemize">the <span class="cmti-10">predicate</span>, which is an <span class="bold">IRI</span>
+            </li>
+          <li class="itemize">the <span class="cmti-10">object</span>, which is an <span class="bold">IRI</span>, a <span class="bold">literal </span>or a <span class="bold">blank node</span>”</li></ul>
+        </blockquote>
+        <blockquote>
+        <!--l. 80--><p class="noindent" >“... <span class="bold">IRI</span>s, <span class="bold">literal</span>s and <span class="bold">blank nodes </span>are distinct and distinguishable.”</p></blockquote>
+        <!--l. 79-->
+        <!--l. 68--><p class="noindent" >provides a definition in Z:</p>
         <center class="math-display" >
           <img 
               src="Z/ShExZ0x.png" alt="Graph == ℙ Triple  " class="math-display" />
@@ -250,20 +291,6 @@
 Graph == \power Triple
 \end{zed}
         </pre>
-
-        <blockquote>
-          <!--l. 72--><p class="noindent" >“An <span class="bold">RDF triple </span>consists of three components:</p>
-
-          <ul class="itemize1">
-            <li class="itemize">the <span class="cmti-10">subject</span>, which is an <span class="bold">IRI </span>or a <span class="bold">blank node</span>
-            </li>
-            <li class="itemize">the <span class="cmti-10">predicate</span>, which is an <span class="bold">IRI</span>
-            </li>
-          <li class="itemize">the <span class="cmti-10">object</span>, which is an <span class="bold">IRI</span>, a <span class="bold">literal </span>or a <span class="bold">blank node</span>”</li></ul>
-        </blockquote>
-        <!--l. 79-->
-        <blockquote>
-        <!--l. 80--><p class="noindent" >“... <span class="bold">IRI</span>s, <span class="bold">literal</span>s and <span class="bold">blank nodes </span>are distinct and distinguishable.”</p></blockquote>
         <!--l. 83--><p class="indent" >   The <span class="cmti-10">ShEx </span>language treats <span class="bold">IRI</span>s and <span class="bold">blank nodes </span>as primitive types, which are
         defined as <span class="cmti-10">Z </span>free types:</p>
         <center class="math-display" >
@@ -2347,7 +2374,7 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
           <!--l. 576--><p class="noindent" >An <span class="cmti-10">AndRule </span>consists of a set of one or more <span class="cmti-10">Rules</span>, whose evaluation is determined by
           the following table: <br 
           class="newline" /></p>
-          <div class="tabular">
+          <div class="math-display">
  <table id="TBL-1" class="tabular" 
                                        cellspacing="0" cellpadding="0" rules="groups" 
                                        ><colgroup id="TBL-1-1g"><col 
@@ -2528,7 +2555,7 @@ AndRule == \seq_1 Label
           <!--l. 609--><p class="noindent" >An <span class="cmti-10">XorRule </span>consists of a set of one or more <span class="cmti-10">Rules</span>, whose evaluation is determined by
           the following table: <br 
           class="newline" /></p>
-          <div class="tabular"> <table id="TBL-2" class="tabular" 
+          <div class="math-display"> <table id="TBL-2" class="tabular" 
                                        cellspacing="0" cellpadding="0" rules="groups" 
                                        ><colgroup id="TBL-2-1g"><col 
                                        id="TBL-2-1" /></colgroup><colgroup id="TBL-2-2g"><col 
