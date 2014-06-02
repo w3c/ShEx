@@ -2302,7 +2302,8 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
           <!--l. 576--><p class="noindent" >An <span class="cmti-10">AndRule </span>consists of a set of one or more <span class="cmti-10">Rules</span>, whose evaluation is determined by
           the following table: <br 
           class="newline" /></p>
-          <div class="tabular"> <table id="TBL-1" class="tabular" 
+          <div class="tabular">
+ <table id="TBL-1" class="tabular" 
                                        cellspacing="0" cellpadding="0" rules="groups" 
                                        ><colgroup id="TBL-1-1g"><col 
                                        id="TBL-1-1" /></colgroup><colgroup id="TBL-1-2g"><col 
@@ -2368,8 +2369,17 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
           class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
           style="vertical-align:baseline;" id="TBL-1-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-1"  
           class="td11"> </td> </tr></table>
-          </div> <br 
-          class="newline" />
+          </div>
+<table>
+  <tr>
+    <th>And</th> <th>∅</th> <th>z</th> <th>f</th> <th>p</th> <th>ε</th> </tr>
+    <tr><th>∅</th> <td><a title="ab:b@·">∅<sub>1</sub></a><a></a></td> <td><a title="ab?:b?@·">∅<sub>1</sub></a><a></a></td> <td><a title="ab:b@B·">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@b·">f<sub>1</sub></a><a></a></td> <td><a title="a(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="a?b:b@·">∅<sub>1</sub></a><a></a></td> <td><a title="(a?b?)?:b?@·">z<sub>1</sub></a><a></a></td> <td><a title="a?b:b@B·">f<sub>1</sub></a><a></a></td> <td><a title="a?b?:b?@b·">p<sub>1</sub></a><a></a></td> <td><a title="a?(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="ab:b@·A">f<sub>1</sub></a><a></a></td> <td><a title="ab?:b?@·A">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@A·B">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@A·b">f<sub>1</sub></a><a></a></td> <td><a title="a?(b|c):(b|c)@Ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="ab:b@·a">f<sub>1</sub></a><a></a></td> <td><a title="a?b?:b?@·a">p<sub>1</sub></a><a></a></td> <td><a title="a?b?:b?@a·B">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@a·b">p<sub>1</sub></a><a></a></td> <td><a title="a?(b|c):(b|c)@ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="(a|b)c:c@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)c?:c?@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)c?:c?@a·bC">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)c?:c?@a·bc">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)(c|d):(c|d)@ab·cd">ε<sub>1</sub></a><a></a></td> </tr>
+</table>
+
           <!--l. 590--><p class="indent" >   The formal implementation of which will be realized in the corresponding
           function:</p>
           <center class="math-display" >
@@ -2539,8 +2549,18 @@ AndRule == \seq_1 Label
           class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
           style="vertical-align:baseline;" id="TBL-2-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-1"  
           class="td11"> </td> </tr></table>
-          </div> <br 
-          class="newline" />The formal implementation of which will be realized in the corresponding
+          </div>
+<table>
+  <tbody>
+    <tr><th>Or</th> <th>∅</th> <th>z</th> <th>f</th> <th>p</th> <th>ε</th> </tr>
+    <tr><th>∅</th> <td><a title="a|b:b@·">∅<sub>1</sub></a><a></a></td> <td><a title="a|b?:b?@·">z<sub>1</sub></a><a></a></td> <td><a title="a|b:b@B·">∅<sub>1</sub></a><a></a></td> <td><a title="a|b:b@b·">p<sub>1</sub></a><a></a></td> <td><a title="a|(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="a?|b:b@·">z<sub>1</sub></a><a></a></td> <td><a title="a?|b?:b?@·">z<sub>1</sub></a><a></a></td> <td><a title="a?|b:b@B·">z<sub>1</sub></a><a></a></td> <td><a title="a?|b?:b?@b·">p<sub>1</sub></a><a></a></td> <td><a title="a?|(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="a|b:b@·A">∅<sub>1</sub></a><a></a></td> <td><a title="a|b?:b?@·A">z<sub>1</sub></a><a></a></td> <td><a title="a|b:b@A·B">f<sub>1</sub></a><a></a></td> <td><a title="a|b:b@A·b">p<sub>1</sub></a><a></a></td> <td><a title="a?|(b|c):(b|c)@Ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="a|b:b@·a">p<sub>1</sub></a><a></a></td> <td><a title="a?|b?:b?@·a">p<sub>1</sub></a><a></a></td> <td><a title="a|b:b@a·B">p<sub>1</sub></a><a></a></td> <td><a title="a|b:b@a·b • a?|b?:b?@a·b • (a|b)c:b@a·b • (a|b)c?:b@a·b • (a|b)c?:b@ab·c • (a|b)c?:b@ab·C • a(b|c):c@b·c • a?(b|c):c@a·bc • a?(b|c):c@A·bc • a?(b|c):c@b·c • (a|b)(c|d):b@abc·d • (a|b)(c|d):d@a·bcd • (a|b)|c:b@a·b • (a|b)|c?:b@a·b • (a|b)|c?:b@ab·c • (a|b)|c?:b@ab·C • a|(b|c):c@b·c • a?|(b|c):c@a·bc • a?|(b|c):c@A·bc • a?|(b|c):c@b·c • (a|b)|(c|d):b@abc·d • (a|b)|(c|d):d@a·bcd • (a|b)?:b@a·b">ε<sub>23</sub></a><a></a></td> <td><a title="a?|(b|c):(b|c)@ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="(a|b)|c:c@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|c?:c?@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|c?:c?@a·bC">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|c?:c?@a·bc">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|(c|d):(c|d)@ab·cd">ε<sub>1</sub></a><a></a></td> </tr>
+  </tbody>
+</table>
+The formal implementation of which will be realized in the corresponding
           function:
 
           <center class="math-display" >
@@ -3396,5 +3416,25 @@ x : TravelDirections
         </dl>
       </div>
     </div>
+<table>
+  <tbody>
+    <tr><th>Grp</th> <th></th> </tr>
+    <tr><th>∅</th> <td><a title="(a)?@·">z<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="(a?b?)?@·">z<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="(a)?@A·">f<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="(a)?@a·">p<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="(a|b)?@ab·">ε<sub>1</sub></a><a></a></td> </tr>
+  </tbody>
+</table>
+<table>
+  <tbody>
+    <tr><th>All</th> <th></th> </tr>
+    <tr><th>∅</th> <td><a title="ab@· • a?b@· • ab?@· • a|b@· • a|b@A· • a|b@B·">f<sub>6</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="a?|b?@· • a|b?@· • a|b?@A· • a?|b@· • a?|b@B· • (a?b?)?@· • (a)?@·">p<sub>7</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="ab@a· • ab@b· • ab@B· • a?b?@aB· • a?b@B· • ab@AB· • ab@Ab· • ab@A· • ab?@A· • a|b@AB· • (a)?@A·">f<sub>11</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="ab@ab· • a?b?@a· • a?b?@b· • a|b@a· • a|b@b· • a|b@Ab· • a|b@aB· • a?|b?@a· • a?|b?@b· • (a)?@a·">p<sub>10</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="a|b@ab· • a?|b?@ab· • (a|b)c@ab· • (a|b)c?@ab· • (a|b)c?@abc· • (a|b)c?@abC· • a(b|c)@bc· • a?(b|c)@abc· • a?(b|c)@Abc· • a?(b|c)@bc· • (a|b)(c|d)@abcd· • (a|b)|c@ab· • (a|b)|c?@ab· • (a|b)|c?@abc· • (a|b)|c?@abC· • a|(b|c)@bc· • a?|(b|c)@abc· • a?|(b|c)@Abc· • a?|(b|c)@bc· • (a|b)|(c|d)@abcd· • (a|b)?@ab·">f<sub>21</sub></a><a></a></td> </tr>
+  </tbody>
+</table>
   </body>
 </html>
