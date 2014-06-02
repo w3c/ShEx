@@ -193,8 +193,14 @@
           <img 
               src="Z/ShExZ0x.png" alt="Graph == ℙ Triple  " class="math-display" />
         </center>
-  <p class="zschema">[<span class="zi">Graph</span>, ℙ <span class="zi">Triple</span>]</p>
-        <pre class="Z-display"><span class="asdefn" id="defn-RDF-Graph">Graph</span> == ℙ Triple</pre>
+    <table class="zzed" style="width:50em;">
+      <col class="zzed1" span="1" />
+      <tbody>
+        <tr> <td rowspan="1" colspan="1">
+          [<span class="zi">Graph</span>, ℙ <span class="zi">Triple</span>]
+        </td></tr>
+      </tbody>
+    </table>
         <pre class="Z-source">\begin{zed}
 Graph == \power Triple
 \end{zed}
@@ -219,8 +225,14 @@ Graph == \power Triple
           <img 
               src="Z/ShExZ1x.png" alt="[IRI ,BlankNode ]  " class="math-display" />
         </center>
-  <p class="zschema">[<span class="zi">IRI</span>, <span class="zi">BlankNode</span>]</p>
-        <pre class="Z-display">[<span class="asdefn" id="decl-IRI-BlankNode">IRI, BlankNode</span>]</pre>
+    <table class="zzed" style="width:50em;">
+      <col class="zzed1" span="1" />
+      <tbody>
+        <tr> <td rowspan="1" colspan="1">
+          [<span class="zi">IRI</span>, <span class="zi">BlankNode</span>]
+        </td></tr>
+      </tbody>
+    </table>
         <pre class="Z-source">\begin{zed}
 [IRI, BlankNode]
 \end{zed}
@@ -248,8 +260,14 @@ Graph == \power Triple
               src="Z/ShExZ2x.png" alt="[String,LanguageTag ]
                                      " class="math-display" />
         </center>
-  <p class="zschema">[<span class="zi">String</span>, <span class="zi">LanguageTag</span>]</p>
-        <pre class="Z-display">[<span class="asdefn" id="decl-String-LanguageTag">String, LanguageTag</span>]</pre>
+    <table class="zzed" style="width:50em;">
+      <col class="zzed1" span="1" />
+      <tbody>
+        <tr> <td rowspan="1" colspan="1">
+          [<span class="zi">String</span>, <span class="zi">LanguageTag</span>]
+        </td></tr>
+      </tbody>
+    </table>
         <pre class="Z-source">\begin{zed}
 [String, LanguageTag]
 \end{zed}
@@ -273,9 +291,6 @@ Graph == \power Triple
       <tr> <td rowspan="1" colspan="1"><span class="zi">RDFLiteral</span> <span class="zinfix">::=</span> <span class="zi">pl</span> ⟨⟨<span class="zi">PlainLiteral</span>⟩⟩ <span class="zinfix">|</span> <span class="zi">tl</span> ⟨⟨<span class="zi">TypedLiteral</span>⟩⟩</td> </tr>
     </tbody>
   </table>
-        <pre class="Z-display"><span class="asdefn" id="defn-RDFLiteral">TypedLiteral</span> ≙ [lexicalForm : String: dataType : IRI | dataType ≠ XSD_String]
-<span class="asdefn" id="defn-RDFLiteral">PlainLiteral</span> ≙ [lexicalForm : String: dataType : IRI : langTag : String | dataType = XSD_String]
-<span class="asdefn" id="defn-RDFLiteral">RDFLiteral</span> ::= pl⟨⟨PlainLiteral⟩⟩ | tl⟨⟨TypedLiteral⟩⟩</pre>
         <pre class="Z-source">\begin{zed}
 TypedLiteral \defs [lexicalForm:String ; dataType : IRI | dataType \neq XSD\_String] \\
 PlainLiteral \defs [lexicalForm:String ; dataType : IRI; langTag : LanguageTag | \\
@@ -300,7 +315,6 @@ RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata \\
       <tr> <td rowspan="1" colspan="1"><span class="zi">RDFTerm</span> <span class="zinfix">::=</span> <span class="zi">iri</span> ⟨⟨<span class="zi">IRI</span>⟩⟩ <span class="zinfix">|</span> <span class="zi">literal</span> ⟨⟨<span class="zi">RDFLiteral</span>⟩⟩ <span class="zinfix">|</span> <span class="zi">bnode</span> ⟨⟨<span class="zi">BlankNode</span>⟩⟩</td> </tr>
     </tbody>
   </table>
-        <pre class="Z-display"><span class="asdefn" id="defn-RDFLiteral">RDFTerm</span> ::= iri⟨⟨IRI⟩⟩ | literal⟨⟨RDFLiteral⟩⟩ | bnode⟨⟨BlankNode⟩⟩</pre>
         <pre class="Z-source">\begin{zed}
 RDFTerm ::= iri \ldata IRI \rdata | literal \ldata RDFLiteral \rdata | bnode \ldata BlankNode \rdata
 \end{zed}
@@ -558,7 +572,14 @@ SHEX\_IRI, SHEX\_BNODE : IRI, SHEX\_LITERAL : IRI, SHEX\_NONLITERAL : IRI
           <img 
               src="Z/ShExZ10x.png" alt="[Label]  " class="math-display" />
         </center>
-  <p class="zschema">[<span class="zi">Label</span>]</p>
+    <table class="zzed" style="width:50em;">
+      <col class="zzed1" span="1" />
+      <tbody>
+        <tr> <td rowspan="1" colspan="1">
+          [<span class="zi">Label</span>]
+        </td></tr>
+      </tbody>
+    </table>
         <pre class="Z-source">\begin{zed}
 [Label]
 \end{zed}
@@ -607,10 +628,10 @@ SHEX\_IRI, SHEX\_BNODE : IRI, SHEX\_LITERAL : IRI, SHEX\_NONLITERAL : IRI
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"> <span class="zi">evaluatesgi</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">evalRule </span> <span class="zi">ec</span>(<span class="zi">iri</span> <span class="zi">i</span>)(<span class="zi">s.ruless.start</span>) ∈ {<span class="zi">z</span>, <span class="zi">p</span>} <span class="err">@@</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">evalRule </span> <span class="zi">ec</span>(<span class="zi">iri</span> <span class="zi">i</span>)(<span class="zi">s.ruless.start</span>) ∈ {<span class="zi">z</span>, <span class="zi">p</span>} <span class="err">@@</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    then <span class="zi">p</span> else <span class="zi">f</span> </span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">then</span> <span class="zi">p</span> <span class="zbs">else</span> <span class="zi">f</span> </span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -784,31 +805,31 @@ Rule ::= arc \ldata ArcRule \rdata | \\
 ; <span class="zi">i</span> : <span class="zi">RDFTerm</span> ; <span class="zi">r</span> : <span class="zi">Rule</span> ∙ <span class="zi">evalRule</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">r</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">r</span> ∈ ran <span class="zi">arc</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">r</span> ∈ ran <span class="zi">arc</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalArcRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalArcRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">r</span> ∈ ran <span class="zi">rarc</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">r</span> ∈ ran <span class="zi">rarc</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalRefArcRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalRefArcRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">r</span> ∈ ran <span class="zi">group</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">r</span> ∈ ran <span class="zi">group</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalGroupRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalGroupRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">r</span> ∈ ran <span class="zi">and</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">r</span> ∈ ran <span class="zi">and</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalAndRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalAndRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span></span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">        <span class="zi">evalXorRule</span> <span class="zi">ec</span> <span class="zi">i</span>(<span class="zi">arc</span> ⋅ <span class="zi">r</span>)</span></td>
@@ -993,19 +1014,19 @@ Rule ::= arc \ldata ArcRule \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"><span class="zi">evalArcRule</span> <span class="zi">ec</span> <span class="zi">s</span> <span class="zi">ar</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">evalCardinality</span> <span class="zi">sg</span> <span class="zi">ar.min</span> <span class="zi">ar.max</span> ≠ <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">evalCardinality</span> <span class="zi">sg</span> <span class="zi">ar.min</span> <span class="zi">ar.max</span> ≠ <span class="zi">p</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalCardinality</span> <span class="zi">sg</span> <span class="zi">ar.min</span> <span class="zi">ar.max</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalCardinality</span> <span class="zi">sg</span> <span class="zi">ar.min</span> <span class="zi">ar.max</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">ar.valueSpec</span> <span class="zi">sg</span> ≠ <span class="zi">p</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">ar.valueSpec</span> <span class="zi">sg</span> ≠ <span class="zi">p</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">ar.valueSpec</span> <span class="zi">sg</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">ar.valueSpec</span> <span class="zi">sg</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span></span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zi">dispatchar.actions</span> <span class="zi">sg</span> <span class="zi">ec</span></span></td>
@@ -1143,10 +1164,10 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">f</span> : <span class="zi">PredicateFilter</span> ; <span class="zi">g</span> : <span class="zi">Graph</span> ∙<span class="zi">evalPredicateFilter</span> <span class="zi">f</span> <span class="zi">g</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">f</span> ∈ ran <span class="zi">pfIRI</span> then <span class="zi">evalIRIorStem</span>(<span class="zi">pfIRI</span> ⋅ <span class="zi">f</span>) <span class="zi">g</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">f</span> ∈ ran <span class="zi">pfIRI</span> <span class="zbs">then</span> <span class="zi">evalIRIorStem</span>(<span class="zi">pfIRI</span> ⋅ <span class="zi">f</span>) <span class="zi">g</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    else <span class="zi">evalWild</span>(<span class="zi">pfWild</span> ⋅ <span class="zi">f</span>) <span class="zi">g</span></span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zi">evalWild</span>(<span class="zi">pfWild</span> ⋅ <span class="zi">f</span>) <span class="zi">g</span></span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1197,10 +1218,10 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">e</span> : <span class="zi">IRIorStem</span> ; <span class="zi">g</span> : <span class="zi">Graph</span> ∙<span class="zi">evalIRIorStem</span> <span class="zi">e</span> <span class="zi">g</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">e</span> ∈ ran <span class="zi">iosi</span> then {<span class="zi">t</span> : <span class="zi">g</span> | <span class="zi">iri</span> ⋅ <span class="zi">t.p</span> = <span class="zi">iosi</span> ⋅ <span class="zi">e</span>}</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">e</span> ∈ ran <span class="zi">iosi</span> <span class="zbs">then</span> {<span class="zi">t</span> : <span class="zi">g</span> | <span class="zi">iri</span> ⋅ <span class="zi">t.p</span> = <span class="zi">iosi</span> ⋅ <span class="zi">e</span>}</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    else {<span class="zi">t</span> : <span class="zi">g</span> | <span class="zi">iri</span> ⋅ <span class="zi">t.p</span> ∈ <span class="zi">IRIstemRange</span>(<span class="zi">iosi</span> ⋅ <span class="zi">e</span>)}</span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> {<span class="zi">t</span> : <span class="zi">g</span> | <span class="zi">iri</span> ⋅ <span class="zi">t.p</span> ∈ <span class="zi">IRIstemRange</span>(<span class="zi">iosi</span> ⋅ <span class="zi">e</span>)}</span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1378,28 +1399,28 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">g</span> : <span class="zi">Graph</span> ; <span class="zi">min</span> , <span class="zi">max</span> : ℕ[0 ..1] ∙ <span class="zi">evalCardinality</span> <span class="zi">g</span> <span class="zi">min</span> <span class="zi">max</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">#min</span> = 1 ∧ <span class="zi">#g</span> = 0 ∧ value <span class="zi">min</span> = 0</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">#min</span> = 1 ∧ <span class="zi">#g</span> = 0 ∧ value <span class="zi">min</span> = 0</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">z</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">z</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">#g</span> = 0</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">#g</span> = 0</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">∅</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">∅</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if (<span class="zi">#min</span> = 1 ∧ <span class="zi">#g</span> &lt; value <span class="zi">min</span>) ∨</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> (<span class="zi">#min</span> = 1 ∧ <span class="zi">#g</span> &lt; value <span class="zi">min</span>) ∨</span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">            (<span class="zi">#max</span> = 1 ∧ <span class="zi">#g</span> &gt; value <span class="zi">max</span>)</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">f</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">f</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschemalasttext">    else <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschemalasttext">    <span class="zbs">else</span> <span class="zi">p</span></span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1459,10 +1480,10 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"> <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">os</span> <span class="zi">g</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if ∀ <span class="zi">t</span> : <span class="zi">g</span> ∙ <span class="zi">evalObjectSpecificationTriple</span> <span class="zi">ec</span> <span class="zi">os</span> <span class="zi">t.o</span> = <span class="zi">p</span> then <span class="zi">p</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> ∀ <span class="zi">t</span> : <span class="zi">g</span> ∙ <span class="zi">evalObjectSpecificationTriple</span> <span class="zi">ec</span> <span class="zi">os</span> <span class="zi">t.o</span> = <span class="zi">p</span> <span class="zbs">then</span> <span class="zi">p</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschemalasttext">    else <span class="zi">f</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschemalasttext">    <span class="zbs">else</span> <span class="zi">f</span> </span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1521,28 +1542,28 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"><span class="zi">evalObjectSpecificationTriple</span> <span class="zi">ec</span> <span class="zi">os</span> <span class="zi">n</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">os</span> ∈ ran <span class="zi">valueType</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">os</span> ∈ ran <span class="zi">valueType</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalValueType</span> (<span class="zi">valueType</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalValueType</span> (<span class="zi">valueType</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">os</span> ∈ ran <span class="zi">valueSet</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">os</span> ∈ ran <span class="zi">valueSet</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalTermSet</span> (<span class="zi">valueSet</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalTermSet</span> (<span class="zi">valueSet</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">os</span> ∈ ran <span class="zi">osWild</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">os</span> ∈ ran <span class="zi">osWild</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalTermWild</span> (<span class="zi">osWild</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalTermWild</span> (<span class="zi">osWild</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">        then <span class="zi">evalReference</span> <span class="zi">ec</span> (<span class="zi">valueRef</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalReference</span> <span class="zi">ec</span> (<span class="zi">valueRef</span> ⋅ <span class="zi">os</span>) <span class="zi">n</span></span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1608,19 +1629,19 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">vt</span> : <span class="zi">IRI</span> ; <span class="zi">n</span> : <span class="zi">RDFTerm</span> ; <span class="zi">l</span> : <span class="zi">RDFLiteral</span> ∙ <span class="zi">evalValueType</span> <span class="zi">vt</span> <span class="zi">n</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">vt</span> = <span class="zi">SHEX_IRI</span> ∧ <span class="zi">n</span> ∈ ran <span class="zi">iri</span> then <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">vt</span> = <span class="zi">SHEX_IRI</span> ∧ <span class="zi">n</span> ∈ ran <span class="zi">iri</span> <span class="zbs">then</span> <span class="zi">p</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">vt</span> = <span class="zi">SHEX_BNODE</span> ∧ <span class="zi">n</span> ∈ ran <span class="zi">bnode</span> then <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">vt</span> = <span class="zi">SHEX_BNODE</span> ∧ <span class="zi">n</span> ∈ ran <span class="zi">bnode</span> <span class="zbs">then</span> <span class="zi">p</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">vt</span> = <span class="zi">SHEX_NONLITERAL</span> ∧ (<span class="zi">n</span> ∈ ran <span class="zi">iri</span> ∨ <span class="zi">n</span> ∈ ran <span class="zi">bnode</span>) then <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">vt</span> = <span class="zi">SHEX_NONLITERAL</span> ∧ (<span class="zi">n</span> ∈ ran <span class="zi">iri</span> ∨ <span class="zi">n</span> ∈ ran <span class="zi">bnode</span>) <span class="zbs">then</span> <span class="zi">p</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">vt</span> = <span class="zi">SHEX_LITERAL</span> ∧ <span class="zi">n</span> ∈ ran <span class="zi">literal</span> then <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">vt</span> = <span class="zi">SHEX_LITERAL</span> ∧ <span class="zi">n</span> ∈ ran <span class="zi">literal</span> <span class="zbs">then</span> <span class="zi">p</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">n</span> ∈ ran <span class="zi">literal</span> ∧ <span class="zi">l</span> = (<span class="zi">literal</span> ⋅ <span class="zi">n</span>) ∧</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">n</span> ∈ ran <span class="zi">literal</span> ∧ <span class="zi">l</span> = (<span class="zi">literal</span> ⋅ <span class="zi">n</span>) ∧</span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">         ((<span class="zi">l</span> ∈ ran <span class="zi">pl</span> ∧ (<span class="zi">pl</span> ⋅ <span class="zi">l</span>). <span class="zi">dataType</span> = <span class="zi">vt</span>) ∨</span></td>
@@ -1629,10 +1650,10 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">         (<span class="zi">l</span> ∈ ran <span class="zi">tl</span> ∧ (<span class="zi">tl</span> ⋅ <span class="zi">l</span>). <span class="zi">dataType</span> = <span class="zi">vt</span>)) </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">p</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">p</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    else <span class="zi">f</span> </span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zi">f</span> </span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1690,7 +1711,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">mvs</span> : ℙ <span class="zi">MatchValue</span> ; <span class="zi">n</span> : <span class="zi">RDFTerm</span> ∙ <span class="zi">evalTermSet</span> <span class="zi">mvs</span> <span class="zi">n</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if ∃ <span class="zi">mv</span> : <span class="zi">mvs</span> ∙</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> ∃ <span class="zi">mv</span> : <span class="zi">mvs</span> ∙</span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        ((<span class="zi">mv</span> ∈ ran <span class="zi">mviri</span> ∧ <span class="zi">n</span> ∈ ran <span class="zi">iri</span> ∧ (<span class="zi">iri</span> ⋅ <span class="zi">n</span>) = <span class="zi">mviri</span> ⋅ <span class="zi">mv</span>) ∨</span></td>
@@ -1705,10 +1726,10 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        (<span class="zi">n</span> ∈ ran <span class="zi">literal</span> ∧ <span class="zi">mvlit</span> ⋅ <span class="zi">mv</span> = <span class="zi">literal</span> ⋅ <span class="zi">n</span>))</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">p</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">p</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    else <span class="zi">f</span> </span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zi">f</span> </span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1761,7 +1782,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">mvs</span> : ℙ <span class="zi">MatchValue</span> ; <span class="zi">n</span> : <span class="zi">RDFTerm</span> ∙ <span class="zi">evalTermWild</span> <span class="zi">mvs</span> <span class="zi">n</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    if <span class="zi">evalTermSet</span> <span class="zi">mvs</span> <span class="zi">n</span> = <span class="zi">p</span> then <span class="zi">f</span> else <span class="zi">p</span> </span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">evalTermSet</span> <span class="zi">mvs</span> <span class="zi">n</span> = <span class="zi">p</span> <span class="zbs">then</span> <span class="zi">f</span> <span class="zbs">else</span> <span class="zi">p</span> </span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1813,10 +1834,10 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zi">evalTermReference</span> <span class="zi">ec</span> <span class="zi">vr</span> <span class="zi">n</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">n</span> ∉ ran <span class="zi">literal</span> then <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">n</span> <span class="zi">vr</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">n</span> ∉ ran <span class="zi">literal</span> <span class="zbs">then</span> <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">n</span> <span class="zi">vr</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    else <span class="zi">f</span> </span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zi">f</span> </span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -1950,19 +1971,19 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"><span class="zi">evalArcRule</span> <span class="zi">ec</span> <span class="zi">o</span> <span class="zi">rar</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">evalCardinality</span> <span class="zi">og</span> <span class="zi">rar.min</span> <span class="zi">rar.max</span> ≠ <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">evalCardinality</span> <span class="zi">og</span> <span class="zi">rar.min</span> <span class="zi">rar.max</span> ≠ <span class="zi">p</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalCardinality</span> <span class="zi">og</span> <span class="zi">rar.min</span> <span class="zi">rar.max</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalCardinality</span> <span class="zi">og</span> <span class="zi">rar.min</span> <span class="zi">rar.max</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">rar.valueSpec</span> <span class="zi">og</span> ≠ <span class="zi">p</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">rar.valueSpec</span> <span class="zi">og</span> ≠ <span class="zi">p</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">rar.valueSpec</span> <span class="zi">og</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">evalObjectSpecification</span> <span class="zi">ec</span> <span class="zi">rar.valueSpec</span> <span class="zi">og</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span></span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zi">dispatchar.actions</span> <span class="zi">og</span> <span class="zi">ec</span></span></td>
@@ -2063,10 +2084,10 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"><span class="zi">evalSubjectSpecification</span> <span class="zi">ec</span> <span class="zi">ss</span> <span class="zi">g</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if ∀ <span class="zi">t</span> <span class="zi">evalSubjectSpecificationTriple</span> <span class="zi">ec</span> <span class="zi">ss</span> <span class="zi">t.o</span> = <span class="zi">p</span> then <span class="zi">p</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> ∀ <span class="zi">t</span> <span class="zi">evalSubjectSpecificationTriple</span> <span class="zi">ec</span> <span class="zi">ss</span> <span class="zi">t.o</span> = <span class="zi">p</span> <span class="zbs">then</span> <span class="zi">p</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    else <span class="zi">f</span></span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zi">f</span></span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -2122,19 +2143,19 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"><span class="zi">evalSubjectSpecificationTriple</span> <span class="zi">ec</span> <span class="zi">ss</span> <span class="zi">n</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">ss</span> ∈ ran <span class="zi">subjectSet</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">ss</span> ∈ ran <span class="zi">subjectSet</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="err">then</span> <span class="zi">evalTermSet</span>(<span class="zi">subjectSet</span> ⋅ <span class="zi">ss</span>) <span class="zi">n</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="err"><span class="zbs">then</span></span> <span class="zi">evalTermSet</span>(<span class="zi">subjectSet</span> ⋅ <span class="zi">ss</span>) <span class="zi">n</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">ss</span> ∈ ran <span class="zi">ssWild</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">ss</span> ∈ ran <span class="zi">ssWild</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="err">then</span> <span class="zi">evalTermWild</span>(<span class="zi">ssWild</span> ⋅ <span class="zi">ss</span>) <span class="zi">n</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="err"><span class="zbs">then</span></span> <span class="zi">evalTermWild</span>(<span class="zi">ssWild</span> ⋅ <span class="zi">ss</span>) <span class="zi">n</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span></span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">         <span class="zi">evalTermReferenceec</span>(<span class="zi">subjectRef</span> ⋅ <span class="zi">ss</span>) <span class="zi">n</span></span></td>
@@ -2231,25 +2252,25 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">ec</span> : <span class="zi">EvalContext</span> ; <span class="zi">i</span> : <span class="zi">RDFTerm</span> ; <span class="zi">gr</span> : <span class="zi">GroupRule</span> ∙ <span class="zi">evalGroupRule</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr.rule</span> = <span class="zi">∅</span> ∧ <span class="zi">gr.opt</span> = <span class="zi">OPTIONAL</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr.rule</span> = <span class="zi">∅</span> ∧ <span class="zi">gr.opt</span> = <span class="zi">OPTIONAL</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then z </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> z </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr.rule</span> = <span class="zi">ε</span> ∧ <span class="zi">gr.opt</span> = <span class="zi">OPTIONAL</span> </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr.rule</span> = <span class="zi">ε</span> ∧ <span class="zi">gr.opt</span> = <span class="zi">OPTIONAL</span> </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then z </span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> z </span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else if <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr.rule</span> = <span class="zi">p</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span> <span class="zbs">if</span> <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr.rule</span> = <span class="zi">p</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        then <span class="zi">dispatch</span> <span class="zi">gr.actions</span> <span class="zi">∅</span> <span class="zi">ec</span></span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zbs">then</span> <span class="zi">dispatch</span> <span class="zi">gr.actions</span> <span class="zi">∅</span> <span class="zi">ec</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    else</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span></span></td>
         </tr>
         <tr>
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zi">evalRule′</span> <span class="zi">ec</span> <span class="zi">i</span> <span class="zi">gr.rule</span></span></td>
@@ -3139,10 +3160,10 @@ XorRule == \seq_1 Label
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">∀ <span class="zi">f</span> : <span class="zi">A</span> → <span class="zi">B</span> ; <span class="zi">xs</span> : seq <span class="zi">A</span> ∙ map <span class="zi">f</span> <span class="zi">xs</span> =</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    if <span class="zi">xs</span> = ⟨⟩ then ⟨⟩⌢</span></td>
+          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">if</span> <span class="zi">xs</span> = ⟨⟩ <span class="zbs">then</span> ⟨⟩⌢</span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschemalasttext">    else ⟨<span class="zi">f</span>(<span class="zi">head</span> <span class="zi">xs</span>)⟩--map <span class="zi">f</span>(<span class="zi">tail</span> <span class="zi">xs</span>)</span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschemalasttext">    <span class="zbs">else</span> ⟨<span class="zi">f</span>(<span class="zi">head</span> <span class="zi">xs</span>)⟩--map <span class="zi">f</span>(<span class="zi">tail</span> <span class="zi">xs</span>)</span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
@@ -3234,7 +3255,7 @@ TravelDirections ::= bus \ldata BusDirections \rdata | \ walking \ldata WalkingD
     <tbody>
       <tr><td colspan="3" class="zschemalasttext noborder" rowspan="1"><span class="zschematext"><span class="zi">x</span> <span class="zinfix">:</span> <span class="zi">TravelDirections</span></span></td></tr>
       <tr><td class="bl" rowspan="1" colspan="1"></td><td rowspan="1" colspan="1"></td><td rowspan="1" colspan="1"></td></tr>
-      <tr><td colspan="3" class="zschemalasttext noborder" rowspan="1"><span class="zschematext"><span class="zbs">if</span> <span class="zi">x</span> <span class="zinfix">∈</span> <span class="zs">ran</span> <span class="zi">bus</span> <span class="zbs">then</span> <span class="zi">bus</span> ⋅ <span class="zi">x</span> <span class="zbs">else</span> <span class="zi">walking</span> ⋅ <span class="zi">x</span></span></td></tr>
+      <tr><td colspan="3" class="zschemalasttext noborder" rowspan="1"><span class="zschematext"><span class="zbs"><span class="zbs">if</span></span> <span class="zi">x</span> <span class="zinfix">∈</span> <span class="zs">ran</span> <span class="zi">bus</span> <span class="zbs"><span class="zbs">then</span></span> <span class="zi">bus</span> ⋅ <span class="zi">x</span> <span class="zbs"><span class="zbs">else</span></span> <span class="zi">walking</span> ⋅ <span class="zi">x</span></span></td></tr>
     </tbody>
   </table>
         <pre class="Z-source">\begin{syntax}
