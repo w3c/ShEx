@@ -103,6 +103,8 @@
       .Z-source { display: block; border: 4px double green; font-style: italic; }
       blockquote { padding-left: 1em; margin-left: .2em; border-left: .2em solid #00b; }
       .err { background-color: red; }
+      .parserAction { font-size: smaller; color: #040; }
+      .keyword { font-weight: bold; }
       /**/
     </style>
     <link type="text/css" rel="stylesheet" href="zml.css" />
@@ -927,7 +929,7 @@ Rule ::= arc \ldata ArcRule \rdata | \\
       <col class="zschema3" span="1" />
       <tbody>
         <tr>
-          <td class="zschemaname" colspan="2" rowspan="1"><span class="zschemaname"><span class="zi">ArcRule</span></span></td>
+          <td class="zschemaname" colspan="2" rowspan="1"><span class="zschemaname"><span class="zi" id="ArcRule">ArcRule</span></span></td>
           <td rowspan="1" colspan="1"></td>
         </tr>
         <tr> <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext"><span class="zi">filter</span> <span class="zinfix">:</span> <span class="zi">PredicateFilter</span></span></td> </tr>
@@ -1056,10 +1058,10 @@ evalArcRule~ec~s~ar = \\
             <h4>4.1.1 PredicateFilter Validation</h4>
             <!--l. 298--><p class="noindent" >A <span class="cmti-10">PredicateFilter</span> can be one of:</p>
             <ul class="itemize1">
-              <li class="itemize">an <span class="cmti-10">pfIRI </span>- the IRI of a specific predicate or the IRIstem that defines a set
+              <li class="itemize"><span class="cmti-10" id="pfIRI">pfIRI </span>- the IRI of a specific predicate or the IRIstem that defines a set
               of predicates
               </li>
-              <li class="itemize"><span class="cmti-10">pfWild </span>- an expression that matches any predicate <span class="cmti-10">except </span>those matching
+              <li class="itemize"><span class="cmti-10" id="pfWild">pfWild </span>- an expression that matches any predicate <span class="cmti-10">except </span>those matching
             the (possibly empty) set of <span class="cmti-10">IRIorStems</span></li></ul>
             <!--l. 304-->
             <center class="math-display" >
@@ -1292,16 +1294,16 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
             <!--l. 345--><p class="noindent" ><span class="cmti-10">ObjectSpecification </span>specifies a set of possible values for an <span class="cmti-10">RDFTerm </span>and takes one of
             the following forms:</p>
             <ul class="itemize1">
-              <li class="itemize"><span class="cmti-10">ValueType </span>- matches <span class="cmti-10">Literals </span>having a specified data type
+              <li class="itemize"><span class="cmti-10" id="ValueType">ValueType </span>- matches <span class="cmti-10">Literals </span>having a specified data type
               </li>
-              <li class="itemize"><span class="cmti-10">ValueSet  </span>-  matches  <span class="cmti-10">IRIs  </span>or  <span class="cmti-10">Literals  </span>that  match  one  or  more  of  the
+              <li class="itemize"><span class="cmti-10" id="ValueSet">ValueSet  </span>-  matches  <span class="cmti-10">IRIs  </span>or  <span class="cmti-10">Literals  </span>that  match  one  or  more  of  the
               expressions in the specified set
               </li>
-              <li class="itemize"><span class="cmti-10">ValueWild </span>- matches any target <span class="cmti-10">except </span>those matching the (possibly empty)
+              <li class="itemize"><span class="cmti-10" id="ValueWild">ValueWild </span>- matches any target <span class="cmti-10">except </span>those matching the (possibly empty)
               set of <span class="cmti-10">IRIstems</span>
 
               </li>
-              <li class="itemize"><span class="cmti-10">ValueReference </span>- matches any target that is considered valid according the
+              <li class="itemize"><span class="cmti-10" id="ValueReference">ValueReference </span>- matches any target that is considered valid according the
             <span class="cmti-10">Rule </span>identified by <span class="cmti-10">Label</span>.</li></ul>
             <!--l. 352-->
             <center class="math-display" >
@@ -2209,7 +2211,7 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
  <span class="zi">OPT</span> ::= <span class="zi">OPTIONAL</span> | <span class="zi">REQUIRE</span> 
         </td></tr>
         <tr> <td rowspan="1" colspan="1">
- <span class="zi">GroupRule</span> ≙ [ <span class="zi">rule</span> : <span class="zi">Label</span> ; <span class="zi">opt</span> : <span class="zi">OPT</span> ; <span class="zi">actions</span> : ℙ <span class="zi">Action</span> ]
+ <span class="zi" id="GroupRule">GroupRule</span> ≙ [ <span class="zi">rule</span> : <span class="zi">Label</span> ; <span class="zi">opt</span> : <span class="zi">OPT</span> ; <span class="zi">actions</span> : ℙ <span class="zi">Action</span> ]
         </td></tr>
       </tbody>
     </table>
@@ -2420,7 +2422,7 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
       <col class="zzed1" span="1" />
       <tbody>
         <tr> <td rowspan="1" colspan="1">
- <span class="zi">AndRule</span> == <span class="zi">seq₁</span> <span class="zi">Label</span> 
+ <span class="zi" id="AndRule">AndRule</span> == <span class="zi">seq₁</span> <span class="zi">Label</span> 
         </td></tr>
       </tbody>
     </table>
@@ -2601,7 +2603,7 @@ The formal implementation of which will be realized in the corresponding
       <col class="zzed1" span="1" />
       <tbody>
         <tr> <td rowspan="1" colspan="1">
- <span class="zi">XorRule</span> == <span class="zi">seq₁</span> <span class="zi">Label</span> 
+ <span class="zi" id="XorRule">XorRule</span> == <span class="zi">seq₁</span> <span class="zi">Label</span> 
         </td></tr>
       </tbody>
     </table>
@@ -2782,7 +2784,7 @@ XorRule == \seq_1 Label
               <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-sparqlPrefix">sparqlPrefix</a></span> 
               | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-sparqlBase">sparqlBase</a></span> 
               | "start" "=" ( <span class="prod"><a class="grammarRef" href="#prod-ShEx1-label">label</a></span> | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-typeSpec">typeSpec</a></span> <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>* )</code><br/>
-              <span class="abstractSyntax"><span class="keyword">let</span> b = a fresh blank node<br/>
+              <span class="parserAction"><span class="keyword">let</span> b = a fresh blank node<br/>
               typeSpec.setLabel(b)<br/>
               new <a href="#ArcRule">ArcRule</a>()</span></td>
             </tr>
@@ -2812,7 +2814,7 @@ XorRule == \seq_1 Label
               <td><code class="production prod">shape</code></td>
               <td>   ::=   </td>
               <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-label">label</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-typeSpec">typeSpec</a></span> <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>*</code><br/>
-              <span class="abstractSyntax"><span class="keyword">if</span> (CODE.<span class="keyword">SIZE</span> > 0)<br/>
+              <span class="parserAction"><span class="keyword">if</span> (CODE.<span class="keyword">SIZE</span> > 0)<br/>
                 <span class="keyword">let</span> r = new <a href="#GroupRule">GroupRule</a>(<span class="keyword">false</span>, typeSpec)<br/>
                 r.label = label<br/>
               <span class="keyword">else</span><br/>
@@ -2835,8 +2837,8 @@ XorRule == \seq_1 Label
               <td><code class="production prod">OrExpression</code></td>
               <td>   ::=   </td>
               <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-AndExpression">l:AndExpression</a></span> ( "|" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-AndExpression">r:AndExpression</a></span> )*</code><br/>
-              <span class="abstractSyntax"><span class="keyword">if</span> (r)<br/>
-                new <a href="#OrRule">OrRule</a>(l, r)<br/>
+              <span class="parserAction"><span class="keyword">if</span> (r)<br/>
+                new <a href="#XorRule">XorRule</a>(l, r)<br/>
               <span class="keyword">else</span><br/>
                 l</span></td>
             </tr>
@@ -2848,7 +2850,7 @@ XorRule == \seq_1 Label
               <td><code class="production prod">AndExpression</code></td>
               <td>   ::=   </td>
               <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-UnaryExpression">l:UnaryExpression</a></span> ( "," <span class="prod"><a class="grammarRef" href="#prod-ShEx1-UnaryExpression">r:UnaryExpression</a></span> )*</code><br/>
-              <span class="abstractSyntax"><span class="keyword">if</span> (r)<br/>
+              <span class="parserAction"><span class="keyword">if</span> (r)<br/>
                 new <a href="#AndRule">AndRule</a>(l, r)<br/>
               <span class="keyword">else</span><br/>
                 l</span></td>
@@ -2865,7 +2867,7 @@ XorRule == \seq_1 Label
             <tr valign="baseline">
               <td colspan="3"></td>
               <td><code class="content">| "(" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-OrExpression">OrExpression</a></span> ")" opt:"?"? <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>*</code><br/>
-              <span class="abstractSyntax">new <a href="#GroupRule">GroupRule</a>(OrExpression, opt, CODE)</span></td>
+              <span class="parserAction">new <a href="#GroupRule">GroupRule</a>(OrExpression, opt, CODE)</span></td>
             </tr>
           </tbody>
 
@@ -2885,7 +2887,7 @@ XorRule == \seq_1 Label
               <td><code class="production prod">arc</code></td>
               <td>   ::=   </td>
               <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-nameClass">nameClass</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-valueSpec">valueSpec</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-default">default</a></span>? <span class="prod"><a class="grammarRef" href="#prod-ShEx1-repeatCount">repeatCount</a></span>? <span class="prod"><a class="grammarRef" href="#prod-ShEx1-properties">properties</a></span>? <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>*</code><br/>
-              <span class="abstractSyntax">new <a href="#ArcRule">ArcRule</a>(nameClass, valueSpec, default, repeatCount, properties, CODE)</span></td>
+              <span class="parserAction">new <a href="#ArcRule">ArcRule</a>(nameClass, valueSpec, default, repeatCount, properties, CODE)</span></td>
             </tr>
           </tbody>
 
@@ -2895,17 +2897,17 @@ XorRule == \seq_1 Label
               <td><code class="production prod">nameClass</code></td>
               <td>   ::=   </td>
               <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-iriStem">iriStem</a></span></code><br/>
-              <span class="abstractSyntax"><a href="#NameStem">NameStem</a>(iriStem)</span></td>
+              <span class="parserAction"><a href="#pfIRI">pfIRI</a>(iriStem)</span></td>
             </tr>
             <tr valign="baseline">
               <td colspan="3"></td>
               <td><code class="content">| "." <span class="prod"><a class="grammarRef" href="#prod-ShEx1-exclusions">exclusions</a></span></code><br/>
-              <span class="abstractSyntax"><a href="#NameAny">NameAny</a>(exclusions)</span></td>
+              <span class="parserAction"><a href="#pfWild">pfWild</a>(exclusions)</span></td>
             </tr>
             <tr valign="baseline">
               <td colspan="3"></td>
               <td><code class="content">| <span class="prod"><a class="grammarRef" href="#term-ShEx1-RDF_TYPE">RDF_TYPE</a></span></code><br/>
-              <span class="abstractSyntax"><a href="#NameTerm">NameTerm</a>(rdf:type)</span></td>
+              <span class="parserAction"><a href="#pfIRI">pfIRI</a>(rdf:type)</span></td>
             </tr>
           </tbody>
 
@@ -2915,28 +2917,28 @@ XorRule == \seq_1 Label
               <td><code class="production prod">valueSpec</code></td>
               <td>   ::=   </td>
               <td><code class="content">"@" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-label">label</a></span></code><br/>
-              <span class="abstractSyntax"><a href="#ValueReference">ValueReference</a>(label)</span></td>
+              <span class="parserAction"><a href="#ValueReference">ValueReference</a>(label)</span></td>
             </tr>
             <tr valign="baseline">
               <td colspan="3"></td>
               <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-typeSpec">typeSpec</a></span></code><br/>
-              <span class="abstractSyntax"><span class="keyword">let</span> b = a fresh blank node<br/>
+              <span class="parserAction"><span class="keyword">let</span> b = a fresh blank node<br/>
               typeSpec.setLabel(b)</span></td>
             </tr>
             <tr valign="baseline">
               <td colspan="3"></td>
               <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-valueSetv">valueSet</a></span></code><br/>
-              <span class="abstractSyntax">new <a href="#ValueSet">ValueSet</a>(valueSet)</span></td>
+              <span class="parserAction">new <a href="#ValueSet">ValueSet</a>(valueSet)</span></td>
             </tr>
             <tr valign="baseline">
               <td colspan="3"></td>
               <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-object">object</a></span></code><br/>
-              <span class="abstractSyntax">new <a href="#ValueType">ValueType</a>(object)</span></td>
+              <span class="parserAction">new <a href="#ValueType">ValueType</a>(object)</span></td>
             </tr>
             <tr valign="baseline">
               <td colspan="3"></td>
               <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-exclusions">exclusions</a></span></code><br/>
-              <span class="abstractSyntax">new <a href="#ValueAny">ValueAny</a>(exclusions)</span></td>
+              <span class="parserAction">new <a href="#ValueWild">ValueWild</a>(exclusions)</span></td>
             </tr>
           </tbody>
 
