@@ -187,7 +187,7 @@
 
       <div id="RDFZ" class="div1">
         <h2>2 The RDF Data Model in Z</h2>
-        <!--l. 66--><p class="noindent" >Using the formal definitions in <span class="cmti-10">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<a href="#XRDF11">1</a>]</span>:</p>
+        <!--l. 66--><p class="noindent" >Using the formal definitions in <span class="cmti-10">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<a href="#bib-RDF11-CONCEPTS">RDF11-CONCEPTS</a>]</span>:</p>
         <blockquote>
         <!--l. 67--><p class="noindent" >“An <span class="bold">RDF graph </span>is a set of <span class="bold">RDF Triples</span>”</p></blockquote>
         <!--l. 68--><p class="noindent" >Formally:</p>
@@ -251,9 +251,9 @@ Graph == \power Triple
             <li class="itemize">a <span class="bold">datatype IRI</span>, being an IRI
             </li>
             <li class="itemize">if and only if the datatype IRI is <br 
-            class="newline" /><span class="obeylines-h"><span class="verb"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code></span></span>,   a
-            non-empty language tag as defined in [BCP47]<span class="cite">[<a href="#XBCP47">3</a>]</span>. The language tag
-          MUST be well-formed according to section 2.2.9 of [BCP47]<span class="cite">[<a href="#XBCP47">3</a>]</span>.”</li></ul>
+            class="newline" /><span class="obeylines-h"><span class="verb"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code></span></span>, a
+            non-empty language tag as defined in <span class="cite">[<a href="#bib-BCP47">BCP47</a>]</span>. The language tag
+          MUST be well-formed according to section 2.2.9 of <span class="cite">[<a href="#bib-BCP47">BCP47</a>]</span>.”</li></ul>
         </blockquote>
 
         <!--l. 99--><p class="noindent" >This is modelled by <span class="cmti-10">String </span>and <span class="cmti-10">LanguageTag </span>as free types:</p>
@@ -1088,7 +1088,7 @@ PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorSt
 \end{zed}
 </pre>
             An <span class="cmti-10">IRIstem </span>matches any <span class="cmti-10">IRI </span>whose stringified representation begins with the
-            stringified representation of <span class="cmti-10">IRIstem </span>according to standard IRI matching rules <span class="cite">[<a href="#XRFC3987">2</a>]</span>.
+            stringified representation of <span class="cmti-10">IRIstem </span>according to standard IRI matching rules <span class="cite">[<a href="#bib-RFC3987">RFC3987</a>]</span>.
             This is represented by the function:
 
             <center class="math-display" >
@@ -2219,8 +2219,8 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
 OPT ::= OPTIONAL | REQUIRED \\
 GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
 \end{zed}</pre>
-          <span class="cmti-10">evalGroupRule </span>evaluates <span class="cmti-10">Rule</span>, applies <span class="cmti-10">opt </span>and,if the result is <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>) evaluates the
-          actions with respect the passing <span class="cmti-10">Graph</span>
+          <span class="cmti-10">evalGroupRule </span>evaluates <span class="cmti-10">Rule</span>, applies <span class="cmti-10">opt </span>and, if the result is <span class="cmti-10">pass </span>(<span class="cmbxti-10">p</span>), evaluates the
+          actions with respect to the passing <span class="cmti-10">Graph</span>
           <center class="math-display" >
             <img 
                 src="Z/ShExZ39x.png" alt="|-----------------------------------------------------------
@@ -3392,14 +3392,14 @@ x : TravelDirections
       <div class="div3">
         <h3 id="Normative-References">A.1 Normative References</h3>
         <dl>
-          <dt id="bib-RDF11-CONCEPTS">[2 RDF11-CONCEPTS]</dt>
+          <dt id="bib-RDF11-CONCEPTS">[RDF11-CONCEPTS]</dt>
           <dd rel="dcterms:references">Richard Cyganiak, David Wood, Markus Lanthaler. <cite><a href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">RDF 1.1 Concepts and Abstract Syntax.</a></cite> W3C Recommendation, 25 February 2014. URL: <a href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/</a>. The latest edition is available at <a href="http://www.w3.org/TR/rdf11-concepts/">http://www.w3.org/TR/rdf11-concepts/</a>
           </dd>
 
-          <dt id="bib-IRIs">[7 RFC-IRIS]</dt>
+          <dt id="bib-RFC3987">[RFC3987]</dt>
           <dd rel="dcterms:references">M. Dürst and M. Suignard. <cite><a href="http://tools.ietf.org/html/rfc3987"> Internationalized resource identifiers (IRIs).</a></cite> IETF Request For Comment January 2005. URL: <a href="http://tools.ietf.org/html/rfc3987">http://tools.ietf.org/html/rfc3987</a>.</dd>
           
-          <dt id="bib-RDF11-CONCEPTS">[0 BCP-LANG]</dt>
+          <dt id="bib-BCP47">[BCP47]</dt>
           <dd rel="dcterms:references">RA Phillips and M. Davis. <cite><a href="http://tools.ietf.org/html/bcp47">Tags for identifying language.</a></cite> IETF Best CurrentPractices, September 2009. URL: <a href="http://tools.ietf.org/html/bcp47">http://tools.ietf.org/html/bcp47</a>.</dd>
 
         </dl>
