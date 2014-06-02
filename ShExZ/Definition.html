@@ -108,10 +108,51 @@
       .keyword { font-weight: bold; }
       /**/
     </style>
+    <script type="text/javascript">
+      var DisplayLaTeX = null;
+      var LatexControl = null;
+      var Zsources = null;
+      var zlabel = " LaTeX for Z notation (or press 'z')";
+      function setClass (elements, display) {
+        for (var i in elements)
+          try {
+            elements[i].style.display = display;
+          } catch (err) {  }
+      }
+      function toggle (evt) {
+        if (!DisplayLaTeX) {
+          setClass(Zsources, "block");
+          LatexControl.removeChild(LatexControl.childNodes[0]);
+          LatexControl.appendChild(document.createTextNode("Hide"+zlabel));
+          DisplayLaTeX = true;
+        } else {
+          setClass(Zsources, "none");
+          LatexControl.removeChild(LatexControl.childNodes[0]);
+          LatexControl.appendChild(document.createTextNode("Display"+zlabel));
+          DisplayLaTeX = false;
+        }
+      }
+      function paintButton () {
+        var intro = document.getElementById("intro");
+        var p = document.createElement("p");
+        LatexControl = document.createElement("button");
+        LatexControl.appendChild(document.createTextNode("Display"+zlabel));
+        p.appendChild(LatexControl);
+        intro.appendChild(p);
+        LatexControl.addEventListener("click", toggle, false);
+        window.onkeypress = function (evt) {
+          if (evt.keyCode == 90 || evt.keyCode == 122)
+            toggle();
+        }
+        Zsources = document.getElementsByClassName("Z-source");
+        DisplayLaTeX = false;
+        setClass(Zsources, "none");
+      }
+    </script>
     <link type="text/css" rel="stylesheet" href="zml.css" />
     <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM" />
   </head>
-  <body>
+  <body onload="paintButton();">
     <div class="head">
       <p>
         <a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home" /></a>
@@ -184,6 +225,7 @@
           Information about the use, grammar and syntax of <span class="ShEx">ShEx</span> can be found at <span class="obeylines-h"><a href="http://www.w3.org/2013/ShEx">http://www.w3.org/2013/ShEx</a></span>.
           This document describes the formal <span class="italic">semantics</span> of the <span class="ShEx">ShEx</span> language using the <span class="italic">Z</span> specification language, beginning with a <span class="italic">Z</span> specification of the characteristics of an <span class="italic">RDF Graph</span> that are referenced by <span class="ShEx">ShEx</span>.
         <!--l. 65--></p>
+
       </div>
 
       <div id="RDFZ" class="div1">
@@ -1989,7 +2031,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
           <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">    <span class="zbs">else</span></span></td>
         </tr>
         <tr>
-          <td colspan="3" class="zschematext" rowspan="1"><span class="zschematext">        <span class="zi">dispatchar.actions</span> <span class="zi">og</span> <span class="zi">ec</span></span></td>
+          <td colspan="3" class="zschemalasttext" rowspan="1"><span class="zschematext">        <span class="zi">dispatchar.actions</span> <span class="zi">og</span> <span class="zi">ec</span></span></td>
         </tr>
         <tr>
           <td class="bl" rowspan="1" colspan="1"></td>
