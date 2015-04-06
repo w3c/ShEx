@@ -1,0 +1,491 @@
+
+%%inop \entryFor 4
+%%inrel \eqtn
+
+
+\begin{zed}
+Graph == \power Triple
+\end{zed}
+        
+
+\begin{zed}
+[IRI, BlankNode]
+\end{zed}
+        
+
+\begin{zed}
+[String, LanguageTag]
+\end{zed}
+        
+
+\begin{zed}
+TypedLiteral \defs \\
+\t1	[lexicalForm:String ; dataType:IRI | \\
+\t2		dataType \neq XSD\_String]
+\also
+PlainLiteral \defs \\
+\t1	[lexicalForm:String ; dataType:IRI; langTag:LanguageTag | \\
+\t2		dataType = XSD\_String]
+\also
+RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata
+\end{zed}
+        
+
+\begin{zed}
+RDFTerm ::= \\
+\t1	iri \ldata IRI \rdata | \\
+\t1	literal \ldata RDFLiteral \rdata | \\
+\t1	bnode \ldata BlankNode \rdata
+\end{zed}
+        
+
+\begin{schema}{Triple}
+   s,p,o:RDFTerm
+\where
+   iri \entryFor s \in IRI \lor bnode \entryFor s \in BlankNode \\
+   iri \entryFor p \in IRI \\
+   iri \entryFor o \in IRI \lor bnode \entryFor o \in BlankNode \lor literal \entryFor o \in RDFLiteral
+\end{schema}
+        
+
+\begin{gendef}
+   triplesForSubject:RDFTerm \fun Graph \fun Graph
+\where
+   \forall subj:RDFTerm; g:Graph @ triplesForSubject~subj~g = \{t:g | t.s = subj \}
+\end{gendef}
+		
+
+\begin{gendef}
+   triplesForObject:RDFTerm \fun Graph \fun Graph
+\where
+   \forall obj:RDFTerm; g:Graph @ triplesForObject~obj~g = \{t:g | t.o = obj \}
+\end{gendef}
+		
+
+\begin{axdef}
+XSD\_String:IRI \\
+SHEX\_IRI:IRI \\
+SHEX\_BNODE:IRI \\
+SHEX\_LITERAL:IRI \\
+SHEX\_NONLITERAL:IRI
+\end{axdef}
+        
+
+\begin{schema}{Schema}
+   rules:Label \pfun Rule \\
+   start:Label
+\where
+   start \in \dom rules \\
+\forall r:\ran rules @ \\
+\t1 (r \in \ran group \implies (group \entryFor r).rule \in \dom rules) \land \\
+\t1 (r \in \ran and \implies \ran (and \entryFor r) \subseteq \dom rules) \land \\
+\t1 (r \in \ran xor \implies \ran (xor \entryFor r) \subseteq \dom rules) \land \\ 
+\t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran valueRef \implies \\
+\t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules)
+\end{schema}
+		
+
+\begin{zed}
+[Label]
+\end{zed}
+		
+
+\begin{gendef}
+   evaluate:Schema \fun Graph \fun IRI \fun OptValidity
+\where
+\forall s:Schema; g:Graph; i:IRI; v:OptValidity; ec:EvalContext | \\
+\t1 ec.graph = g \land ec.schema = s @ \\
+\t2		evaluate ~s ~g ~i = \\
+\t3			\IF evalRule ~ec ~ (iri~ i)~ (s.rules~ s.start) \in \{\nomatch, \pass\} \\
+\t3			\THEN \pass \ELSE \fail
+\end{gendef}
+        
+
+\begin{zed}
+EvalContext \defs [schema:Schema; graph:Graph]
+\end{zed}
+		
+
+\begin{zed}
+OptValidity ::= \pass | \fail | \nomatch | \none | \error \\
+\end{zed}
+        
+
+\begin{zed}
+Rule ::= \\
+\t1	arc \ldata ArcRule \rdata | \\
+\t1 rarc \ldata RevArcRule \rdata | \\
+\t1 group \ldata GroupRule \rdata | \\
+\t1 and \ldata AndRule \rdata | \\
+\t1 xor \ldata XorRule \rdata \\
+\end{zed}
+        
+
+\begin{gendef}
+   evalRule:EvalContext \fun RDFTerm \fun Rule \fun OptValidity
+\where
+   \forall ec:EvalContext; i:RDFTerm; r:Rule @ evalRule~ec~i~r = \\
+\t1 \IF r \in \ran arc \\
+\t2 \THEN evalArcRule~ec~i~(arc \entryFor r) \\
+\t1 \ELSE \IF r \in \ran rarc \\
+\t2 \THEN evalRevArcRule~ec~i~(rarc \entryFor r) \\
+\t1 \ELSE \IF r \in \ran group \\
+\t2 \THEN evalGroupRule~ec~i~(group \entryFor r) \\
+\t1 \ELSE \IF r \in \ran and \\
+\t2 \THEN evalAndRule~ec~i~(and \entryFor r) \\
+\t1 \ELSE \\
+\t2 evalXorRule~ec~i~(xor \entryFor r)
+\end{gendef}
+        
+
+\begin{gendef}
+   evalRule':EvalContext \fun RDFTerm \fun Label \fun OptValidity
+\where
+   \forall ec:EvalContext; l:Label @ l \in \dom ec.schema.rules
+\end{gendef}
+		
+
+\begin{schema}{ArcRule}
+   filter:PredicateFilter \\
+   valueSpec:ObjectSpecification \\
+   min, max:\optional[\nat] \\
+   actions:\power Action
+\where
+   (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
+\end{schema}
+		
+
+\begin{gendef}
+   evalArcRule:EvalContext \fun RDFTerm \fun ArcRule \fun OptValidity
+\where
+   \forall ec:EvalContext; s:RDFTerm; ar:ArcRule; sg:Graph | \\ 
+\t1 sg = evalPredicateFilter~ar.filter~(triplesForSubject~ s~ ec.graph) @ \\
+\t2		evalArcRule~ec~s~ar = \\
+\t3 \IF evalCardinality~sg~ar.min~ar.max \neq \pass \\
+\t4 \THEN evalCardinality~sg~ar.min~ar.max \\
+\t3 \ELSE \IF evalObjectSpecification~ec~ar.valueSpec~sg \neq \pass \\
+\t4 \THEN evalObjectSpecification~ec~ar.valueSpec~sg \\
+\t3 \ELSE \\
+\t4  dispatch~ ar.actions~ sg~ ec 
+\end{gendef}
+		
+
+\begin{zed}
+IRIorStem ::= iosi \ldata IRI \rdata | ioss \ldata IRIstem \rdata \\
+PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorStem \rdata
+\end{zed}
+		
+
+\begin{zed}
+[IRIstem]
+\end{zed}
+		
+
+\begin{gendef}
+	IRIstemRange:IRIstem \pfun \power IRI
+\end{gendef}
+		
+
+\begin{gendef}
+   evalPredicateFilter:PredicateFilter \pfun Graph \pfun Graph
+\where
+   \forall f:PredicateFilter; g:Graph @ evalPredicateFilter~ f ~g = \\
+\t1 \IF f \in \ran pfIRI \THEN evalIRIorStem~ (pfIRI \entryFor f)~ g \\
+\t1 \ELSE evalWild~ (pfWild \entryFor f)~ g
+\end{gendef}
+		
+
+\begin{gendef}
+   evalIRIorStem:IRIorStem \pfun Graph \pfun Graph
+\where
+   \forall e:IRIorStem; g:Graph @ evalIRIorStem~ e ~g = \\
+\t1 \IF e \in \ran iosi \THEN \{t:g | iri \entryFor t.p = iosi \entryFor e \} \\
+\t1 \ELSE \{t:g | iri \entryFor t.p \in IRIstemRange~ (ioss \entryFor e) \}
+\end{gendef}
+		
+
+\begin{gendef}
+   evalWild:\power IRIorStem \pfun Graph \pfun Graph
+\where
+   \forall es:\power IRIorStem; g:Graph @ evalWild ~es ~g = \\
+\t1 \{t:g | t \notin \bigcup \{e:es @ evalIRIorStem~e~g\} \}
+\end{gendef}
+		
+
+\begin{zed}
+MatchValue ::= \\
+\t1	mviri \ldata IRI \rdata | \\
+\t1	mviris \ldata IRIstem \rdata | \\
+\t1 mvlit \ldata RDFLiteral \rdata
+\also
+ObjectSpecification ::= \\
+\t1	valueType \ldata IRI \rdata | \\
+\t1 valueSet \ldata \power MatchValue \rdata | \\
+\t1 osWild \ldata \power MatchValue \rdata | \\
+\t1 valueRef \ldata Label \rdata
+\end{zed}
+		
+
+\begin{gendef}
+   evalCardinality:Graph \fun \optional[\nat] \fun \optional[\nat] \fun OptValidity
+\where
+   \forall g:Graph; min, max:\optional[\nat] @ evalCardinality~g~min~max = \\
+   \t1 \IF \# min = 1 \land \# g = 0 \land  value~ min = 0 \\
+\t2 \THEN \nomatch \\
+\t1 \ELSE \IF \# g = 0 \\
+\t2 \THEN \none \\
+\t1 \ELSE \IF (\# min = 1 \land \# g < value~ min) \lor \\
+\t3 (\# max = 1 \land \# g > value~ max) \\
+\t2 \THEN \fail \\
+\t1 \ELSE \pass
+\end{gendef}
+		
+
+\begin{gendef}
+   evalObjectSpecification:EvalContext \fun ObjectSpecification \fun Graph \fun \\
+\t1 OptValidity
+\where
+   \forall ec:EvalContext; os:ObjectSpecification; g:Graph @ \\ evalObjectSpecification~ec~os~g = \\
+\t1 \IF \forall t:g @ evalObjectSpecificationTriple~ec~os~t.o = \pass \\
+\t2		\THEN \pass \\
+\t2		\ELSE \fail
+\end{gendef}
+		
+
+\begin{gendef}
+   evalObjectSpecificationTriple:EvalContext \fun ObjectSpecification \fun \\
+\t1 RDFTerm \fun OptValidity
+\where
+   \forall ec:EvalContext; os:ObjectSpecification; n:RDFTerm @ \\
+\t1	evalObjectSpecificationTriple~ec~os~n = \\
+\t2 \IF os \in \ran valueType \THEN \\
+\t3 evalValueType~(valueType \entryFor os)~n \\
+\t2 \ELSE \IF os \in \ran valueSet \THEN \\
+\t3 evalTermSet~(valueSet \entryFor os)~n \\
+\t2 \ELSE \IF os \in \ran osWild \THEN \\
+\t3 evalTermWild~(osWild \entryFor os)~n \\
+\t2 \ELSE \\
+\t3 evalTermReference~ec~(valueRef \entryFor os)~n
+\end{gendef}
+		
+
+\begin{gendef}
+   evalValueType:IRI \pfun RDFTerm \pfun OptValidity
+\where
+   \forall vt:IRI; n:RDFTerm; l:RDFLiteral @ evalValueType~vt~ n = \\
+\t1 \IF vt = SHEX\_IRI \land  n \in \ran iri \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_BNODE \land  n \in \ran bnode \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_NONLITERAL \land  (n \in \ran iri \lor n \in \ran bnode) \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_LITERAL \land  n \in \ran literal \THEN \pass \\
+\t1 \ELSE \IF n \in \ran literal \land l = (literal \entryFor n) \land \\
+\t2 ((l \in \ran pl \land (pl \entryFor l).dataType = vt) \lor \\
+\t2  (l \in \ran tl \land (tl \entryFor l).dataType = vt)) \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+		
+
+\begin{gendef}
+   evalTermSet:\power MatchValue \pfun RDFTerm \pfun OptValidity
+\where
+   \forall mvs:\power MatchValue; n:RDFTerm @ evalTermSet~mvs~n = \\
+\t1	\IF \exists mv:mvs @ \\
+\t2 ((mv \in \ran mviri \land n \in \ran iri \land (iri \entryFor n) = mviri \entryFor mv) \lor \\
+\t2  (mv \in \ran mviris \land n \in \ran iri \land  \\
+\t3 (iri \entryFor n) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
+\t2  (n \in \ran literal \land mvlit \entryFor mv = literal \entryFor n)) \\
+\t1 \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+		
+
+\begin{gendef}
+   evalTermWild:\power MatchValue \fun RDFTerm \fun OptValidity
+\where
+   \forall mvs:\power MatchValue; n:RDFTerm @ evalTermWild~mvs~n = \\
+\t1 \IF evalTermSet~ mvs~ n = \pass \THEN \fail \ELSE \pass
+\end{gendef}
+		
+
+\begin{gendef}
+   evalTermReference:EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
+\where
+\forall ec:EvalContext; vr:Label; n:RDFTerm @ \\ 
+\t1	evalTermReference~ec~vr~n = \\
+\t2		\IF n \notin \ran literal \THEN evalRule'~ec~n~vr \\
+\t2		\ELSE \fail
+\end{gendef}
+		
+
+\begin{schema}{RevArcRule}
+   filter:PredicateFilter \\
+   valueSpec:SubjectSpecification \\
+   min, max:\optional[\nat] \\
+   actions:\power Action
+\where
+   (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
+\end{schema}
+		
+
+\begin{gendef}
+   evalRevArcRule:EvalContext \fun RDFTerm \fun RevArcRule \fun OptValidity
+\where
+  \forall ec:EvalContext; o:RDFTerm; rar:RevArcRule; og:Graph  | \\ 
+\t1 og = evalPredicateFilter~rar.filter~(triplesForObject~ o~ ec.graph) @ \\
+\t2		evalRevArcRule~ec~o~rar = \\
+\t3 		\IF evalCardinality~og~rar.min~rar.max \neq \pass \\
+\t4 			\THEN evalCardinality~og~rar.min~rar.max \\
+\t3 		\ELSE \IF evalSubjectSpecification~ec~rar.valueSpec~og \neq \pass \\
+\t4 			\THEN evalSubjectSpecification~ec~rar.valueSpec~og \\
+\t3 		\ELSE \\
+\t4 			 dispatch~ rar.actions~ og~ ec 
+\end{gendef}
+		
+
+\begin{zed}
+SubjectSpecification ::=  \\
+\t1	subjectSet \ldata \power MatchValue \rdata | \\
+\t1 ssWild \ldata \power MatchValue \rdata | \\
+\t1 subjectRef \ldata Label \rdata
+\end{zed}
+			
+
+\begin{gendef}
+   evalSubjectSpecification:EvalContext \fun SubjectSpecification \fun Graph \fun \\
+\t1 OptValidity
+\where
+   \forall ec:EvalContext; ss:SubjectSpecification; g:Graph @ \\ 
+\t1	evalSubjectSpecification~ec~ss~g = \\
+\t2 	\IF \forall t:g @ evalSubjectSpecificationTriple~ec~ss~t.o = \pass \\
+\t2		\THEN \pass \\
+\t2 	\ELSE \fail
+\end{gendef}
+			
+
+\begin{gendef}
+   evalSubjectSpecificationTriple:EvalContext \fun SubjectSpecification \fun \\
+\t1 RDFTerm \fun OptValidity
+\where
+   \forall ec:EvalContext; ss:SubjectSpecification; n:RDFTerm @ \\
+\t1	evalSubjectSpecificationTriple~ec~ss~n = \\
+\t2 	\IF ss \in \ran subjectSet \THEN \\
+\t3 		evalTermSet~(subjectSet \entryFor ss)~n \\
+\t2 	\ELSE \IF ss \in \ran ssWild \THEN \\
+\t3 		evalTermWild~(ssWild \entryFor ss)~n \\
+\t2 	\ELSE \\
+\t3 		evalTermReference~ec~(subjectRef \entryFor ss)~n
+\end{gendef}
+			
+
+\begin{zed}
+OPT ::= OPTIONAL | REQUIRED
+\also
+GroupRule \defs [rule:Label; opt:OPT; actions:\power Action ] \\
+\end{zed}
+		
+
+\begin{gendef}
+   evalGroupRule:EvalContext \fun RDFTerm \fun GroupRule \fun OptValidity
+\where
+\forall ec:EvalContext; i:RDFTerm; gr:GroupRule @ \\
+\t1	evalGroupRule~ ec~ i ~ gr = \\
+\t2 	\IF evalRule'~ec~i~gr.rule = \none \land gr.opt = OPTIONAL \\
+\t3 	\THEN \nomatch \\
+\t2 	\ELSE \IF evalRule'~ec~i~gr.rule = \error \land gr.opt = OPTIONAL \\
+\t3 	\THEN \fail \\
+\t2 	\ELSE \IF evalRule'~ec~i~gr.rule = \pass \\
+\t3 	\THEN dispatch~ gr.actions~ \emptyset ~ ec \\
+\t2 	\ELSE \\
+\t3			evalRule'~ec~i~gr.rule
+\end{gendef}
+		
+
+\begin{gendef}
+   And:OptValidity \fun OptValidity \fun OptValidity
+\end{gendef}
+		
+
+\begin{zed}
+AndRule == \seq_1 Label
+\end{zed}
+		
+
+\begin{gendef}
+   evalAndRule:EvalContext \fun RDFTerm \fun AndRule \fun OptValidity
+\where
+\forall ec:EvalContext; i:RDFTerm; r:AndRule  @ \\
+\t1	evalAndRule~ec~i~r = \\
+\t2		foldr~ And~ \nomatch ~ (map~(evalRule'~ec~i)~r)
+\end{gendef}
+		
+
+\begin{gendef}
+   Xor:OptValidity \fun OptValidity \fun OptValidity
+\end{gendef}
+		
+
+\begin{zed}
+XorRule == \seq_1 Label
+\end{zed}
+		
+
+\begin{gendef}
+   evalXorRule:EvalContext \fun RDFTerm \fun XorRule \fun OptValidity
+\where
+   \forall ec:EvalContext; i:RDFTerm; r:XorRule  @ \\
+\t1	evalXorRule~ec~i~r = \\
+\t2		foldr~ Xor~ \fail ~ (map~(evalRule'~ ec ~i)~ r)
+\end{gendef}
+		
+
+\begin{zed}
+[Action]
+\end{zed}
+		
+
+\begin{gendef}
+   dispatch:\power Action \fun Graph \fun EvalContext \fun OptValidity
+\where
+   \forall as:\power Action; g:Graph; ec:EvalContext @ \\
+\t1 as = \emptyset \implies dispatch~ as~ g ~ec = \pass
+\end{gendef}
+		
+
+\begin{gendef}[T]
+   foldr:(T \fun T \fun T) \fun T \fun \seq T \fun T
+\where
+   \forall f:T \fun T \fun T; id:T; xs:\seq T @ \\
+\t1	foldr~f~id~xs = \\
+\t2 	\IF xs = \langle \rangle \THEN id \\
+\t2 	\ELSE f~(head~xs)~(foldr~f~id~(tail~xs))
+\end{gendef}
+		
+
+\begin{gendef}[A,B]
+   map:(A \fun B) \fun \seq A \fun \seq B
+\where
+   \forall f:A \fun B; xs:\seq A @ \\
+\t1	map~f~xs = \\
+\t2 	\IF xs = \langle \rangle \THEN \langle \rangle \\
+\t2 	\ELSE \langle f~(head~xs) \rangle \cat map~f~(tail~xs)
+\end{gendef}
+		
+
+\begin{gendef}[X, Y]
+\_  \entryFor \_ :(X \inj Y) \cross Y \pfun X
+\where
+\forall f:X \inj Y; y:Y @  \\
+\t1	f \entryFor y = (\mu x:\dom f | f~x = y)
+\end{gendef}
+		
+
+\begin{zed} 
+  \optional[T] == \{ s:\power T \mid \# s \leq 1 \} \\
+\end{zed}
+		
+
+\begin{gendef}[T]
+   value:\power T \pfun T
+\where
+   \forall s:\power T @ value~ s = (\mu e:T | e \in s) 
+\end{gendef}
+		

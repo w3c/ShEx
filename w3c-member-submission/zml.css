@@ -22,6 +22,9 @@
 
 	ChangeLog:
 	
+	2015-04-01: Arthur Ryman <arthur.ryman@gmail.com>
+	- use double line on top border of gendef boxes
+	
 	2005-03-20: Arthur Ryman <ryman@ca.ibm.com>
 	- make Z Notation initially visible in non-normative version
 	since it is now hidden in normative version
@@ -158,7 +161,7 @@ td.zschemadname {
 
 td.zgendeftop {
 	padding-left: .75em;
-	border-bottom: 3px solid black;
+	border-bottom: 3px double black;
 }
 
 span.zschemaname { color:black;

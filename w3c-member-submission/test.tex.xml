@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Test</title>
+		<link rel="stylesheet" type="text/css" href="shape-expression-1.0.css" />
+		<link type="text/css" rel="stylesheet" href="zml.css" />
+		<link rel="stylesheet" type="text/css"
+			href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM" />
+	</head>
+	<body>
+		<div class="body">
+		
+		<p>\ldata U+300A (&#x300A;)</p>
+		<p>\rdata U+300B (&#x300B;)</p>
+		<p>\langle U+2329 (&#x2329;)</p>
+		<p>\rangle U+232A (&#x232A;)</p>
+		<p>\bind U+21DB (&#x21DB;)</p>
+		<p>\lblot U+2989 (&#x2989;)</p>
+		<p>\rblot U+298A (&#x298A;)</p>
+
+			<div id="RDFZ" class="div1">
+
+<pre class="Z-source" xml:space="preserve">
+\begin{gendef}
+   triplesForSubject: RDFTerm \fun Graph \fun Graph
+\where
+   \forall subj: RDFTerm; g: Graph @ triplesForSubject~subj~g = \{t: g | t.s = subj \}
+\end{gendef}
+</pre>
+
+<pre class="Z-source" xml:space="preserve">
+\begin{zed}
+C = \lblot a \bind 1, b \bind 2, c \bind 3 \rblot
+\end{zed}
+</pre>
+
+<pre class="Z-source" xml:space="preserve">
+\begin{zed}
+A == \langle 1, 2, 3 \rangle
+\end{zed}
+</pre>
+
+<pre class="Z-source" xml:space="preserve">
+\begin{zed}
+B ::= foo \ldata bar \rdata | baz \ldata \num \rdata
+\end{zed}
+</pre>
+<pre class="Z-source" xml:space="preserve">
+\begin{zed}
+pass == \pass
+\end{zed}
+</pre>
+
+<pre class="Z-source" xml:space="preserve">
+\begin{zed}
+XorRule == \seq Label
+\end{zed}
+</pre>
+
+<pre class="Z-source" xml:space="preserve">
+\begin{zed}
+Graph == \power Triple
+\end{zed}
+</pre>
+		
+			</div>
+		</div>
+	</body>
+</html>

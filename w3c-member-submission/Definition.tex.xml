@@ -1,0 +1,1639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="emacs and ericP's fingers. Z Notation LaTeX converted to HTML by XSLT." />
+    <title>Shape Expressions 1.0 Definition</title>
+    <link rel="stylesheet" type="text/css" href="Definition.css" />
+    <script type="text/javascript" src="Definition.js">
+    </script>
+    <link type="text/css" rel="stylesheet" href="zml.css" />
+    <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM" />
+  </head>
+  <body onload="paintButton();">
+    <div class="head">
+      <p>
+        <a href="http://www.w3.org/"><img height="48" width="72" alt="W3C" src="http://www.w3.org/Icons/w3c_home" /></a>
+        <a href="http://www.w3.org/Submission/"><img height="48" width="211" alt="W3C Member Submission" src="http://www.w3.org/Icons/member_subm" /></a>
+      </p>
+      <h1 class="title p-name" id="title">Shape Expressions 1.0 Definition</h1>
+      <h2 id="w3c-member-submission-02-june-2014">W3C Member Submission 2 June 2014 V1.0.1</h2>
+
+      <dl>        
+        <dt>This version:</dt>
+        <dd><a class="u-url" href="http://w3c.github.io/ShEx/V1.0.1/Definition.html">http://w3c.github.io/ShEx/V1.0.1/Definition.html</a></dd>
+        <dt>Latest published version:</dt>
+        <dd><a href="http://www.w3.org/Submission/shex-defn/">http://www.w3.org/Submission/shex-defn/</a></dd>
+        <dt>Previous version:</dt>
+        <dd><a class="u-url" href="http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/">http://www.w3.org/Submission/2014/SUBM-shex-defn-20140602/</a></dd>
+        <dt>Authors:</dt>
+        <dd class="p-author h-card vcard"><span class="p-name fn">Harold Solbrig</span>, <span class="ed_mailto"><a class="u-email email" href="mailto:solbrig.harold@mayo.edu">solbrig.harold@mayo.edu</a></span></dd>
+        <dd class="p-author h-card vcard"><span class="p-name fn">Eric Prud'hommeaux</span>, <span class="ed_mailto"><a class="u-email email" href="mailto:eric@w3.org">eric@w3.org</a></span></dd>
+		<dt>Editor:</dt>
+        <dd class="p-author h-card vcard"><span class="p-name fn">Arthur Ryman</span>, <span class="ed_mailto"><a class="u-email email" href="mailto:arthur.ryman@gmail.com">arthur.ryman@gmail.com</a></span></dd>
+      </dl>
+      
+      
+      <p class="copyright">
+        Copyright © 2014 W3C.
+        This document is available under the <a href="http://www.w3.org/Consortium/Legal/copyright-documents">W3C Document License</a>.
+        See the <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">W3C Intellectual Rights Notice and Legal Disclaimers</a> for additional information.
+      </p>
+      
+      
+    </div>
+      <hr/>
+    <div>
+      <h2><a name="abstract" id="abstract" shape="rect"></a>Abstract</h2>
+      <p>
+        Shape Expressions associate RDF graphs with labeled patterns called "shapes".
+        Shapes can be used for validation, documentation and transformation of RDF data.
+      </p>
+      <p>
+        Shape Expressions express formal constraints on the content of RDF graphs and is intended to be used to validate RDF documents, communicate  expected  graph  patterns  for  interfaces  and  to  generate forms and validation code.
+        This document describes the formal semantics of the Shape Expressions language through the use of the Z Specification Language.
+        The accompanying <a href="http://www.w3.org/Submission/2014/SUBM-shex-primer-20140602/">Shape Expressions Primer</a> provides an informal introduction to the language.
+      </p>
+    </div>
+    <hr />
+	<h2 id="status">Status of This Document</h2>
+	<div>
+      <p>
+        <em>
+          This section describes the status of this document at the time of its publication.
+          Other documents may supersede this document.
+          A list of current W3C publications can be found in the </em><a href="http://www.w3.org/TR/"><i>W3C technical reports index</i></a><em> at http://www.w3.org/TR/.
+        </em>
+      </p>
+
+      <p>
+        This document describes the Shape Expressions langauge developed as a community effort.
+        It is being submitted to W3C so that it can inform the development of a future RDF Data Shape specification.
+      </p>
+
+      <p>
+        By publishing this document, W3C acknowledges that the <a href="http://www.w3.org/Submission/2014/01/">Submitting Members</a> have made a formal Submission request to W3C for discussion.
+        Publication of this document by W3C indicates no endorsement of its content by W3C, nor that W3C has, is, or will be allocating any resources to the issues addressed by it.
+        This document is not the product of a chartered W3C group, but is published as potential input to the <a href="http://www.w3.org/Consortium/Process">W3C Process</a>.
+        A <a href="http://www.w3.org/Submission/2014/01/Comment/">W3C Team Comment</a> has been published in conjunction with this Member Submission.
+        Publication of acknowledged Member Submissions at the W3C site is one of the benefits of <a href="http://www.w3.org/Consortium/Prospectus/Joining">W3C Membership</a>.
+        Please consult the requirements associated with Member Submissions of <a href="http://www.w3.org/Consortium/Patent-Policy-20030520.html#sec-submissions">section 3.3 of the W3C Patent Policy</a>.
+        Please consult the complete <a href="http://www.w3.org/Submission">list of acknowledged W3C Member Submissions</a>.
+      </p>
+      
+      <h3 id="V1.0.1">V1.0.1</h3>
+      <p>
+      	This version has no official status. 
+      	It corrects multiple Z Notation rendering errors which were caused by manually translating LaTeX to HTML.
+      	The Z Notation rendering in this version was generated by automatically translating LaTeX to HTML using XSLT. 
+      	These XSLT scripts are available in the w3c/ShEx project hosted on GitHub: <a href="https://github.com/w3c/ShEx">https://github.com/w3c/ShEx</a>.
+      </p>
+      <p>
+      	This version only corrects the Z Notation rendering errors present in the original W3C Member Submission.
+      	Stylistic and semantic errors remain.
+      </p>
+	</div>
+
+    <div class="tableofcontents">
+      <span class="sectionToc" >1 <a href="#intro">Introduction</a></span><br />
+      <span class="sectionToc" >2 <a href="#RDFZ">The RDF Data Model in Z</a></span><br />
+      <span class="sectionToc" >3 <a href="#ShExEval">Shape Expression Evaluation</a></span><br />
+      <span class="sectionToc" >4 <a href="#ruleEval">Rule Evaluation</a></span><br />
+      <span class="sectionToc" >5 <a href="#actionEval">Action evaluation</a></span><br />
+      <span class="sectionToc" >6 <a href="#parsing">Parsing Rules</a></span><br />
+      <span class="sectionToc" >7 <a href="#appendix">Appendix</a></span><br />
+      <span class="likesectionToc" ><a href="#references">References</a></span>
+    </div>
+    <div class="body">
+
+      <div id="intro" class="div1">
+        <h2>1. Introduction</h2>
+        <p><!--l. 55-->
+          The Shape Expressions Language (<span class="ShEx">ShEx</span>) is used to specify formal constraints on the content of RDF graphs and are intended to be used to validate RDF documents, communicate expected graph patterns for interfaces and to generate forms and validation code.
+          <span class="ShEx">ShEx</span> can be used to:
+        </p>
+        <ul>
+          <li>Describe the contents of an RDF graph</li>
+          <li>Express invariants about an RDF triple store</li>
+          <li>Define a predicate that can be tested against an RDF graph instance</li>
+          <li>Define a set of rules that can be used to generate forms, validation code and other constructs in specific target languages</li>
+        </ul>
+
+        <p><!--l. 63-->
+          Information about the use, grammar and syntax of <span class="ShEx">ShEx</span> can be found at <span class="obeylines-h"><a href="http://www.w3.org/2013/ShEx/">http://www.w3.org/2013/ShEx/</a></span>.
+          This document describes the formal <span class="italic">semantics</span> of the <span class="ShEx">ShEx</span> language using the <span class="italic">Z</span> specification language, beginning with a <span class="italic">Z</span> specification of the characteristics of an <span class="italic">RDF Graph</span> that are referenced by <span class="ShEx">ShEx</span>.
+        <!--l. 65--></p>
+
+        <p class="Z-source Z-doc">
+          The output from <a href="ExtractZed.xsl">ExtractZed.xsl</a> produces text parsable with <code>fuzz -d</code> .
+        </p>
+
+      </div>
+
+      <div id="RDFZ" class="div1">
+        <h2>2 The RDF Data Model in Z</h2>
+        <!--l. 66--><p class="noindent" >The formal definition for an RDF graph in <span class="zi">RDF 1.1 Concepts and Abstract Syntax</span><span class="cite">[<a href="#bib-RDF11-CONCEPTS">RDF11-CONCEPTS</a>]</span>:</p>
+        <blockquote>
+        <!--l. 67--><p class="noindent" >“An <span class="bold">RDF graph </span>is a set of <span class="bold">RDF Triples</span>”</p></blockquote>
+
+        <blockquote>
+          <!--l. 72--><p class="noindent" >“An <span class="bold">RDF triple </span>consists of three components:</p>
+
+          <ul class="itemize1">
+            <li class="itemize">the <span class="zi">subject</span>, which is an <span class="bold">IRI </span>or a <span class="bold">blank node</span>
+            </li>
+            <li class="itemize">the <span class="zi">predicate</span>, which is an <span class="bold">IRI</span>
+            </li>
+          <li class="itemize">the <span class="zi">object</span>, which is an <span class="bold">IRI</span>, a <span class="bold">literal </span>or a <span class="bold">blank node</span>”</li></ul>
+        </blockquote>
+        <blockquote>
+        <!--l. 80--><p class="noindent" >“... <span class="bold">IRI</span>s, <span class="bold">literal</span>s and <span class="bold">blank nodes </span>are distinct and distinguishable.”</p></blockquote>
+        <!--l. 79-->
+        <!--l. 68--><p class="noindent" >provides a definition in Z:</p>
+        <pre class="Z-source">
+\begin{zed}
+Graph == \power Triple
+\end{zed}
+        </pre>
+        <!--l. 83--><p class="indent" >   The <span class="zi">ShEx </span>language treats <span class="bold">IRI</span>s and <span class="bold">blank nodes </span>as primitive types, which are
+        defined as <span class="zi">Z </span>free types:</p>
+        <pre class="Z-source">
+\begin{zed}
+[IRI, BlankNode]
+\end{zed}
+        </pre>
+        <!--l. 88--><p class="indent" >   The <span class="zi">ShEx </span>language can express constraints on both the type and content of
+        <span class="bold">literals</span>, which are modeled separately:
+        <!--l. 90--></p><p class="indent" ></p>
+        <blockquote>
+          <!--l. 91--><p class="noindent" >“A <span class="bold">literal </span>in an RDF graph consists of two or three elements:</p>
+          <ul class="itemize1">
+            <li class="itemize">a <span class="bold">lexical form</span>, being a Unicode string...
+            </li>
+            <li class="itemize">a <span class="bold">datatype IRI</span>, being an IRI
+            </li>
+            <li class="itemize">if and only if the datatype IRI is <br 
+            class="newline" /><span class="obeylines-h"><span class="verb"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code></span></span>, a
+            non-empty language tag as defined in <span class="cite">[<a href="#bib-BCP47">BCP47</a>]</span>. The language tag
+          MUST be well-formed according to section 2.2.9 of <span class="cite">[<a href="#bib-BCP47">BCP47</a>]</span>.”</li></ul>
+        </blockquote>
+
+        <!--l. 99--><p class="noindent" >This is modelled by <span class="zi">String </span>and <span class="zi">LanguageTag </span>as free types:</p>
+        <pre class="Z-source">
+\begin{zed}
+[String, LanguageTag]
+\end{zed}
+        </pre>
+        and using them in the definition the two flavors of <span class="zi">RDFLiteral</span>, plain literal and typed
+        literal:
+        <pre class="Z-source">
+\begin{zed}
+TypedLiteral \defs \\
+\t1	[lexicalForm:String ; dataType:IRI | \\
+\t2		dataType \neq XSD\_String]
+\also
+PlainLiteral \defs \\
+\t1	[lexicalForm:String ; dataType:IRI; langTag:LanguageTag | \\
+\t2		dataType = XSD\_String]
+\also
+RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata
+\end{zed}
+        </pre>
+
+        <span class="zi">RDFTerm </span>is defined as:
+        <blockquote>
+        <!--l. 112--><p class="noindent" >“<span class="bold">IRI</span>s, <span class="bold">literal</span>s and <span class="bold">blank nodes </span>are collectively known as <span class="bold">RDF terms</span></p></blockquote>
+        <!--l. 115--><p class="indent" ></p>
+        <pre class="Z-source">
+\begin{zed}
+RDFTerm ::= \\
+\t1	iri \ldata IRI \rdata | \\
+\t1	literal \ldata RDFLiteral \rdata | \\
+\t1	bnode \ldata BlankNode \rdata
+\end{zed}
+        </pre>
+        The definition of RDF <span class="zi">Triple </span>is modelled as a tuple consisting of three constrained
+        <span class="zi">RDFTerm</span>s:
+        <pre class="Z-source">
+\begin{schema}{Triple}
+   s,p,o:RDFTerm
+\where
+   iri \entryFor s \in IRI \lor bnode \entryFor s \in BlankNode \\
+   iri \entryFor p \in IRI \\
+   iri \entryFor o \in IRI \lor bnode \entryFor o \in BlankNode \lor literal \entryFor o \in RDFLiteral
+\end{schema}
+        </pre>
+
+        <div id="accessFunctions" class="div2">
+          <h3>2.1 RDF Access Functions</h3>
+          <!--l. 128--><p class="noindent" >The <span class="zi">ShEx </span>language uses the following functions:</p>
+
+          <div id="triplesForSubject" class="div3">
+            <h4>2.1.1 triplesForSubject</h4>
+            <!--l. 130--><p class="noindent" >– return set of triples in a graph triples whose subject is a given <span class="zi">RDFTerm</span></p>
+        <pre class="Z-source">
+\begin{gendef}
+   triplesForSubject:RDFTerm \fun Graph \fun Graph
+\where
+   \forall subj:RDFTerm; g:Graph @ triplesForSubject~subj~g = \{t:g | t.s = subj \}
+\end{gendef}
+		</pre>
+          </div>
+
+          <div id="triplesForObject" class="div3">
+            <h4>2.1.2 triplesForObject</h4>
+            <!--l. 137--><p class="noindent" >– return set of triples in a graph triples whose object is a given <span class="zi">RDFTerm</span></p>
+        <pre class="Z-source">
+\begin{gendef}
+   triplesForObject:RDFTerm \fun Graph \fun Graph
+\where
+   \forall obj:RDFTerm; g:Graph @ triplesForObject~obj~g = \{t:g | t.o = obj \}
+\end{gendef}
+		</pre>
+
+            <!--l. 144-->
+          </div>
+        </div>
+
+
+        <div id="wellKnownURIs" class="div2">
+          <h3>2.2 Well Known URIs</h3>
+          <!--l. 146--><p class="noindent" >The following URIs are referenced explicitly in the <span class="zi">ShEx </span>implementation:
+          <!--l. 148--></p><p class="indent" ></p>
+        <pre class="Z-source">
+\begin{axdef}
+XSD\_String:IRI \\
+SHEX\_IRI:IRI \\
+SHEX\_BNODE:IRI \\
+SHEX\_LITERAL:IRI \\
+SHEX\_NONLITERAL:IRI
+\end{axdef}
+        </pre>
+          <!--l. 152--><p class="indent" >   The above definitions of <span class="zi">Graph</span>, <span class="zi">Triple</span>, <span class="zi">RDFTerm </span>and their components will now be used to describe the relationship between a <span class="zi">ShEx</span> <span class="zi">Schema </span>and an RDF graph.
+          <!--l. 154--></p>
+        </div>
+      </div>
+
+      <div id="ShExEval" class="div1">
+        <h2>3 Shape Expression Evaluation</h2>
+        <!--l. 155--><p class="noindent" >A Shape Expression <span class="zi">Schema </span>is a collection of labeled rules where exactly one rule in
+        the collection is identified as the outermost or “starting” rule. In addition, any rule
+        that is referenced within the <span class="zi">Schema </span>is also itself a member of the <span class="zi">Schema</span>
+        Formally:
+        <!--l. 159--></p><p class="indent" ></p>
+        <pre class="Z-source">
+\begin{schema}{Schema}
+   rules:Label \pfun Rule \\
+   start:Label
+\where
+   start \in \dom rules \\
+\forall r:\ran rules @ \\
+\t1 (r \in \ran group \implies (group \entryFor r).rule \in \dom rules) \land \\
+\t1 (r \in \ran and \implies \ran (and \entryFor r) \subseteq \dom rules) \land \\
+\t1 (r \in \ran xor \implies \ran (xor \entryFor r) \subseteq \dom rules) \land \\ 
+\t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran valueRef \implies \\
+\t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules)
+\end{schema}
+		</pre>
+
+        <!--l. 172--><p class="indent" >   While existing <span class="zi">ShEx </span>implementations define a rule <span class="zi">Label </span>as being either an <span class="zi">IRI </span>or
+        a <span class="zi">BlankNode</span>, the type of <span class="zi">Label </span>does not impact the evaluation semantics. For our
+        purposes, we can simply define it as a separate free type:</p>
+        <pre class="Z-source">
+\begin{zed}
+[Label]
+\end{zed}
+		</pre>
+        <!--l. 179--><p class="indent" >   The validity of a given RDF <span class="zi">Graph </span>is determined by taking the <span class="zi">start Rule </span>of a
+        <span class="zi">ShEx Schema </span>and a reference <span class="zi">IRI </span>and evaluating the validity of the <span class="zi">Rule </span>against the
+        supplied graph.
+        <!--l. 182--></p><p class="indent" >   Formally, the <span class="zi">evaluate </span>function takes a <span class="zi">Schema</span>, a <span class="zi">Graph </span>and a reference <span class="zi">IRI </span>and,
+        if the <span class="zi">start Rule </span>in the <span class="zi">Schema</span>, in the context of the starting <span class="zi">Schema </span>and <span class="zi">graph</span>,
+        returns either <span class="zi">nomatch </span>(<span class="cmbxti-10">z</span>) or <span class="zi">pass </span>(<span class="cmbxti-10">p</span>) then the function returns <span class="zi">pass</span>. In all other
+        cases, the function returns <span class="zi">fail </span>(<span class="cmbxti-10">f</span> ).</p>
+        <pre class="Z-source">
+\begin{gendef}
+   evaluate:Schema \fun Graph \fun IRI \fun OptValidity
+\where
+\forall s:Schema; g:Graph; i:IRI; v:OptValidity; ec:EvalContext | \\
+\t1 ec.graph = g \land ec.schema = s @ \\
+\t2		evaluate ~s ~g ~i = \\
+\t3			\IF evalRule ~ec ~ (iri~ i)~ (s.rules~ s.start) \in \{\nomatch, \pass\} \\
+\t3			\THEN \pass \ELSE \fail
+\end{gendef}
+        </pre>
+        <!--l. 197-->
+      </div>
+
+      <div id="ruleEval" class="div1">
+        <h2>4 Rule Evaluation</h2>
+        <!--l. 198--><p class="noindent" >A <span class="zi">ShEx Rule </span>is a set of constraints that can be evaluated against a reference
+        <span class="zi">RDFTerm</span> in the context of a given <span class="zi">Schema </span>and RDF <span class="zi">Graph</span>:</p>
+        <pre class="Z-source">
+\begin{zed}
+EvalContext \defs [schema:Schema; graph:Graph]
+\end{zed}
+		</pre>
+        <!--l. 205--><p class="indent" >   Formally, the <span class="zi">evalRule </span>function takes an <span class="zi">EvalContext</span>, a reference <span class="zi">RDFTerm </span>and a
+        <span class="zi">Rule </span>and returns one of the following:</p>
+        <ul class="itemize1">
+          <li class="itemize"><span class="bold">Pass (</span><span class="cmbxti-10">p</span><span class="bold">) </span>- the supplied <span class="zi">Graph </span>satisfied the evaluation <span class="zi">Rule</span>
+          </li>
+          <li class="itemize"><span class="bold">Fail (</span><span class="cmbxti-10">f</span> <span class="bold">) </span>- the supplied <span class="zi">Graph </span>did not satisfy the evaluation <span class="zi">Rule</span>
+          </li>
+          <li class="itemize"><span class="bold">Nomatch (</span><span class="cmbxti-10">z</span><span class="bold">) </span>- an <span class="zi">optional GroupRule </span>was encountered and there were no
+          matching triples
+          </li>
+          <li class="itemize"><span class="bold">None (</span><span class="msbm-10">∅</span><span class="bold">) </span>- an <span class="zi">ArcRule </span>was encountered with a minimum cardinality of 0
+          and there were no matching triples
+          </li>
+          <li class="itemize"><span class="bold">Error(</span><span class="cmmi-10">ε</span><span class="bold">) </span>- an <span class="zi">XorRule </span>was evaluated and two or more components passed
+        the evaluation.</li></ul>
+        <!--l. 213-->
+        <pre class="Z-source">
+\begin{zed}
+OptValidity ::= \pass | \fail | \nomatch | \none | \error \\
+\end{zed}
+        </pre>
+        A <span class="zi">Rule </span>can take one of five forms. Each will be formally described later in this
+        document, but informally they are:
+        <ul class="itemize1">
+          <li class="itemize"><span class="cmbxti-10">ArcRule </span>– selects the subset of the graph having the reference <span class="zi">RDFTerm</span> as
+          the subject and matching predicates and and validates the resulting objects
+          </li>
+          <li class="itemize"><span class="cmbxti-10">RevArcRule  </span>–  selects  the  subset  of  the  graph  having  the  reference
+          <span class="zi">RDFTerm</span> as  the  object  and  matching  predicates  and  and  validates  the
+          resulting subjects
+
+          </li>
+          <li class="itemize"><span class="cmbxti-10">GroupRule </span>– identifies a <span class="zi">Rule </span>and declares it as optional and/or describes
+          a set of external <span class="zi">Actions </span>to be evaluated if the inner <span class="zi">Rule </span>passes.
+          </li>
+          <li class="itemize"><span class="cmbxti-10">AndRule </span>– identifies a set of <span class="zi">Rules</span>, all of which must pass when evaluated
+          against the supplied <span class="zi">Graph </span>and <span class="zi">EvalContext</span>
+          </li>
+          <li class="itemize"><span class="cmbxti-10">XorRule </span>– identifies a set of <span class="zi">Rules</span>, exactly one of which must pass when
+        evaluated against the supplied <span class="zi">Graph </span>and <span class="zi">EvalContext</span></li></ul>
+        <!--l. 228-->
+        <pre class="Z-source">
+\begin{zed}
+Rule ::= \\
+\t1	arc \ldata ArcRule \rdata | \\
+\t1 rarc \ldata RevArcRule \rdata | \\
+\t1 group \ldata GroupRule \rdata | \\
+\t1 and \ldata AndRule \rdata | \\
+\t1 xor \ldata XorRule \rdata \\
+\end{zed}
+        </pre>
+        <pre class="Z-source">
+\begin{gendef}
+   evalRule:EvalContext \fun RDFTerm \fun Rule \fun OptValidity
+\where
+   \forall ec:EvalContext; i:RDFTerm; r:Rule @ evalRule~ec~i~r = \\
+\t1 \IF r \in \ran arc \\
+\t2 \THEN evalArcRule~ec~i~(arc \entryFor r) \\
+\t1 \ELSE \IF r \in \ran rarc \\
+\t2 \THEN evalRevArcRule~ec~i~(rarc \entryFor r) \\
+\t1 \ELSE \IF r \in \ran group \\
+\t2 \THEN evalGroupRule~ec~i~(group \entryFor r) \\
+\t1 \ELSE \IF r \in \ran and \\
+\t2 \THEN evalAndRule~ec~i~(and \entryFor r) \\
+\t1 \ELSE \\
+\t2 evalXorRule~ec~i~(xor \entryFor r)
+\end{gendef}
+        </pre>
+        The <span class="zi">evalRule</span><span class="cmsy-10">′ </span>function de-references the supplied <span class="zi">Label </span>and invokes <span class="zi">evalRule </span>with the
+        result. This is not explicitly represented because the <span class="zi">Z </span>specification language does
+        not allow cyclic dependencies. This function is undefined if <span class="zi">Label </span>is not in
+        <span class="zi">EvalContext</span>
+        <!--l. 256--><p class="indent" ></p>
+        <pre class="Z-source">
+\begin{gendef}
+   evalRule':EvalContext \fun RDFTerm \fun Label \fun OptValidity
+\where
+   \forall ec:EvalContext; l:Label @ l \in \dom ec.schema.rules
+\end{gendef}
+		</pre>
+        <!--l. 261-->
+        <div id="ArcRuleEval" class="div2">
+          <h3>4.1 ArcRule Evaluation</h3>
+          <!--l. 262--><p class="noindent" >The <span class="zi">ArcRule </span>is used to select the subset of the graph having a given predicate or
+          predicates and to determine whether the cardinality and/or “type” of this subset
+          matches a supplied criteria. The rule itself consists of a <span class="zi">PredicateFilter </span>to select the
+          triples, an <span class="zi">ObjectSpecification </span>to evaluate the result, an optional <span class="zi">min </span>and <span class="zi">max</span>
+          cardinality and a (possibly empty) set of <span class="zi">Actions</span>:</p>
+
+          <pre class="Z-source">
+\begin{schema}{ArcRule}
+   filter:PredicateFilter \\
+   valueSpec:ObjectSpecification \\
+   min, max:\optional[\nat] \\
+   actions:\power Action
+\where
+   (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
+\end{schema}
+		</pre>
+          <span class="zi">ArcRule </span>evaluation consists of:
+          <ol  class="enumerate1" >
+            <li 
+                class="enumerate" id="x1-9002x1">Select the subset of the <span class="zi">EvalContext Graph </span>with the supplied subject and
+            predicates matching <span class="zi">PredicateFilter</span>
+            </li>
+            <li 
+                class="enumerate" id="x1-9004x2">Evaluate the cardinality and return the result if it doesn’t pass
+            </li>
+            <li 
+                class="enumerate" id="x1-9006x3">Evaluate   the   object   of   each   of   the   triples   in   the   set   against
+            <span class="zi">ObjectSpecification</span>. If any of the evaluations fail, return <span class="zi">fail </span>(<span class="cmbxti-10">f</span> ).
+            </li>
+            <li 
+                class="enumerate" id="x1-9008x4">Return the result of evaluating <span class="zi">actions </span>against the matching triples.</li>
+          </ol>
+          <!--l. 283-->
+          <pre class="Z-source">
+\begin{gendef}
+   evalArcRule:EvalContext \fun RDFTerm \fun ArcRule \fun OptValidity
+\where
+   \forall ec:EvalContext; s:RDFTerm; ar:ArcRule; sg:Graph | \\ 
+\t1 sg = evalPredicateFilter~ar.filter~(triplesForSubject~ s~ ec.graph) @ \\
+\t2		evalArcRule~ec~s~ar = \\
+\t3 \IF evalCardinality~sg~ar.min~ar.max \neq \pass \\
+\t4 \THEN evalCardinality~sg~ar.min~ar.max \\
+\t3 \ELSE \IF evalObjectSpecification~ec~ar.valueSpec~sg \neq \pass \\
+\t4 \THEN evalObjectSpecification~ec~ar.valueSpec~sg \\
+\t3 \ELSE \\
+\t4  dispatch~ ar.actions~ sg~ ec 
+\end{gendef}
+		</pre>
+          <div id="PredicateFilterValidation" class="div3">
+            <h4>4.1.1 PredicateFilter Validation</h4>
+            <!--l. 298--><p class="noindent" >A <span class="zi">PredicateFilter</span> can be one of:</p>
+            <ul class="itemize1">
+              <li class="itemize"><span class="zi" id="pfIRI">pfIRI </span>- the IRI of a specific predicate or the IRIstem that defines a set
+              of predicates
+              </li>
+              <li class="itemize"><span class="zi" id="pfWild">pfWild </span>- an expression that matches any predicate <span class="zi">except </span>those matching
+            the (possibly empty) set of <span class="zi">IRIorStems</span></li></ul>
+            <!--l. 304-->
+            <pre class="Z-source">
+\begin{zed}
+IRIorStem ::= iosi \ldata IRI \rdata | ioss \ldata IRIstem \rdata \\
+PredicateFilter ::= pfIRI \ldata IRIorStem \rdata | pfWild \ldata \power IRIorStem \rdata
+\end{zed}
+		</pre>
+            An <span class="zi">IRIstem </span>matches any <span class="zi">IRI </span>whose stringified representation begins with the
+            stringified representation of <span class="zi">IRIstem </span>according to standard IRI matching rules <span class="cite">[<a href="#bib-RFC3987">RFC3987</a>]</span>.
+            This is represented by the function:
+
+            <pre class="Z-source">
+\begin{zed}
+[IRIstem]
+\end{zed}
+		</pre>
+            <pre class="Z-source">
+\begin{gendef}
+	IRIstemRange:IRIstem \pfun \power IRI
+\end{gendef}
+		</pre>
+            <span class="zi">evalPredicateFilter </span>returns all of the triples in a <span class="zi">Graph </span>whose predicate matches the
+            supplied <span class="zi">PredicateFilter</span>:
+            <pre class="Z-source">
+\begin{gendef}
+   evalPredicateFilter:PredicateFilter \pfun Graph \pfun Graph
+\where
+   \forall f:PredicateFilter; g:Graph @ evalPredicateFilter~ f ~g = \\
+\t1 \IF f \in \ran pfIRI \THEN evalIRIorStem~ (pfIRI \entryFor f)~ g \\
+\t1 \ELSE evalWild~ (pfWild \entryFor f)~ g
+\end{gendef}
+		</pre>
+            <span class="zi">evalIRIorStem </span>returns all of the triples in a <span class="zi">Graph </span>matching the supplied
+            <span class="zi">IRIorStem</span>
+
+            <pre class="Z-source">
+\begin{gendef}
+   evalIRIorStem:IRIorStem \pfun Graph \pfun Graph
+\where
+   \forall e:IRIorStem; g:Graph @ evalIRIorStem~ e ~g = \\
+\t1 \IF e \in \ran iosi \THEN \{t:g | iri \entryFor t.p = iosi \entryFor e \} \\
+\t1 \ELSE \{t:g | iri \entryFor t.p \in IRIstemRange~ (ioss \entryFor e) \}
+\end{gendef}
+		</pre>
+            <span class="zi">evalWild </span>returns all of the triples in a <span class="zi">Graph </span>that do <span class="zi">not </span>match an entry in the set of
+            <span class="zi">IRIorStems</span>.
+            <pre class="Z-source">
+\begin{gendef}
+   evalWild:\power IRIorStem \pfun Graph \pfun Graph
+\where
+   \forall es:\power IRIorStem; g:Graph @ evalWild ~es ~g = \\
+\t1 \{t:g | t \notin \bigcup \{e:es @ evalIRIorStem~e~g\} \}
+\end{gendef}
+		</pre>
+          </div>
+
+          <div id="ObjectSpecificationEvaluation" class="div3">
+            <h4>4.1.2 ObjectSpecification Evaluation</h4>
+            <!--l. 345--><p class="noindent" ><span class="zi">ObjectSpecification </span>specifies a set of possible values for an <span class="zi">RDFTerm </span>and takes one of
+            the following forms:</p>
+            <ul class="itemize1">
+              <li class="itemize"><span class="zi" id="ValueType">ValueType </span>- matches <span class="zi">Literals </span>having a specified data type
+              </li>
+              <li class="itemize"><span class="zi" id="ValueSet">ValueSet  </span>-  matches  <span class="zi">IRIs  </span>or  <span class="zi">Literals  </span>that  match  one  or  more  of  the
+              expressions in the specified set
+              </li>
+              <li class="itemize"><span class="zi" id="ValueWild">ValueWild </span>- matches any target <span class="zi">except </span>those matching the (possibly empty)
+              set of <span class="zi">IRIstems</span>
+
+              </li>
+              <li class="itemize"><span class="zi" id="ValueReference">ValueReference </span>- matches any target that is considered valid according the
+            <span class="zi">Rule </span>identified by <span class="zi">Label</span>.</li></ul>
+            <!--l. 352-->
+            <pre class="Z-source">
+\begin{zed}
+MatchValue ::= \\
+\t1	mviri \ldata IRI \rdata | \\
+\t1	mviris \ldata IRIstem \rdata | \\
+\t1 mvlit \ldata RDFLiteral \rdata
+\also
+ObjectSpecification ::= \\
+\t1	valueType \ldata IRI \rdata | \\
+\t1 valueSet \ldata \power MatchValue \rdata | \\
+\t1 osWild \ldata \power MatchValue \rdata | \\
+\t1 valueRef \ldata Label \rdata
+\end{zed}
+		</pre>
+          </div>
+
+          <div id="evalCardinality" class="div3">
+            <h4>4.1.3 evalCardinality</h4>
+            <!--l. 361--><p class="noindent" >– evaluates the cardinality the supplied graph.</p>
+            <ul class="itemize1">
+              <li class="itemize">If the graph has no elements and:
+              <ul class="itemize2">
+                <li class="itemize"><span class="zi">min </span>value is 0 – <span class="zi">nomatch </span>(<span class="cmbxti-10">z</span>)
+                </li>
+              <li class="itemize"><span class="zi">min </span>value isn’t specified or is <span class="cmmi-10">> </span>0 – <span class="zi">none </span>(<span class="msbm-10">∅</span>)</li></ul>
+              </li>
+              <li class="itemize">Otherwise:
+              <ul class="itemize2">
+                <li class="itemize">If number of elements in graph <span class="cmmi-10">&lt; </span><span class="zi">min </span>or <span class="cmmi-10">&gt; </span><span class="zi">max </span>– <span class="zi">fail </span>(<span class="cmbxti-10">f</span> )
+                </li>
+              <li class="itemize">Otherwise – <span class="zi">pass </span>(<span class="cmbxti-10">p</span>)</li></ul>
+            </li></ul>
+            <!--l. 377--><p class="indent" ></p>
+
+            <pre class="Z-source">
+\begin{gendef}
+   evalCardinality:Graph \fun \optional[\nat] \fun \optional[\nat] \fun OptValidity
+\where
+   \forall g:Graph; min, max:\optional[\nat] @ evalCardinality~g~min~max = \\
+   \t1 \IF \# min = 1 \land \# g = 0 \land  value~ min = 0 \\
+\t2 \THEN \nomatch \\
+\t1 \ELSE \IF \# g = 0 \\
+\t2 \THEN \none \\
+\t1 \ELSE \IF (\# min = 1 \land \# g &lt; value~ min) \lor \\
+\t3 (\# max = 1 \land \# g > value~ max) \\
+\t2 \THEN \fail \\
+\t1 \ELSE \pass
+\end{gendef}
+		</pre>
+            <!--l. 391--><p class="noindent" ><span class="paragraphHead"><a href="#x1-130004.1" id="x1-130004.1"><span class="bold">evalObjectSpecification</span></a></span>
+            – returns <span class="zi">pass </span>(<span class="cmbxti-10">p</span>) if all of the triples in a <span class="zi">Graph </span>match the supplied
+            <span class="zi">ObjectSpecification</span>, otherwise <span class="zi">fail </span>(<span class="cmbxti-10">f</span> )</p>
+            <pre class="Z-source">
+\begin{gendef}
+   evalObjectSpecification:EvalContext \fun ObjectSpecification \fun Graph \fun \\
+\t1 OptValidity
+\where
+   \forall ec:EvalContext; os:ObjectSpecification; g:Graph @ \\ evalObjectSpecification~ec~os~g = \\
+\t1 \IF \forall t:g @ evalObjectSpecificationTriple~ec~os~t.o = \pass \\
+\t2		\THEN \pass \\
+\t2		\ELSE \fail
+\end{gendef}
+		</pre>
+
+            <pre class="Z-source">
+\begin{gendef}
+   evalObjectSpecificationTriple:EvalContext \fun ObjectSpecification \fun \\
+\t1 RDFTerm \fun OptValidity
+\where
+   \forall ec:EvalContext; os:ObjectSpecification; n:RDFTerm @ \\
+\t1	evalObjectSpecificationTriple~ec~os~n = \\
+\t2 \IF os \in \ran valueType \THEN \\
+\t3 evalValueType~(valueType \entryFor os)~n \\
+\t2 \ELSE \IF os \in \ran valueSet \THEN \\
+\t3 evalTermSet~(valueSet \entryFor os)~n \\
+\t2 \ELSE \IF os \in \ran osWild \THEN \\
+\t3 evalTermWild~(osWild \entryFor os)~n \\
+\t2 \ELSE \\
+\t3 evalTermReference~ec~(valueRef \entryFor os)~n
+\end{gendef}
+		</pre>
+            <!--l. 418--><p class="noindent" ><span class="paragraphHead"><a href="#x1-140004.1" id="x1-140004.1"><span class="bold">evalValueType</span></a></span>
+            – returns pass if the supplied <span class="zi">RDFTerm </span>is:</p>
+            <ul class="itemize1">
+              <li class="itemize">type <span class="zi">literal </span>and whose <span class="zi">dataType </span>matches ValueType
+              </li>
+            <li class="itemize">type <span class="zi">IRI </span>and <span class="zi">ValueType </span>is type <span class="zi">RDF</span>_<span class="zi">Literal</span></li></ul>
+            <!--l. 424-->
+            <pre class="Z-source">
+\begin{gendef}
+   evalValueType:IRI \pfun RDFTerm \pfun OptValidity
+\where
+   \forall vt:IRI; n:RDFTerm; l:RDFLiteral @ evalValueType~vt~ n = \\
+\t1 \IF vt = SHEX\_IRI \land  n \in \ran iri \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_BNODE \land  n \in \ran bnode \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_NONLITERAL \land  (n \in \ran iri \lor n \in \ran bnode) \THEN \pass \\
+\t1 \ELSE \IF vt = SHEX\_LITERAL \land  n \in \ran literal \THEN \pass \\
+\t1 \ELSE \IF n \in \ran literal \land l = (literal \entryFor n) \land \\
+\t2 ((l \in \ran pl \land (pl \entryFor l).dataType = vt) \lor \\
+\t2  (l \in \ran tl \land (tl \entryFor l).dataType = vt)) \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+		</pre>
+            <!--l. 437--><p class="noindent" ><span class="paragraphHead"><a href="#x1-150004.1" id="x1-150004.1"><span class="bold">evalTermSet</span></a></span>
+            – return <span class="cmbxti-10">p</span> if the supplied <span class="zi">RDFTerm </span>is a member of <span class="zi">MatchValue</span></p>
+            <pre class="Z-source">
+\begin{gendef}
+   evalTermSet:\power MatchValue \pfun RDFTerm \pfun OptValidity
+\where
+   \forall mvs:\power MatchValue; n:RDFTerm @ evalTermSet~mvs~n = \\
+\t1	\IF \exists mv:mvs @ \\
+\t2 ((mv \in \ran mviri \land n \in \ran iri \land (iri \entryFor n) = mviri \entryFor mv) \lor \\
+\t2  (mv \in \ran mviris \land n \in \ran iri \land  \\
+\t3 (iri \entryFor n) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
+\t2  (n \in \ran literal \land mvlit \entryFor mv = literal \entryFor n)) \\
+\t1 \THEN \pass \\
+\t1 \ELSE \fail
+\end{gendef}
+		</pre>
+
+            <!--l. 452--><p class="noindent" ><span class="paragraphHead"><a href="#x1-160004.1" id="x1-160004.1"><span class="bold">evalTermWild</span></a></span>
+            – return pass (<span class="cmbxti-10">p</span>) if the supplied <span class="zi">RDFTerm </span>is <span class="zi">not </span>a member of <span class="zi">MatchValue</span>.
+            <!--l. 455--></p><p class="indent" ></p>
+            <pre class="Z-source">
+\begin{gendef}
+   evalTermWild:\power MatchValue \fun RDFTerm \fun OptValidity
+\where
+   \forall mvs:\power MatchValue; n:RDFTerm @ evalTermWild~mvs~n = \\
+\t1 \IF evalTermSet~ mvs~ n = \pass \THEN \fail \ELSE \pass
+\end{gendef}
+		</pre>
+            <!--l. 461--><p class="noindent" ><span class="paragraphHead"><a href="#x1-170004.1" id="x1-170004.1"><span class="bold">evalTermReference</span></a></span>
+            – return <span class="cmbxti-10">p</span> if the subgraph of the <span class="zi">EvalContext </span>graph whose subjects match the
+            supplied <span class="zi">RDFTerm </span>satisfies the <span class="zi">ValueReference </span>rule.
+            <!--l. 464--></p><p class="indent" ></p>
+            <pre class="Z-source">
+\begin{gendef}
+   evalTermReference:EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
+\where
+\forall ec:EvalContext; vr:Label; n:RDFTerm @ \\ 
+\t1	evalTermReference~ec~vr~n = \\
+\t2		\IF n \notin \ran literal \THEN evalRule'~ec~n~vr \\
+\t2		\ELSE \fail
+\end{gendef}
+		</pre>
+
+            <!--l. 472-->
+          </div>
+        </div>
+
+        <div id="RevArcRuleEvaluation" class="div2">
+          <h3>4.2 RevArcRule Evaluation</h3>
+          <!--l. 473--><p class="noindent" >The <span class="zi">RevArcRule </span>is used to select the subset of the graph having a given
+          predicate or predicates and to determine whether the cardinality and/or
+          “type” of this subset matches a supplied criteria. The rule itself consists of a
+          <span class="zi">PredicateFilter </span>to select the triples, an <span class="zi">SubjectSpecification </span>to evaluate the
+          result, a optional <span class="zi">min </span>and <span class="zi">max </span>cardinality and a (possibly empty) set of
+          <span class="zi">Actions</span>:</p>
+          <pre class="Z-source">
+\begin{schema}{RevArcRule}
+   filter:PredicateFilter \\
+   valueSpec:SubjectSpecification \\
+   min, max:\optional[\nat] \\
+   actions:\power Action
+\where
+   (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
+\end{schema}
+		</pre>
+          <span class="zi">RevArcRule </span>evaluation consists of:
+          <ol  class="enumerate1" >
+            <li 
+                class="enumerate" id="x1-18002x1">Select the subset of the <span class="zi">EvalContext Graph </span>with the supplied object and
+            predicates matching <span class="zi">PredicateFilter</span>
+            </li>
+            <li 
+                class="enumerate" id="x1-18004x2">Evaluate the cardinality and return the result if it doesn’t pass
+            </li>
+            <li 
+                class="enumerate" id="x1-18006x3">Evaluate   the   object   of   each   of   the   triples   in   the   set   against
+            <span class="zi">SubjectSpecification</span>. If any of the evaluations fail, return <span class="zi">fail </span>(<span class="cmbxti-10">f</span> ).
+            </li>
+            <li 
+                class="enumerate" id="x1-18008x4">Return the result of evaluating <span class="zi">actions </span>against the matching triples.</li>
+          </ol>
+          <!--l. 494-->
+          <pre class="Z-source">
+\begin{gendef}
+   evalRevArcRule:EvalContext \fun RDFTerm \fun RevArcRule \fun OptValidity
+\where
+  \forall ec:EvalContext; o:RDFTerm; rar:RevArcRule; og:Graph  | \\ 
+\t1 og = evalPredicateFilter~rar.filter~(triplesForObject~ o~ ec.graph) @ \\
+\t2		evalRevArcRule~ec~o~rar = \\
+\t3 		\IF evalCardinality~og~rar.min~rar.max \neq \pass \\
+\t4 			\THEN evalCardinality~og~rar.min~rar.max \\
+\t3 		\ELSE \IF evalSubjectSpecification~ec~rar.valueSpec~og \neq \pass \\
+\t4 			\THEN evalSubjectSpecification~ec~rar.valueSpec~og \\
+\t3 		\ELSE \\
+\t4 			 dispatch~ rar.actions~ og~ ec 
+\end{gendef}
+		</pre>
+          <div id="SubjectSpecificationEvaluation" class="div3">
+            <h4>4.2.1 SubjectSpecification Evaluation</h4>
+            <!--l. 508--><p class="noindent" ><span class="zi">SubjectSpecification </span>specifies a set of possible values for an <span class="zi">RDFTerm </span>and takes one
+            of the following forms:</p>
+            <ul class="itemize1">
+              <li class="itemize"><span class="zi">SubjectSet  </span>-  matches  <span class="zi">IRIs  </span>or  <span class="zi">IRIstems  </span>that  match  one  or  more  of  the
+              expressions in the specified set
+              </li>
+              <li class="itemize"><span class="zi">SubjectWild </span>- matches any target <span class="zi">except </span>those matching the (possibly empty)
+              set of <span class="zi">IRIstems</span>
+              </li>
+              <li class="itemize"><span class="zi">subjectRef  </span>- matches any target that is considered valid according the <span class="zi">Rule</span>
+            identified by <span class="zi">Label</span>.</li></ul>
+            <!--l. 514-->
+            <pre class="Z-source">
+\begin{zed}
+SubjectSpecification ::=  \\
+\t1	subjectSet \ldata \power MatchValue \rdata | \\
+\t1 ssWild \ldata \power MatchValue \rdata | \\
+\t1 subjectRef \ldata Label \rdata
+\end{zed}
+			</pre>
+
+            <!--l. 520--><p class="indent" >   paragraphevalSubjectSpecification – returns <span class="zi">pass </span>(<span class="cmbxti-10">p</span>) if all of the triples in a
+            <span class="zi">Graph </span>match the supplied <span class="zi">SubjectSpecification</span>, otherwise <span class="zi">fail </span>(<span class="cmbxti-10">f</span> )</p>
+            <pre class="Z-source">
+\begin{gendef}
+   evalSubjectSpecification:EvalContext \fun SubjectSpecification \fun Graph \fun \\
+\t1 OptValidity
+\where
+   \forall ec:EvalContext; ss:SubjectSpecification; g:Graph @ \\ 
+\t1	evalSubjectSpecification~ec~ss~g = \\
+\t2 	\IF \forall t:g @ evalSubjectSpecificationTriple~ec~ss~t.o = \pass \\
+\t2		\THEN \pass \\
+\t2 	\ELSE \fail
+\end{gendef}
+			</pre>
+            <pre class="Z-source">
+\begin{gendef}
+   evalSubjectSpecificationTriple:EvalContext \fun SubjectSpecification \fun \\
+\t1 RDFTerm \fun OptValidity
+\where
+   \forall ec:EvalContext; ss:SubjectSpecification; n:RDFTerm @ \\
+\t1	evalSubjectSpecificationTriple~ec~ss~n = \\
+\t2 	\IF ss \in \ran subjectSet \THEN \\
+\t3 		evalTermSet~(subjectSet \entryFor ss)~n \\
+\t2 	\ELSE \IF ss \in \ran ssWild \THEN \\
+\t3 		evalTermWild~(ssWild \entryFor ss)~n \\
+\t2 	\ELSE \\
+\t3 		evalTermReference~ec~(subjectRef \entryFor ss)~n
+\end{gendef}
+			</pre>
+
+            <!--l. 544-->
+          </div>
+        </div>
+
+        <div id="GroupRuleEvaluation" class="div2">
+          <h3>4.3 GroupRule Evaluation</h3>
+          <!--l. 545--><p class="noindent" >A <span class="zi">GroupRule </span>serves two purposes. The first is to declare that a referenced rule is to
+          be treated as “optional”, which, in this case means that if (a) the referenced
+          rule returned <span class="zi">none </span>(<span class="msbm-10">∅</span>), (meaning an <span class="zi">ArcRule </span>was encountered that had no
+          matching predicates and a non-zero minimum cardinality) the group rule returns
+          <span class="zi">nomatch </span>(<span class="cmbxti-10">z</span>). An optional <span class="zi">GroupRule </span>also treats an error situation as a <span class="zi">fail</span>
+          (<span class="cmbxti-10">f</span> ).
+          <!--l. 552--></p><p class="indent" >   The second purpose of a group rule is to allow a set of external <span class="zi">actions </span>to be
+          evaluated whenever the referenced <span class="zi">rule </span>returns <span class="zi">pass </span>(<span class="cmbxti-10">p</span>).
+          <!--l. 557--></p><p class="indent" ></p>
+          <pre class="Z-source">
+\begin{zed}
+OPT ::= OPTIONAL | REQUIRED
+\also
+GroupRule \defs [rule:Label; opt:OPT; actions:\power Action ] \\
+\end{zed}
+		</pre>
+          <span class="zi">evalGroupRule </span>evaluates <span class="zi">Rule</span>, applies <span class="zi">opt </span>and, if the result is <span class="zi">pass </span>(<span class="cmbxti-10">p</span>), evaluates the
+          actions with respect to the passing <span class="zi">Graph</span>
+          <pre class="Z-source">
+\begin{gendef}
+   evalGroupRule:EvalContext \fun RDFTerm \fun GroupRule \fun OptValidity
+\where
+\forall ec:EvalContext; i:RDFTerm; gr:GroupRule @ \\
+\t1	evalGroupRule~ ec~ i ~ gr = \\
+\t2 	\IF evalRule'~ec~i~gr.rule = \none \land gr.opt = OPTIONAL \\
+\t3 	\THEN \nomatch \\
+\t2 	\ELSE \IF evalRule'~ec~i~gr.rule = \error \land gr.opt = OPTIONAL \\
+\t3 	\THEN \fail \\
+\t2 	\ELSE \IF evalRule'~ec~i~gr.rule = \pass \\
+\t3 	\THEN dispatch~ gr.actions~ \emptyset ~ ec \\
+\t2 	\ELSE \\
+\t3			evalRule'~ec~i~gr.rule
+\end{gendef}
+		</pre>
+          <!--l. 575-->
+        </div>
+
+        <div id="XX" class="div2">
+          <h3 class="subsectionHead">4.4 <a href="#x1-210004.4" id="x1-210004.4">AndRule evaluation</a></h3>
+          <!--l. 576--><p class="noindent" >An <span class="zi">AndRule </span>consists of a set of one or more <span class="zi">Rules</span>, whose evaluation is determined by
+          the following table:<br 
+          class="newline" /></p>
+          <!-- div class="math-display">
+ <table id="TBL-1" class="tabular" 
+                                       cellspacing="0" cellpadding="0" rules="groups" 
+                                       ><colgroup id="TBL-1-1g"><col 
+                                       id="TBL-1-1" /></colgroup><colgroup id="TBL-1-2g"><col 
+                                       id="TBL-1-2" /></colgroup><colgroup id="TBL-1-3g"><col 
+                                       id="TBL-1-3" /></colgroup><colgroup id="TBL-1-4g"><col 
+                                       id="TBL-1-4" /></colgroup><colgroup id="TBL-1-5g"><col 
+                                       id="TBL-1-5" /></colgroup><colgroup id="TBL-1-6g"><col 
+                                       id="TBL-1-6" /></colgroup><tr 
+                                       class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+                                       style="vertical-align:baseline;" id="TBL-1-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-1"  
+                                       class="td11">And</td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-2"  
+                                       class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-3"  
+                                       class="td11"><span class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-4"  
+                                       class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-5"  
+                                       class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-6"  
+                                       class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-1-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-1"  
+          class="td11"> <span class="msbm-10">∅  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-2"  
+          class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-3"  
+          class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-4"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-5"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-1-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-1"  
+          class="td11"> <span class="cmbxti-10">z</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-2"  
+          class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-3"  
+          class="td11"><span class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-4"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-5"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-1-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-1"  
+          class="td11">  <span class="cmbxti-10">f</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-2"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-3"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-4"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-5"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-1-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-1"  
+          class="td11"> <span class="cmbxti-10">p</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-2"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-3"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-4"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-5"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-1-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-1"  
+          class="td11">  <span class="cmmi-10">ε  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-2"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-3"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-4"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-5"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-6"  
+          class="td11"><span class="cmmi-10">ε</span></td></tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-1-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-1"  
+          class="td11"> </td> </tr></table>
+          </div -->
+<table>
+  <tr>
+    <th>And</th> <th>∅</th> <th>z</th> <th>f</th> <th>p</th> <th>ε</th> </tr>
+    <tr><th>∅</th> <td><a title="ab:b@·">∅<sub>1</sub></a><a></a></td> <td><a title="ab?:b?@·">∅<sub>1</sub></a><a></a></td> <td><a title="ab:b@B·">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@b·">f<sub>1</sub></a><a></a></td> <td><a title="a(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="a?b:b@·">∅<sub>1</sub></a><a></a></td> <td><a title="(a?b?)?:b?@·">z<sub>1</sub></a><a></a></td> <td><a title="a?b:b@B·">f<sub>1</sub></a><a></a></td> <td><a title="a?b?:b?@b·">p<sub>1</sub></a><a></a></td> <td><a title="a?(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="ab:b@·A">f<sub>1</sub></a><a></a></td> <td><a title="ab?:b?@·A">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@A·B">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@A·b">f<sub>1</sub></a><a></a></td> <td><a title="a?(b|c):(b|c)@Ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="ab:b@·a">f<sub>1</sub></a><a></a></td> <td><a title="a?b?:b?@·a">p<sub>1</sub></a><a></a></td> <td><a title="a?b?:b?@a·B">f<sub>1</sub></a><a></a></td> <td><a title="ab:b@a·b">p<sub>1</sub></a><a></a></td> <td><a title="a?(b|c):(b|c)@ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="(a|b)c:c@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)c?:c?@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)c?:c?@a·bC">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)c?:c?@a·bc">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)(c|d):(c|d)@ab·cd">ε<sub>1</sub></a><a></a></td> </tr>
+</table>
+
+          <!--l. 590--><p class="indent" >   The formal implementation of which will be realized in the corresponding
+          function:</p>
+          <pre class="Z-source">
+\begin{gendef}
+   And:OptValidity \fun OptValidity \fun OptValidity
+\end{gendef}
+		</pre>
+          <!--l. 595--><p class="indent" >   Observing that the above table is a monoid with <span class="zi">nomatch </span>(<span class="cmbxti-10">z</span>) as an identity
+          element, <span class="zi">evalAndRule </span>can be applied using the standard functional pattern:</p>
+
+          <pre class="Z-source">
+\begin{zed}
+AndRule == \seq_1 Label
+\end{zed}
+		</pre>
+          <pre class="Z-source">
+\begin{gendef}
+   evalAndRule:EvalContext \fun RDFTerm \fun AndRule \fun OptValidity
+\where
+\forall ec:EvalContext; i:RDFTerm; r:AndRule  @ \\
+\t1	evalAndRule~ec~i~r = \\
+\t2		foldr~ And~ \nomatch ~ (map~(evalRule'~ec~i)~r)
+\end{gendef}
+		</pre>
+          <!--l. 608-->
+        </div>
+
+        <div id="XorRuleEvaluation" class="div2">
+          <h3>4.5 XorRule Evaluation</h3>
+          <!--l. 609--><p class="noindent" >An <span class="zi">XorRule </span>consists of a set of one or more <span class="zi">Rules</span>, whose evaluation is determined by
+          the following table:<br 
+          class="newline" /></p>
+          <!-- div class="math-display"> <table id="TBL-2" class="tabular" 
+                                       cellspacing="0" cellpadding="0" rules="groups" 
+                                       ><colgroup id="TBL-2-1g"><col 
+                                       id="TBL-2-1" /></colgroup><colgroup id="TBL-2-2g"><col 
+                                       id="TBL-2-2" /></colgroup><colgroup id="TBL-2-3g"><col 
+                                       id="TBL-2-3" /></colgroup><colgroup id="TBL-2-4g"><col 
+                                       id="TBL-2-4" /></colgroup><colgroup id="TBL-2-5g"><col 
+                                       id="TBL-2-5" /></colgroup><colgroup id="TBL-2-6g"><col 
+                                       id="TBL-2-6" /></colgroup><tr 
+                                       class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+                                       style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-1"  
+                                       class="td11">Xor</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-2"  
+                                       class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-3"  
+                                       class="td11"><span class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-4"  
+                                       class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-5"  
+                                       class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-6"  
+                                       class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-1"  
+          class="td11"> <span class="msbm-10">∅  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-2"  
+          class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-3"  
+          class="td11"><span class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-4"  
+          class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-5"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-1"  
+          class="td11"> <span class="cmbxti-10">z</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-2"  
+          class="td11"><span class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-3"  
+          class="td11"><span class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-4"  
+          class="td11"><span class="cmbxti-10">z</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-5"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-1"  
+          class="td11"> <span class="cmbxti-10">f</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-2"  
+          class="td11"><span class="msbm-10">∅</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-3"  
+          class="td11"><span class="cmbxti-10">z</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-4"  
+          class="td11"><span class="cmbxti-10">f</span> </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-5"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-1"  
+          class="td11"> <span class="cmbxti-10">p</span>  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-2"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-3"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-4"  
+          class="td11"><span class="cmbxti-10">p</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-5"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-6"  
+          class="td11"><span class="cmmi-10">ε</span></td>
+          </tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-1"  
+          class="td11"> <span class="cmmi-10">ε  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-2"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-3"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-4"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-5"  
+          class="td11"><span class="cmmi-10">ε</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-6"  
+          class="td11"><span class="cmmi-10">ε</span></td></tr><tr 
+          class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+          style="vertical-align:baseline;" id="TBL-2-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-1"  
+          class="td11"> </td> </tr></table>
+          </div -->
+<table>
+  <tbody>
+    <tr><th>Or</th> <th>∅</th> <th>z</th> <th>f</th> <th>p</th> <th>ε</th> </tr>
+    <tr><th>∅</th> <td><a title="a|b:b@·">∅<sub>1</sub></a><a></a></td> <td><a title="a|b?:b?@·">z<sub>1</sub></a><a></a></td> <td><a title="a|b:b@B·">∅<sub>1</sub></a><a></a></td> <td><a title="a|b:b@b·">p<sub>1</sub></a><a></a></td> <td><a title="a|(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="a?|b:b@·">z<sub>1</sub></a><a></a></td> <td><a title="a?|b?:b?@·">z<sub>1</sub></a><a></a></td> <td><a title="a?|b:b@B·">z<sub>1</sub></a><a></a></td> <td><a title="a?|b?:b?@b·">p<sub>1</sub></a><a></a></td> <td><a title="a?|(b|c):(b|c)@bc·">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="a|b:b@·A">∅<sub>1</sub></a><a></a></td> <td><a title="a|b?:b?@·A">z<sub>1</sub></a><a></a></td> <td><a title="a|b:b@A·B">f<sub>1</sub></a><a></a></td> <td><a title="a|b:b@A·b">p<sub>1</sub></a><a></a></td> <td><a title="a?|(b|c):(b|c)@Ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="a|b:b@·a">p<sub>1</sub></a><a></a></td> <td><a title="a?|b?:b?@·a">p<sub>1</sub></a><a></a></td> <td><a title="a|b:b@a·B">p<sub>1</sub></a><a></a></td> <td><a title="a|b:b@a·b • a?|b?:b?@a·b • (a|b)c:b@a·b • (a|b)c?:b@a·b • (a|b)c?:b@ab·c • (a|b)c?:b@ab·C • a(b|c):c@b·c • a?(b|c):c@a·bc • a?(b|c):c@A·bc • a?(b|c):c@b·c • (a|b)(c|d):b@abc·d • (a|b)(c|d):d@a·bcd • (a|b)|c:b@a·b • (a|b)|c?:b@a·b • (a|b)|c?:b@ab·c • (a|b)|c?:b@ab·C • a|(b|c):c@b·c • a?|(b|c):c@a·bc • a?|(b|c):c@A·bc • a?|(b|c):c@b·c • (a|b)|(c|d):b@abc·d • (a|b)|(c|d):d@a·bcd • (a|b)?:b@a·b">ε<sub>23</sub></a><a></a></td> <td><a title="a?|(b|c):(b|c)@ab·c">ε<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="(a|b)|c:c@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|c?:c?@·ab">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|c?:c?@a·bC">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|c?:c?@a·bc">ε<sub>1</sub></a><a></a></td> <td><a title="(a|b)|(c|d):(c|d)@ab·cd">ε<sub>1</sub></a><a></a></td> </tr>
+  </tbody>
+</table>
+The formal implementation of which will be realized in the corresponding
+          function:
+
+          <pre class="Z-source">
+\begin{gendef}
+   Xor:OptValidity \fun OptValidity \fun OptValidity
+\end{gendef}
+		</pre>
+          As with the <span class="zi">And </span>function above, <span class="zi">Xor </span>is a monoid whose identity is <span class="zi">fail </span>(<span class="cmbxti-10">f</span> ) resulting
+          in the following definition for <span class="zi">evalXorRule</span>
+          <pre class="Z-source">
+\begin{zed}
+XorRule == \seq_1 Label
+\end{zed}
+		</pre>
+          <pre class="Z-source">
+\begin{gendef}
+   evalXorRule:EvalContext \fun RDFTerm \fun XorRule \fun OptValidity
+\where
+   \forall ec:EvalContext; i:RDFTerm; r:XorRule  @ \\
+\t1	evalXorRule~ec~i~r = \\
+\t2		foldr~ Xor~ \fail ~ (map~(evalRule'~ ec ~i)~ r)
+\end{gendef}
+		</pre>
+
+          <!--l. 642-->
+        </div>
+      </div>
+
+      <div id="actionEval" class="div1">
+        <h2>5 Action evaluation</h2>
+        <!--l. 643--><p class="noindent" >The <span class="zi">dispatch </span>function allows the evaluation / execution of arbitrary external
+        “<span class="zi">Actions</span>”. While the evaluation of an <span class="zi">Action </span>can (obviously) have side effects outside
+        the context of the <span class="zi">ShEx </span>environment, it must be side effect free within the
+        execution context. In particular, an <span class="zi">Action </span>may not change anything in the
+        <span class="zi">EvalContext </span>The action dispatcher exists to allow external events to happen.
+        Parameters:</p>
+        <ul class="itemize1">
+          <li class="itemize"><span class="zi">as  </span>-  the  set  of  <span class="zi">Actions  </span>associated  with  the  <span class="zi">GroupRule</span>,  <span class="zi">ArcRule  </span>or
+          <span class="zi">RevArcRule</span>
+          </li>
+          <li class="itemize"><span class="zi">g </span>- the <span class="zi">Graph </span>that passed the <span class="zi">ArcRule </span>or <span class="zi">RevArcRule</span>. Empty in the case of
+          <span class="zi">GroupRule</span>
+          </li>
+          <li class="itemize"><span class="zi">ec </span>- the <span class="zi">EvalContext </span>containing the <span class="zi">Schema </span>and <span class="zi">Graph</span>
+        </li></ul>
+        <!--l. 655--><p class="indent" >   The dispatch function usually returns pass (<span class="cmbxti-10">p</span>) or fail (<span class="cmbxti-10">f</span> ), although there may also
+        be cases for other <span class="zi">OptValidity </span>values in certain circumstances. The dispatch function
+        always returns <span class="zi">pass </span>(<span class="cmbxti-10">p</span>) if the set of actions is empty.</p>
+        <pre class="Z-source">
+\begin{zed}
+[Action]
+\end{zed}
+		</pre>
+        <pre class="Z-source">
+\begin{gendef}
+   dispatch:\power Action \fun Graph \fun EvalContext \fun OptValidity
+\where
+   \forall as:\power Action; g:Graph; ec:EvalContext @ \\
+\t1 as = \emptyset \implies dispatch~ as~ g ~ec = \pass
+\end{gendef}
+		</pre>
+        <!--l. 668-->
+      </div>
+
+      <div id="parsing" class="div1">
+        <h2>6 Parsing Rules</h2>
+
+        <p>
+          The semantics of the productions and terminals from the Turtle specification are defined in <a href="http://www.w3.org/TR/turtle/">Turtle Terse RDF Triple Language</a> section <a href="http://www.w3.org/TR/turtle/#sec-parsing">7 Parsing</a>.
+        </p>
+
+        <p>
+          The following grammar rules are mapped to the abstract syntax:
+        </p>
+
+        <table border="0">
+          <tbody><tr><td colspan="4" class="grammarSection"><h3><a id="productions" name="productions">Productions</a>:</h3></td></tr></tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-ShExDoc" name="prod-ShEx1-ShExDoc"></a>[<span class="prodNo">1</span>]   </td>
+              <td><code class="production prod">ShExDoc</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-statement">statement</a></span>*</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-statement" name="prod-ShEx1-statement"></a>[<span class="prodNo">2</span>]   </td>
+              <td><code class="production prod">statement</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-directive">directive</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-shape">shape</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-directive" name="prod-ShEx1-directive"></a>[<span class="prodNo">3</span>]   </td>
+              <td><code class="production prod">directive</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-sparqlPrefix">sparqlPrefix</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-sparqlBase">sparqlBase</a></span> 
+              | "start" "=" ( <span class="prod"><a class="grammarRef" href="#prod-ShEx1-label">label</a></span> | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-typeSpec">typeSpec</a></span> <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>* )</code><br/>
+              <span class="parserAction"><span class="keyword">let</span> b = a fresh blank node<br/>
+              typeSpec.setLabel(b)<br/>
+              new <a href="#ArcRule">ArcRule</a>()</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-sparqlPrefix" name="prod-ShEx1-sparqlPrefix"></a>[<span class="prodNo">4</span>]   </td>
+              <td><code class="production prod">sparqlPrefix</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rPrefixDecl">"PREFIX"</a></span> <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rPNAME_NS">PNAME_NS</a></span> <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rIRIREF">IRIREF</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-sparqlBase" name="prod-ShEx1-sparqlBase"></a>[<span class="prodNo">5</span>]   </td>
+              <td><code class="production prod">sparqlBase</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rBaseDecl">"BASE"</a></span> <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rIRIREF">IRIREF</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-shape" name="prod-ShEx1-shape"></a>[<span class="prodNo">6</span>]   </td>
+              <td><code class="production prod">shape</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-label">label</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-typeSpec">typeSpec</a></span> <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>*</code><br/>
+              <span class="parserAction"><span class="keyword">if</span> (CODE.<span class="keyword">SIZE</span> > 0)<br/>
+                <span class="keyword">let</span> r = new <a href="#GroupRule">GroupRule</a>(<span class="keyword">false</span>, typeSpec)<br/>
+                r.label = label<br/>
+              <span class="keyword">else</span><br/>
+                typeSpec.label = label</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-typeSpec" name="prod-ShEx1-typeSpec"></a>[<span class="prodNo">7</span>]   </td>
+              <td><code class="production prod">typeSpec</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">"{" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-OrExpression">OrExpression</a></span> "}"</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-OrExpression" name="prod-ShEx1-OrExpression"></a>[<span class="prodNo">8</span>]   </td>
+              <td><code class="production prod">OrExpression</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-AndExpression">l:AndExpression</a></span> ( "|" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-AndExpression">r:AndExpression</a></span> )*</code><br/>
+              <span class="parserAction"><span class="keyword">if</span> (r)<br/>
+                new <a href="#XorRule">XorRule</a>(l, r)<br/>
+              <span class="keyword">else</span><br/>
+                l</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-AndExpression" name="prod-ShEx1-AndExpression"></a>[<span class="prodNo">9</span>]   </td>
+              <td><code class="production prod">AndExpression</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-UnaryExpression">l:UnaryExpression</a></span> ( "," <span class="prod"><a class="grammarRef" href="#prod-ShEx1-UnaryExpression">r:UnaryExpression</a></span> )*</code><br/>
+              <span class="parserAction"><span class="keyword">if</span> (r)<br/>
+                new <a href="#AndRule">AndRule</a>(l, r)<br/>
+              <span class="keyword">else</span><br/>
+                l</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-UnaryExpression" name="prod-ShEx1-UnaryExpression"></a>[<span class="prodNo">10</span>]   </td>
+              <td><code class="production prod">UnaryExpression</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-arc">arc</a></span></code></td>
+            </tr>
+            <tr valign="baseline">
+              <td colspan="3"></td>
+              <td><code class="content">| "(" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-OrExpression">OrExpression</a></span> ")" opt:"?"? <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>*</code><br/>
+              <span class="parserAction">new <a href="#GroupRule">GroupRule</a>(OrExpression, opt, CODE)</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-label" name="prod-ShEx1-label"></a>[<span class="prodNo">11</span>]   </td>
+              <td><code class="production prod">label</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-iri">iri</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-BlankNode">BlankNode</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-arc" name="prod-ShEx1-arc"></a>[<span class="prodNo">12</span>]   </td>
+              <td><code class="production prod">arc</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-nameClass">nameClass</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-valueSpec">valueSpec</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-default">default</a></span>? <span class="prod"><a class="grammarRef" href="#prod-ShEx1-repeatCount">repeatCount</a></span>? <span class="prod"><a class="grammarRef" href="#prod-ShEx1-properties">properties</a></span>? <span class="prod"><a class="grammarRef" href="#term-ShEx1-CODE">CODE</a></span>*</code><br/>
+              <span class="parserAction">new <a href="#ArcRule">ArcRule</a>(nameClass, valueSpec, default, repeatCount, properties, CODE)</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-nameClass" name="prod-ShEx1-nameClass"></a>[<span class="prodNo">13</span>]   </td>
+              <td><code class="production prod">nameClass</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-iriStem">iriStem</a></span></code><br/>
+              <span class="parserAction"><a href="#pfIRI">pfIRI</a>(iriStem)</span></td>
+            </tr>
+            <tr valign="baseline">
+              <td colspan="3"></td>
+              <td><code class="content">| "." <span class="prod"><a class="grammarRef" href="#prod-ShEx1-exclusions">exclusions</a></span></code><br/>
+              <span class="parserAction"><a href="#pfWild">pfWild</a>(exclusions)</span></td>
+            </tr>
+            <tr valign="baseline">
+              <td colspan="3"></td>
+              <td><code class="content">| <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rVerb">'a'</a></span></code><br/>
+              <span class="parserAction"><a href="#pfIRI">pfIRI</a>(rdf:type)</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-valueSpec" name="prod-ShEx1-valueSpec"></a>[<span class="prodNo">14</span>]   </td>
+              <td><code class="production prod">valueSpec</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">"@" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-label">label</a></span></code><br/>
+              <span class="parserAction"><a href="#ValueReference">ValueReference</a>(label)</span></td>
+            </tr>
+            <tr valign="baseline">
+              <td colspan="3"></td>
+              <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-typeSpec">typeSpec</a></span></code><br/>
+              <span class="parserAction"><span class="keyword">let</span> b = a fresh blank node<br/>
+              typeSpec.setLabel(b)</span></td>
+            </tr>
+            <tr valign="baseline">
+              <td colspan="3"></td>
+              <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-valueSet">valueSet</a></span></code><br/>
+              <span class="parserAction">new <a href="#ValueSet">ValueSet</a>(valueSet)</span></td>
+            </tr>
+            <tr valign="baseline">
+              <td colspan="3"></td>
+              <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-object">object</a></span></code><br/>
+              <span class="parserAction">new <a href="#ValueType">ValueType</a>(object)</span></td>
+            </tr>
+            <tr valign="baseline">
+              <td colspan="3"></td>
+              <td><code class="content">| <span class="prod"><a class="grammarRef" href="#prod-ShEx1-exclusions">exclusions</a></span></code><br/>
+              <span class="parserAction">new <a href="#ValueWild">ValueWild</a>(exclusions)</span></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-iriStem" name="prod-ShEx1-iriStem"></a>[<span class="prodNo">15</span>]   </td>
+              <td><code class="production prod">iriStem</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-iri">iri</a></span> ("~")?</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-default" name="prod-ShEx1-default"></a>[<span class="prodNo">16</span>]   </td>
+              <td><code class="production prod">default</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">"=" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-object">object</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-properties" name="prod-ShEx1-properties"></a>[<span class="prodNo">17</span>]   </td>
+              <td><code class="production prod">properties</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">"[" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-iri">iri</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-object">object</a></span> ( ";" ( <span class="prod"><a class="grammarRef" href="#prod-ShEx1-iri">iri</a></span> <span class="prod"><a class="grammarRef" href="#prod-ShEx1-object">object</a></span> )? )* "]"</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-exclusions" name="prod-ShEx1-exclusions"></a>[<span class="prodNo">18</span>]   </td>
+              <td><code class="production prod">exclusions</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">( "-" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-iriStem">iriStem</a></span> )*</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-repeatCount" name="prod-ShEx1-repeatCount"></a>[<span class="prodNo">19</span>]   </td>
+              <td><code class="production prod">repeatCount</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">"*" 
+              | "+" 
+              | "?" 
+              | "{" <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rINTEGER">INTEGER</a></span> ( "," (<span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rINTEGER">INTEGER</a></span>)? )? "}"</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-valueSet" name="prod-ShEx1-valueSet"></a>[<span class="prodNo">20</span>]   </td>
+              <td><code class="production prod">valueSet</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">"(" (<span class="prod"><a class="grammarRef" href="#prod-ShEx1-object">object</a></span>)+ ")"</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-object" name="prod-ShEx1-object"></a>[<span class="prodNo">21</span>]   </td>
+              <td><code class="production prod">object</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-iriStem">iriStem</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-BlankNode">BlankNode</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-literal">literal</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-literal" name="prod-ShEx1-literal"></a>[<span class="prodNo">22</span>]   </td>
+              <td><code class="production prod">literal</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-RDFLiteral">RDFLiteral</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-NumericLiteral">NumericLiteral</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-BooleanLiteral">BooleanLiteral</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-NumericLiteral" name="prod-ShEx1-NumericLiteral"></a>[<span class="prodNo">23</span>]   </td>
+              <td><code class="production prod">NumericLiteral</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rINTEGER">INTEGER</a></span> 
+              | <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rDECIMAL">DECIMAL</a></span> 
+              | <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rDOUBLE">DOUBLE</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-RDFLiteral" name="prod-ShEx1-RDFLiteral"></a>[<span class="prodNo">24</span>]   </td>
+              <td><code class="production prod">RDFLiteral</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-ShEx1-String">String</a></span> ( <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rLANGTAG">LANGTAG</a></span> | "^^" <span class="prod"><a class="grammarRef" href="#prod-ShEx1-iri">iri</a></span> )?</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-BooleanLiteral" name="prod-ShEx1-BooleanLiteral"></a>[<span class="prodNo">25</span>]   </td>
+              <td><code class="production prod">BooleanLiteral</code></td>
+              <td>   ::=   </td>
+              <td><code class="content">"true" 
+              | "false"</code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-String" name="prod-ShEx1-String"></a>[<span class="prodNo">26</span>]   </td>
+              <td><code class="production prod">String</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rSTRING_LITERAL1">STRING_LITERAL1</a></span> 
+              | <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rSTRING_LITERAL2">STRING_LITERAL2</a></span> 
+              | <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a></span> 
+              | <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-iri" name="prod-ShEx1-iri"></a>[<span class="prodNo">27</span>]   </td>
+              <td><code class="production prod">iri</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rIRIREF">IRIREF</a></span> 
+              | <span class="prod"><a class="grammarRef" href="#prod-ShEx1-PrefixedName">PrefixedName</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-PrefixedName" name="prod-ShEx1-PrefixedName"></a>[<span class="prodNo">28</span>]   </td>
+              <td><code class="production prod">PrefixedName</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rPNAME_LN">PNAME_LN</a></span> 
+              | <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rPNAME_NS">PNAME_NS</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="prod">
+            <tr valign="baseline">
+              <td><a id="prod-ShEx1-BlankNode" name="prod-ShEx1-BlankNode"></a>[<span class="prodNo">29</span>]   </td>
+              <td><code class="production prod">BlankNode</code></td>
+              <td>   ::=   </td>
+              <td><code class="content"><span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rBLANK_NODE_LABEL">BLANK_NODE_LABEL</a></span> 
+              | <span class="prod"><a class="grammarRef" href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/#rANON">ANON</a></span></code></td>
+            </tr>
+          </tbody>
+
+          <tbody class="term">
+            <tr><td colspan="4"><h3 id="terminals">Terminals Not in SPARQL:</h3></td></tr>
+          </tbody>
+
+          <tbody class="term">
+            <tr valign="baseline">
+              <td><a id="term-ShEx1-CODE" name="term-ShEx1-CODE"></a>[<span class="prodNo">30</span>]   </td>
+              <td>&lt;<code class="production term">CODE</code>&gt;</td>
+              <td>   ::=   </td>
+              <td><code class="content">"%" ( [a-zA-Z+#_] ([a-zA-Z0-9+#_])* )? "{" ( [^%\\] | "\\" "%" )* "%" "}"</code></td>
+            </tr>
+          </tbody>
+
+        </table>
+
+
+        <div class="div1">
+        <h2 id="ordering">Ordering (informative)</h2>
+
+        <p>
+          A Shape Expressions schema with no semantic actions can be treated as unordered.
+          In practice, error messages can be much clearer, and extension functions much simpler to write if the engine follows the lexical order when validating the members of a conjunction.
+          Likewise, form and interface code generation will be more predictable and controllable if the Shape Expressions are processed in a specific order.
+        </p>
+        </div>
+      </div>
+
+      <div id="appendix" class="div1">
+        <h2>7 Appendix</h2>
+        <!--l. 669-->
+
+        <div id="Foldr" class="div2">
+        <h3>7.1 Foldr</h3>
+        <!--l. 670--><p class="noindent" >The <span class="zi">foldr </span>function is the standard functional pattern, which takes a binary
+        function of type <span class="zi">T</span>, an identity function for type <span class="zi">T</span>, a sequence of type <span class="zi">T </span>and
+        returns the result of applying the function to the right to left pairs of the
+        sequence.</p>
+        <pre class="Z-source">
+\begin{gendef}[T]
+   foldr:(T \fun T \fun T) \fun T \fun \seq T \fun T
+\where
+   \forall f:T \fun T \fun T; id:T; xs:\seq T @ \\
+\t1	foldr~f~id~xs = \\
+\t2 	\IF xs = \langle \rangle \THEN id \\
+\t2 	\ELSE f~(head~xs)~(foldr~f~id~(tail~xs))
+\end{gendef}
+		</pre>
+        <!--l. 681-->
+        </div>
+
+        <div id="Map" class="div2">
+        <h3>7.2 Map</h3>
+        <!--l. 682--><p class="noindent" >The <span class="zi">map </span>function takes a function from type <span class="zi">A </span>to type <span class="zi">B </span>and applies it to all
+        members in the supplied sequence</p>
+
+        <pre class="Z-source">
+\begin{gendef}[A,B]
+   map:(A \fun B) \fun \seq A \fun \seq B
+\where
+   \forall f:A \fun B; xs:\seq A @ \\
+\t1	map~f~xs = \\
+\t2 	\IF xs = \langle \rangle \THEN \langle \rangle \\
+\t2 	\ELSE \langle f~(head~xs) \rangle \cat map~f~(tail~xs)
+\end{gendef}
+		</pre>
+        <!--l. 692-->
+        </div>
+
+        <div id="HelperFunctions" class="div2">
+        <h3>6.3 Helper Functions</h3>
+        <!--l. 693--><p class="noindent" ><span class="zi">Z </span>uses the notion of <span class="zi">free type definitions </span>in the form:</p>
+        <pre class="Z-source Z-syntax">
+\begin{syntax}
+FreeType ::= constructor \ldata source \rdata
+\end{syntax}
+		</pre>
+        which introduces a collection of constants of type <span class="zi">FreeType</span>, one for each
+        element of the set <span class="zi">source</span>. <span class="zi">constructor </span>is an injective function from <span class="zi">source </span>to
+        <span class="zi">FreeType</span>:
+		<pre class="Z-source Z-syntax">
+\begin{axdef}
+constructor:source \inj FreeType
+\end{axdef}
+		</pre>
+        In the models that follow, there is a need to reverse this – to find the <span class="zi">source </span>for a
+        given <span class="zi">FreeType </span>instance. The <span class="cmsy-10">⋅ </span>function exists for this purpose. As an example, if one
+        were to define:
+        <pre class="Z-source Z-syntax">
+\begin{syntax}
+TravelDirections ::= \\
+\t1	bus \ldata BusDirections \rdata | \\
+\t1	walking \ldata WalkingDirections \rdata
+\end{syntax}
+		</pre>
+        If one is supplied with an instance of <span class="zi">TravelDirections</span>, one can convert it to the appropriate
+        type by:
+        <pre class="Z-source Z-syntax">
+\begin{syntax}
+x \in TravelDirections
+\where
+\IF x \in \ran bus \THEN bus \entryFor x \ELSE walking \entryFor x
+\end{syntax}
+		</pre>
+        <!--l. 717--><p class="indent" ></p>
+        <pre class="Z-source">
+\begin{gendef}[X, Y]
+\_  \entryFor \_ :(X \inj Y) \cross Y \pfun X
+\where
+\forall f:X \inj Y; y:Y @  \\
+\t1	f \entryFor y = (\mu x:\dom f | f~x = y)
+\end{gendef}
+		</pre>
+        <!--l. 725--><p class="indent" >   One way to represent optional values is a set with one member. We take that
+        route here and introduce a bit of syntactic sugar to show our intent:</p>
+        <pre class="Z-source">
+\begin{zed} 
+  \optional[T] == \{ s:\power T \mid \# s \leq 1 \} \\
+\end{zed}
+		</pre>
+        <!--l. 731--><p class="indent" >   And a shorthand for addressing the content:</p>
+        <pre class="Z-source">
+\begin{gendef}[T]
+   value:\power T \pfun T
+\where
+   \forall s:\power T @ value~ s = (\mu e:T | e \in s) 
+\end{gendef}
+		</pre>
+        <!--l. 1-->
+        </div>
+      </div>
+
+    </div>
+
+    <div class="div1">
+      <h2 id="references">A. References</h2>
+      <div class="div3">
+        <h3 id="Normative-References">A.1 Normative References</h3>
+        <dl>
+          <dt id="bib-RDF11-CONCEPTS">[RDF11-CONCEPTS]</dt>
+          <dd>Richard Cyganiak, David Wood, Markus Lanthaler. <cite><a href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">RDF 1.1 Concepts and Abstract Syntax.</a></cite> W3C Recommendation, 25 February 2014. URL: <a href="http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">http://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/</a>. The latest edition is available at <a href="http://www.w3.org/TR/rdf11-concepts/">http://www.w3.org/TR/rdf11-concepts/</a>
+          </dd>
+
+          <dt id="bib-RFC3987">[RFC3987]</dt>
+          <dd>M. Dürst and M. Suignard. <cite><a href="http://tools.ietf.org/html/rfc3987"> Internationalized resource identifiers (IRIs).</a></cite> IETF Request For Comment January 2005. URL: <a href="http://tools.ietf.org/html/rfc3987">http://tools.ietf.org/html/rfc3987</a>.</dd>
+          
+          <dt id="bib-BCP47">[BCP47]</dt>
+          <dd>RA Phillips and M. Davis. <cite><a href="http://tools.ietf.org/html/bcp47">Tags for identifying language.</a></cite> IETF Best CurrentPractices, September 2009. URL: <a href="http://tools.ietf.org/html/bcp47">http://tools.ietf.org/html/bcp47</a>.</dd>
+
+        </dl>
+      </div>
+      <div class="div3">
+        <h3 id="Informative-References">A.2 Informative References</h3>
+        <dl>
+          <dt class="label"><a name="ZNotationReferenceManual" id="ZNotationReferenceManual" shape="rect"></a>[Z Notation Reference Manual]</dt>
+          <dd><cite><a href="http://spivey.oriel.ox.ac.uk/mike/zrm/index.html" shape="rect">The Z Notation:
+          A Reference Manual, Second Edition</a></cite>, J. M. Spivey,
+          Prentice Hall, 1992.</dd>
+          <dt class="label"><a name="Fuzz2000" id="Fuzz2000" shape="rect"></a>[Fuzz
+          2000]</dt>
+          <dd><cite><a href="http://spivey.oriel.ox.ac.uk/mike/fuzz/" shape="rect">Release
+          Notes For Fuzz 2000</a></cite>, J. M. Spivey.</dd>
+        </dl>
+      </div>
+    </div>
+<table style="display:none;">
+  <tbody>
+    <tr><th>Grp</th> <th></th> </tr>
+    <tr><th>∅</th> <td><a title="(a)?@·">z<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="(a?b?)?@·">z<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="(a)?@A·">f<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="(a)?@a·">p<sub>1</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="(a|b)?@ab·">ε<sub>1</sub></a><a></a></td> </tr>
+  </tbody>
+</table>
+<table style="display:none;">
+  <tbody>
+    <tr><th>All</th> <th></th> </tr>
+    <tr><th>∅</th> <td><a title="ab@· • a?b@· • ab?@· • a|b@· • a|b@A· • a|b@B·">f<sub>6</sub></a><a></a></td> </tr>
+    <tr><th>z</th> <td><a title="a?|b?@· • a|b?@· • a|b?@A· • a?|b@· • a?|b@B· • (a?b?)?@· • (a)?@·">p<sub>7</sub></a><a></a></td> </tr>
+    <tr><th>f</th> <td><a title="ab@a· • ab@b· • ab@B· • a?b?@aB· • a?b@B· • ab@AB· • ab@Ab· • ab@A· • ab?@A· • a|b@AB· • (a)?@A·">f<sub>11</sub></a><a></a></td> </tr>
+    <tr><th>p</th> <td><a title="ab@ab· • a?b?@a· • a?b?@b· • a|b@a· • a|b@b· • a|b@Ab· • a|b@aB· • a?|b?@a· • a?|b?@b· • (a)?@a·">p<sub>10</sub></a><a></a></td> </tr>
+    <tr><th>ε</th> <td><a title="a|b@ab· • a?|b?@ab· • (a|b)c@ab· • (a|b)c?@ab· • (a|b)c?@abc· • (a|b)c?@abC· • a(b|c)@bc· • a?(b|c)@abc· • a?(b|c)@Abc· • a?(b|c)@bc· • (a|b)(c|d)@abcd· • (a|b)|c@ab· • (a|b)|c?@ab· • (a|b)|c?@abc· • (a|b)|c?@abC· • a|(b|c)@bc· • a?|(b|c)@abc· • a?|(b|c)@Abc· • a?|(b|c)@bc· • (a|b)|(c|d)@abcd· • (a|b)?@ab·">f<sub>21</sub></a><a></a></td> </tr>
+  </tbody>
+</table>
+  </body>
+</html>

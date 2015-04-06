@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Mar 29, 2015 3:00:20 PM                                                        
+
+     w3-shape-expression    
+     Converts Z Notation in LaTeX to HTML.
+                   
+     arthurryman                                                                
+     ====================================================================== -->
+<project name="w3-shape-expression" default="main">
+	<description>
+		Typechecks and converts embedded LaTeX Z Notation.
+    </description>
+
+	<property name="fuzz" location="/Users/arthurryman/fuzz/fuzz-3.4.1/src/fuzz" />
+
+	<!-- locally cached DTD and entities to speed up XML processing -->
+	<xmlcatalog id="xhtml-catalog">
+		<dtd publicId="-//W3C//DTD XHTML 1.0 Transitional//EN" location="xhtml1-transitional.dtd" />
+		<entity publicId="-//W3C//ENTITIES Latin 1 for XHTML//EN" location="xhtml-lat1.ent" />
+		<entity publicId="-//W3C//ENTITIES Symbols for XHTML//EN" location="xhtml-symbol.ent" />
+		<entity publicId="-//W3C//ENTITIES Special for XHTML//EN" location="xhtml-special.ent" />
+	</xmlcatalog>
+
+	<target name="main" depends="Definition.html" description="Processes all documents." />
+
+	<!-- Corrected W3C Submission with automatically generated HTML for Z Notation -->
+
+	<target name="Definition.tex" description="Extracts and typechecks LaTeX Z Notation embedded in Definition.tex.xml.">
+		<xslt style="ExtractZed.xsl" in="Definition.tex.xml" out="Definition.tex" force="yes">
+			<xmlcatalog refid="xhtml-catalog" />
+		</xslt>
+		<exec executable="${fuzz}">
+			<arg line="-d Definition.tex" />
+		</exec>
+	</target>
+
+	<target name="Definition.zml.xml" depends="Definition.tex" description="Converts LaTeX in shape-expression-1.0.tex.xml to ZML in shape-expression-1.0.zml.xml.">
+		<xslt style="latex2zml.xsl" in="Definition.tex.xml" out="Definition.zml.xml" force="yes">
+			<xmlcatalog refid="xhtml-catalog" />
+		</xslt>
+	</target>
+
+	<target name="Definition.html" depends="Definition.zml.xml" description="Converts ZML in Definition.zml.xml to HTML in Definition.html.">
+		<xslt style="zml2spec.xsl" in="Definition.zml.xml" out="Definition.html" force="yes" />
+	</target>
+	
+	<!-- Test document -->
+
+	<target name="test.html" description="Converts LaTeX in test.tex.xml to HTML in test.html.">
+		<xslt style="latex2zml.xsl" in="test.tex.xml" out="test.zml.xml" force="yes" />
+		<xslt style="zml2spec.xsl" in="test.zml.xml" out="test.html" force="yes" />
+	</target>
+
+</project>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+
+	<command name="entryFor">
+		<span class="zinfix">&#x22C5;</span>
+	</command>
+
+	<command name="optional">
+		<span class="zss">optional</span>
+	</command>
+
+	<command name="pass">
+		<span class="zi">p</span>
+	</command>
+
+	<command name="fail">
+		<span class="zi">f</span>
+	</command>
+
+	<command name="none">
+		<span class="zi">&#x2205;</span>
+	</command>
+
+	<command name="error">
+		<span class="zi">&#x03B5;</span>
+	</command>
+
+	<command name="nomatch">
+		<span class="zi">z</span>
+	</command>
+
+</commands>

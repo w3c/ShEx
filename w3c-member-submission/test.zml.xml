@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Test</title>
+		<link rel="stylesheet" type="text/css" href="shape-expression-1.0.css"/>
+		<link type="text/css" rel="stylesheet" href="zml.css"/>
+		<link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM"/>
+	</head>
+	<body>
+		<div class="body">
+		
+		<p>\ldata U+300A (《)</p>
+		<p>\rdata U+300B (》)</p>
+		<p>\langle U+2329 (〈)</p>
+		<p>\rangle U+232A (〉)</p>
+		<p>\bind U+21DB (⇛)</p>
+		<p>\lblot U+2989 (⦉)</p>
+		<p>\rblot U+298A (⦊)</p>
+
+			<div id="RDFZ" class="div1">
+
+<z:gendef xmlns:z="http://www.w3.org/2004/zml">triplesForSubject: RDFTerm <ns682:fun xmlns:ns682="http://www.w3.org/2004/zml"/> Graph <ns683:fun xmlns:ns683="http://www.w3.org/2004/zml"/> Graph <ns684:where xmlns:ns684="http://www.w3.org/2004/zml"/> <ns685:forall xmlns:ns685="http://www.w3.org/2004/zml"/> subj: RDFTerm; g: Graph @ triplesForSubject~subj~g = {t: g | t.s = subj }</z:gendef><pre class="Z-source" xml:space="preserve">
+\begin{gendef}
+   triplesForSubject: RDFTerm \fun Graph \fun Graph
+\where
+   \forall subj: RDFTerm; g: Graph @ triplesForSubject~subj~g = \{t: g | t.s = subj \}
+\end{gendef}
+</pre>
+
+<z:zed xmlns:z="http://www.w3.org/2004/zml">C = <ns686:lblot xmlns:ns686="http://www.w3.org/2004/zml"/> a <ns687:bind xmlns:ns687="http://www.w3.org/2004/zml"/> 1, b <ns688:bind xmlns:ns688="http://www.w3.org/2004/zml"/> 2, c <ns689:bind xmlns:ns689="http://www.w3.org/2004/zml"/> 3 <ns690:rblot xmlns:ns690="http://www.w3.org/2004/zml"/></z:zed><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+C = \lblot a \bind 1, b \bind 2, c \bind 3 \rblot
+\end{zed}
+</pre>
+
+<z:zed xmlns:z="http://www.w3.org/2004/zml">A == <ns691:langle xmlns:ns691="http://www.w3.org/2004/zml"/> 1, 2, 3 <ns692:rangle xmlns:ns692="http://www.w3.org/2004/zml"/></z:zed><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+A == \langle 1, 2, 3 \rangle
+\end{zed}
+</pre>
+
+<z:zed xmlns:z="http://www.w3.org/2004/zml">B ::= foo <ns693:ldata xmlns:ns693="http://www.w3.org/2004/zml"/> bar <ns694:rdata xmlns:ns694="http://www.w3.org/2004/zml"/> | baz <ns695:ldata xmlns:ns695="http://www.w3.org/2004/zml"/> <ns696:num xmlns:ns696="http://www.w3.org/2004/zml"/> <ns697:rdata xmlns:ns697="http://www.w3.org/2004/zml"/></z:zed><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+B ::= foo \ldata bar \rdata | baz \ldata \num \rdata
+\end{zed}
+</pre>
+<z:zed xmlns:z="http://www.w3.org/2004/zml">pass == <ns698:pass xmlns:ns698="http://www.w3.org/2004/zml/local"/></z:zed><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+pass == \pass
+\end{zed}
+</pre>
+
+<z:zed xmlns:z="http://www.w3.org/2004/zml">XorRule == <ns699:seq xmlns:ns699="http://www.w3.org/2004/zml"/> Label</z:zed><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+XorRule == \seq Label
+\end{zed}
+</pre>
+
+<z:zed xmlns:z="http://www.w3.org/2004/zml">Graph == <ns700:power xmlns:ns700="http://www.w3.org/2004/zml"/> Triple</z:zed><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+Graph == \power Triple
+\end{zed}
+</pre>
+		
+			</div>
+		</div>
+	</body>
+</html>

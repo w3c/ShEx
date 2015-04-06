@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Test</title>
+		<link rel="stylesheet" type="text/css" href="shape-expression-1.0.css"/>
+		<link type="text/css" rel="stylesheet" href="zml.css"/>
+		<link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/W3C-Member-SUBM"/>
+	</head>
+	<body>
+		<div class="body">
+		
+		<p>\ldata U+300A (《)</p>
+		<p>\rdata U+300B (》)</p>
+		<p>\langle U+2329 (〈)</p>
+		<p>\rangle U+232A (〉)</p>
+		<p>\bind U+21DB (⇛)</p>
+		<p>\lblot U+2989 (⦉)</p>
+		<p>\rblot U+298A (⦊)</p>
+
+			<div id="RDFZ" class="div1">
+
+<table class="zschema"><col class="zschema1"/><col class="zschema2"/><col class="zschema3"/><tbody><tr><td class="zgendeftop" colspan="2"/><td/></tr><tr><td colspan="3" class="zschemalasttext"><span class="zschematext"><span class="zi">triplesForSubject</span><span class="zinfix">:</span> <span class="zi">RDFTerm</span><span class="zinfix">→
+		</span><span class="zi">Graph</span><span class="zinfix">→
+		</span><span class="zi">Graph</span></span></td></tr><tr><td class="bl"/><td/><td/></tr><tr><td colspan="3" class="zschemalasttext"><span class="zschematext"><span class="zprefix">∀
+		</span><span class="zi">subj</span><span class="zinfix">:</span> <span class="zi">RDFTerm</span>; <span class="zi">g</span><span class="zinfix">:</span> <span class="zi">Graph</span> <span class="zinfix">•
+		</span> <span class="zi">triplesForSubject</span> <span class="zi">subj</span> <span class="zi">g</span> <span class="zinfix">=</span> {<span class="zi">t</span><span class="zinfix">:</span> <span class="zi">g</span> <span class="zinfix">|</span> <span class="zi">t</span>.<span class="zi">s</span> <span class="zinfix">=</span> <span class="zi">subj</span> }</span></td></tr><tr><td class="bl"/><td class="b"/><td/></tr></tbody></table><pre class="Z-source" xml:space="preserve">
+\begin{gendef}
+   triplesForSubject: RDFTerm \fun Graph \fun Graph
+\where
+   \forall subj: RDFTerm; g: Graph @ triplesForSubject~subj~g = \{t: g | t.s = subj \}
+\end{gendef}
+</pre>
+
+<table class="zzed"><col class="zzed1"/><tbody><tr><td><span class="zi">C</span> <span class="zinfix">=</span>⦉<span class="zi">a</span><span class="zinfix">⇛</span>1<span class="zprefix">,</span> <span class="zi">b</span><span class="zinfix">⇛</span>2<span class="zprefix">,</span> <span class="zi">c</span><span class="zinfix">⇛</span>3⦊</td></tr></tbody></table><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+C = \lblot a \bind 1, b \bind 2, c \bind 3 \rblot
+\end{zed}
+</pre>
+
+<table class="zzed"><col class="zzed1"/><tbody><tr><td><span class="zi">A</span> <span class="zinfix"><span class="zdefa">==</span></span>〈1<span class="zprefix">,</span> 2<span class="zprefix">,</span> 3〉</td></tr></tbody></table><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+A == \langle 1, 2, 3 \rangle
+\end{zed}
+</pre>
+
+<table class="zzed"><col class="zzed1"/><tbody><tr><td><span class="zi">B</span> <span class="zinfix">::=</span> <span class="zi">foo</span>《<span class="zi">bar</span>》<span class="zinfix">|</span> <span class="zi">baz</span>《ℤ》</td></tr></tbody></table><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+B ::= foo \ldata bar \rdata | baz \ldata \num \rdata
+\end{zed}
+</pre>
+<table class="zzed"><col class="zzed1"/><tbody><tr><td><span class="zi">pass</span> <span class="zinfix"><span class="zdefa">==</span></span><span class="zi">p</span></td></tr></tbody></table><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+pass == \pass
+\end{zed}
+</pre>
+
+<table class="zzed"><col class="zzed1"/><tbody><tr><td><span class="zi">XorRule</span> <span class="zinfix"><span class="zdefa">==</span></span><span class="zprefix"><span class="zs">seq</span></span><span class="zi">Label</span></td></tr></tbody></table><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+XorRule == \seq Label
+\end{zed}
+</pre>
+
+<table class="zzed"><col class="zzed1"/><tbody><tr><td><span class="zi">Graph</span> <span class="zinfix"><span class="zdefa">==</span></span><span class="zprefix">ℙ</span><span class="zi">Triple</span></td></tr></tbody></table><pre class="Z-source" xml:space="preserve">
+\begin{zed}
+Graph == \power Triple
+\end{zed}
+</pre>
+		
+			</div>
+		</div>
+	</body>
+</html>
