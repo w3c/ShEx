@@ -141,11 +141,26 @@ The $ShEx$ language uses the following functions:
 
 \subsection{Well Known URIs}
 
-The following URI's are referenced explicitly in the $ShEx$ implementation:
+The following URI's are referenced explicitly in the $ShEx$ implementation: \\
+
+\begin{tabular}{l | l}
+   \hline 
+   ID & URI \\
+   \hline \hline
+   RDF\_langString & \verb|http://www.w3.org/1999/02/22-rdf-syntax-ns#langString| \\
+   SHEX\_IRI & \verb|http://www.w3.org/ns/shacl#IRI| \\
+   SHEX\_BNODE & \verb|http://www.w3.org/ns/shacl#BNode| \\
+   SHEX\_LITERAL& \verb|http://www.w3.org/ns/shacl#Literal| \\
+   SHEX\_NONLITERAL & ?\\
+\end{tabular} \\
+
 
 \begin{axdef}
 SHEX\_IRI, SHEX\_BNODE, SHEX\_LITERAL, SHEX\_NONLITERAL, \\
-RDF\_langString : IRI
+RDF\_langString : IRI \\
+\where
+\disjoint \langle \{SHEX\_IRI\}, \{SHEX\_BNODE\}, \{SHEX\_LITERAL\}, \\
+\t2 \{SHEX\_NONLITERAL\}, \{RDF\_langString\} \rangle
 \end{axdef}
 
 This completes the formal definition of \zc{Graph}, \zc{Triple}, \zc{RDFTerm} and their components, which we can now use to describe the relationship between an $ShEx$ $Schema$ and an RDF graph.
@@ -515,7 +530,7 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
 \t1 subjectRef \ldata Label \rdata
 \end{zed}
 
-paragraph{evalSubjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
+\paragraph{evalSubjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
 match the supplied \zc{SubjectSpecification}, otherwise \zc{fail} ($\fail$)
 \begin{axdef}
    evalSubjectSpecification: EvalContext \fun SubjectSpecification \fun Graph \fun \\
