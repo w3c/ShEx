@@ -584,9 +584,27 @@ by the following table: \\
    $\error$ & $\error$ & $\error$ & $\error$ & $\error$ & $\error$ \\ \hline 
 \end{tabular} \\
 
-The formal implementation of which will be realized in the corresponding function:
+The formal implementation of which will be realized in the corresponding function.
+\begin{itemize}
+\item If either term is an error the result is an error
+\item else if either term is a fail the result is a fail
+\item else if both terms are the same, the result is whatever they were
+\item else none ($\none$) and nomatch ($\nomatch$) is nomatch ($\nomatch$)
+\item nomatch ($\nomatch$) and pass ($\pass$) is fail ($\fail$)
+\item none ($\none$) and pass ($\pass$) is pass($\pass$)
+\end{itemize}
 \begin{axdef}
    And: OptValidity \fun OptValidity \fun OptValidity
+\where
+   \forall a1, a2: OptValidity @ And~a1~a2 = \\
+\t1 \IF a1 = \error \lor a2 = \error \THEN \error \\
+\t1 \ELSE \IF a1 = \fail \lor a2 = \fail \THEN \fail \\
+\t1 \ELSE \IF a1 = a2 \THEN a1 \\
+\t1 \ELSE  \IF a1 = \none \THEN \\
+\t2  \IF a2 = \nomatch  \THEN \nomatch \ELSE \fail \\
+\t1 \ELSE \IF a1 = \none \THEN \\
+\t2 \IF a2 = \nomatch \THEN \nomatch \ELSE \pass \\
+\t1 \ELSE \IF a2 = \nomatch \THEN \fail \ELSE \pass
 \end{axdef}
 
 Observing that the above table is a monoid with \zc{nomatch} ($\nomatch$) as an identity
@@ -618,8 +636,24 @@ by the following table: \\
 \end{tabular}
 \\
 The formal implementation of which will be realized in the corresponding function:
+\begin{itemize}
+\item If either term is fail ($\fail$) the result is the other term  \textit{Identity}
+\item else if either term is error ($\error$) the result is ($\error$) \textit{unity}
+\item else if both terms are pass ($\pass$) the result is ($\error$) 
+\item else if either term is pass ($\pass$) the result is ($\pass$)
+\item else if either term is nomatch ($\nomatch$) the result is ($\nomatch$)
+\item else the result is none ($\none$)
+\end{itemize}
 \begin{axdef}
    Xor: OptValidity \fun OptValidity \fun OptValidity
+\where
+   \forall o1, o2: OptValidity @ Xor~o1~o2 = \\
+\t1 \IF o1 = \error \lor o2 = \error \lor (o1 = \pass \land o2 = \pass) \THEN \error \\
+\t1 \ELSE \IF o1 = \pass \lor o2 = \pass \THEN \pass \\
+\t1 \ELSE \IF o1 = \fail \THEN o2 \\
+\t1 \ELSE \IF o2 = \fail \THEN o1 \\
+\t1 \ELSE \IF o1 = \nomatch \lor o2 = \nomatch \THEN \nomatch \\
+\t1 \ELSE \none
 \end{axdef}
 As with the \zc{And} function above, \zc{Xor} is a monoid whose identity is \zc{fail} ($\fail$)
 resulting in the following definition for \zc{evalXorRule}
