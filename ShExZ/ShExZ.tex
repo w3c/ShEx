@@ -100,9 +100,9 @@ This is modelled by $String$ and $LanguageTag$ as free types:
 \end{zed}
 and using them in the definition the two flavors of $RDFLiteral$,  plain literal and typed literal::
 \begin{zed}
-TypedLiteral \defs [lexicalForm:String ; dataType : IRI | dataType \neq XSD\_String] \\
+TypedLiteral \defs [lexicalForm:String ; dataType : IRI | dataType \neq RDF\_langString] \\
 PlainLiteral \defs [lexicalForm:String ; dataType : IRI; langTag : LanguageTag | \\
-\t3 dataType = XSD\_String] \\
+\t3 dataType = RDF\_langString] \\
 RDFLiteral ::= pl \ldata PlainLiteral \rdata | tl \ldata TypedLiteral \rdata \\ 
 \end{zed}
 $RDFTerm$ is defined as:
@@ -144,7 +144,8 @@ The $ShEx$ language uses the following functions:
 The following URI's are referenced explicitly in the $ShEx$ implementation:
 
 \begin{axdef}
-SHEX\_IRI, SHEX\_BNODE, SHEX\_LITERAL, SHEX\_NONLITERAL, XSD\_String : IRI
+SHEX\_IRI, SHEX\_BNODE, SHEX\_LITERAL, SHEX\_NONLITERAL, \\
+RDF\_langString : IRI
 \end{axdef}
 
 This completes the formal definition of \zc{Graph}, \zc{Triple}, \zc{RDFTerm} and their components, which we can now use to describe the relationship between an $ShEx$ $Schema$ and an RDF graph.
