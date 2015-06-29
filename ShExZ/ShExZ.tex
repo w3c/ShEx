@@ -265,7 +265,7 @@ a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to selec
 \begin{schema}{ArcRule}
    filter: PredicateFilter \\
    valueSpec: ObjectSpecification \\
-   min, max: \optional[\nat] \\
+   min, max: Optional[\nat] \\
    actions: \power Action
 \where
    (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
@@ -372,9 +372,9 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 
 
 \begin{axdef}
-   evalCardinality: Graph \fun \optional[\nat] \fun \optional[\nat] \fun OptValidity
+   evalCardinality: Graph \fun Optional[\nat] \fun Optional[\nat] \fun OptValidity
 \where
-   \forall g: Graph; min, max: \optional[\nat] @ evalCardinality~g~min~max = \\
+   \forall g: Graph; min, max: Optional[\nat] @ evalCardinality~g~min~max = \\
    \t1 \IF \# min = 1 \land \# g = 0 \land  value~ min = 0 \\
 \t2 \THEN \nomatch \\
 \t1 \ELSE \IF \# g = 0 \\
@@ -476,7 +476,7 @@ a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to selec
 \begin{schema}{RevArcRule}
    filter: PredicateFilter \\
    valueSpec: SubjectSpecification \\
-   min, max: \optional[\nat] \\
+   min, max: Optional[\nat] \\
    actions: \power Action
 \where
    (\# min = 1 \land \# max = 1) \implies value~ min \leq value~ max
@@ -750,7 +750,7 @@ x : TravelDirections
 One way to represent optional values is a set with one member.  We take that route here 
 and introduce a bit of syntactic sugar to show our intent:
 \begin{zed} 
-  \optional[T] == \{ s : \power T \mid \# s \leq 1 \} \\
+  Optional[T] == \{ s : \power T \mid \# s \leq 1 \} \\
 \end{zed}
 
 And a shorthand for addressing the content:
