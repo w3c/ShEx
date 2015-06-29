@@ -4,7 +4,6 @@
 \usepackage{amsmath}
 \usepackage{zed}
 \usepackage[utf8]{inputenc}
-\def\entryFor{\cdot}
 \def\eqtn{eq_{tn}}
 
 \def\pass{\textbf{\textit{p}}}
@@ -18,7 +17,6 @@
 
 \include{uml_style}
 
-%%inop \entryFor 4
 %%inrel \eqtn
 
 
@@ -119,27 +117,27 @@ The definition of RDF $Triple$ is modelled as a tuple consisting of three constr
 \begin{schema}{Triple}
    s,p,o : RDFTerm
 \where
-   iri \entryFor s \in IRI \lor bnode \entryFor s \in BlankNode \\
-   iri \entryFor p \in IRI \\
-   iri \entryFor o \in IRI \lor bnode \entryFor o \in BlankNode \lor literal \entryFor o \in RDFLiteral
+   iri \inv s \in IRI \lor bnode \inv s \in BlankNode \\
+   iri \inv p \in IRI \\
+   iri \inv o \in IRI \lor bnode \inv o \in BlankNode \lor literal \inv o \in RDFLiteral
 \end{schema}
 \subsection{RDF Access Functions}
 
 The $ShEx$ language uses the following functions:
 
 \subsubsection{\zc{triplesForSubject}} -- return set of triples in a graph triples whose subject is a given \zc{RDFTerm}
-\begin{gendef}
+\begin{axdef}
    triplesForSubject: RDFTerm \fun Graph \fun Graph
 \where
    \forall subj: RDFTerm; g: Graph @ triplesForSubject~subj~g = \{t: g | t.s = subj \}
-\end{gendef}
+\end{axdef}
 
 \subsubsection{\zc{triplesForObject}} -- return set of triples in a graph triples whose object is a given \zc{RDFTerm}
-\begin{gendef}
+\begin{axdef}
    triplesForObject: RDFTerm \fun Graph \fun Graph
 \where
    \forall obj: RDFTerm; g: Graph @ triplesForObject~obj~g = \{t: g | t.o = obj \}
-\end{gendef}
+\end{axdef}
 
 \subsection{Well Known URIs}
 
@@ -161,11 +159,11 @@ that is referenced within the \zc{Schema} is also itself a member of the \zc{Sch
 \where
    start \in \dom rules \\
 \forall r: \ran rules @ \\
-\t1 (r \in \ran group \implies (group \entryFor r).rule \in \dom rules) \land \\
-\t1 (r \in \ran and \implies \ran (and \entryFor r) \subseteq \dom rules) \land \\
-\t1 (r \in \ran xor \implies \ran (xor \entryFor r) \subseteq \dom rules) \land \\ 
-\t1 (r \in \ran arc \land (arc \entryFor r).valueSpec \in \ran valueRef \implies \\
-\t2 (valueRef \entryFor (arc \entryFor r).valueSpec) \in \dom rules)
+\t1 (r \in \ran group \implies (group \inv r).rule \in \dom rules) \land \\
+\t1 (r \in \ran and \implies \ran (and \inv r) \subseteq \dom rules) \land \\
+\t1 (r \in \ran xor \implies \ran (xor \inv r) \subseteq \dom rules) \land \\ 
+\t1 (r \in \ran arc \land (arc \inv r).valueSpec \in \ran valueRef \implies \\
+\t2 (valueRef \inv (arc \inv r).valueSpec) \in \dom rules)
 \end{schema}
 
 
@@ -184,7 +182,7 @@ and, if the \zc{start} \zc{Rule} in the \zc{Schema},
 in the context of the starting \zc{Schema} and \zc{graph}, returns either \zc{nomatch} 
 ($\nomatch$) or \zc{pass} ($\pass$) then the function returns \zc{pass}.  In all other cases,
 the function returns \zc{fail} ($\fail$).
-\begin{gendef}
+\begin{axdef}
    evaluate: Schema \fun Graph \fun IRI \fun OptValidity
 \where
    \forall s: Schema; g: Graph; i: IRI; v: OptValidity; ec: EvalContext | \\
@@ -192,7 +190,7 @@ the function returns \zc{fail} ($\fail$).
    evaluate ~s ~g ~i = \\
 \t1 \IF evalRule ~ec ~ (iri~ i)~ (s.rules~ s.start) \in \{\nomatch, \pass\} \\
 \t1 \THEN \pass \ELSE \fail
-\end{gendef}
+\end{axdef}
 
 \section{Rule Evaluation}
 A $ShEx$ \zc{Rule} is a set of constraints that can be evaluated against a reference ${RDFTerm}$
@@ -232,30 +230,30 @@ Rule ::= arc \ldata ArcRule \rdata | \\
 \t1 and \ldata AndRule \rdata | \\
 \t1 xor \ldata XorRule \rdata \\
 \end{zed}
-\begin{gendef}
+\begin{axdef}
    evalRule: EvalContext \fun RDFTerm \fun Rule \fun OptValidity
 \where
    \forall ec: EvalContext; i:RDFTerm; r: Rule @ evalRule~ec~i~r = \\
 \t1 \IF r \in \ran arc \\
-\t2 \THEN evalArcRule~ec~i~(arc \entryFor r) \\
+\t2 \THEN evalArcRule~ec~i~(arc \inv r) \\
 \t1 \ELSE \IF r \in \ran rarc \\
-\t2 \THEN evalRevArcRule~ec~i~(rarc \entryFor r) \\
+\t2 \THEN evalRevArcRule~ec~i~(rarc \inv r) \\
 \t1 \ELSE \IF r \in \ran group \\
-\t2 \THEN evalGroupRule~ec~i~(group \entryFor r) \\
+\t2 \THEN evalGroupRule~ec~i~(group \inv r) \\
 \t1 \ELSE \IF r \in \ran and \\
-\t2 \THEN evalAndRule~ec~i~(and \entryFor r) \\
+\t2 \THEN evalAndRule~ec~i~(and \inv r) \\
 \t1 \ELSE \\
-\t2 evalXorRule~ec~i~(xor \entryFor r)
-\end{gendef}
+\t2 evalXorRule~ec~i~(xor \inv r)
+\end{axdef}
 The $evalRule'$ function  de-references the supplied \zc{Label} and
 invokes \zc{evalRule} with the result.  This is not explicitly represented because
 the $Z$ specification language does not allow cyclic dependencies. This function
 is undefined if \zc{Label} is not in \zc{EvalContext}
-\begin{gendef}
+\begin{axdef}
    evalRule': EvalContext \fun RDFTerm \fun Label \fun OptValidity
 \where
    \forall ec: EvalContext; l:Label @ l \in \dom ec.schema.rules
-\end{gendef}
+\end{axdef}
 
 \subsection{ArcRule evaluation}
 The \zc{ArcRule} is used to select the subset of the graph having a given predicate or
@@ -278,7 +276,7 @@ a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to selec
 \item Evaluate the object of each of the triples in the set against \zc{ObjectSpecification}.  If any of the evaluations fail, return \zc{fail} ($\fail$).
 \item Return the result of evaluating \zc{actions} against the matching triples.
 \end{enumerate}
-\begin{gendef}
+\begin{axdef}
    evalArcRule: EvalContext \fun RDFTerm \fun ArcRule \fun OptValidity
 \where
    \forall ec: EvalContext; s: RDFTerm; ar: ArcRule; sg: Graph  | \\ 
@@ -290,7 +288,7 @@ evalArcRule~ec~s~ar = \\
 \t2 \THEN evalObjectSpecification~ec~ar.valueSpec~sg \\
 \t1 \ELSE \\
 \t2  dispatch~ ar.actions~ sg~ ec 
-\end{gendef}
+\end{axdef}
 
 
 \subsubsection{\zc{PredicateFilter} Validation}
@@ -309,35 +307,35 @@ representation of \zc{IRIstem} according to standard IRI matching rules \cite{RF
 \begin{zed}
 [IRIstem]
 \end{zed}
-\begin{gendef}
+\begin{axdef}
 	IRIstemRange: IRIstem \pfun \power IRI
-\end{gendef}
+\end{axdef}
 \zc{evalPredicateFilter} returns all of the triples in a \zc{Graph} whose predicate
 matches the supplied \zc{PredicateFilter}:
-\begin{gendef}
+\begin{axdef}
    evalPredicateFilter : PredicateFilter \pfun Graph \pfun Graph
 \where
    \forall f: PredicateFilter; g: Graph @ evalPredicateFilter~ f ~g = \\
-\t1 \IF f \in \ran pfIRI \THEN evalIRIorStem~ (pfIRI \entryFor f)~ g \\
-\t1 \ELSE evalWild~ (pfWild \entryFor f)~ g
-\end{gendef}
+\t1 \IF f \in \ran pfIRI \THEN evalIRIorStem~ (pfIRI \inv f)~ g \\
+\t1 \ELSE evalWild~ (pfWild \inv f)~ g
+\end{axdef}
 \zc{evalIRIorStem} returns all of the triples in a \zc{Graph} matching the supplied 
 \zc{IRIorStem}
-\begin{gendef}
+\begin{axdef}
    evalIRIorStem: IRIorStem \pfun Graph \pfun Graph
 \where
    \forall e: IRIorStem; g: Graph @ evalIRIorStem~ e ~g = \\
-\t1 \IF e \in \ran iosi \THEN \{t : g | iri \entryFor t.p = iosi \entryFor e \} \\
-\t1 \ELSE \{t: g | iri \entryFor t.p \in IRIstemRange~ (ioss \entryFor e) \}
-\end{gendef}
+\t1 \IF e \in \ran iosi \THEN \{t : g | iri \inv t.p = iosi \inv e \} \\
+\t1 \ELSE \{t: g | iri \inv t.p \in IRIstemRange~ (ioss \inv e) \}
+\end{axdef}
 \zc{evalWild} returns all of the triples in a \zc{Graph} that do \emph{not} match an entry
 in the set of \zc{IRIorStems}.
-\begin{gendef}
+\begin{axdef}
    evalWild: \power IRIorStem \pfun Graph \pfun Graph
 \where
    \forall es: \power IRIorStem; g: Graph @ evalWild ~es ~g = \\
 \t1 \{t: g | t \notin \bigcup \{e: es @ evalIRIorStem~e~g\} \}
-\end{gendef}
+\end{axdef}
 
 
 \subsubsection{ObjectSpecification evaluation}
@@ -372,7 +370,7 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 \end{itemize}
 
 
-\begin{gendef}
+\begin{axdef}
    evalCardinality: Graph \fun \optional[\nat] \fun \optional[\nat] \fun OptValidity
 \where
    \forall g: Graph; min, max: \optional[\nat] @ evalCardinality~g~min~max = \\
@@ -384,34 +382,34 @@ ObjectSpecification ::= valueType \ldata IRI \rdata | \\
 \t3 (\# max = 1 \land \# g > value~ max) \\
 \t2 \THEN \fail \\
 \t1 \ELSE \pass
-\end{gendef}
+\end{axdef}
 
 
 \paragraph{evalObjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
 match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
-\begin{gendef}
+\begin{axdef}
    evalObjectSpecification: EvalContext \fun ObjectSpecification \fun Graph \fun \\
 \t1 OptValidity
 \where
    \forall ec: EvalContext; os: ObjectSpecification; g: Graph @ \\ evalObjectSpecification~ec~os~g = \\
 \t1 \IF \forall t: g @ evalObjectSpecificationTriple~ec~os~t.o = \pass \THEN \pass \\
 \t1 \ELSE \fail
-\end{gendef}
-\begin{gendef}
+\end{axdef}
+\begin{axdef}
    evalObjectSpecificationTriple: EvalContext \fun ObjectSpecification \fun \\
 \t1 RDFTerm \fun OptValidity
 \where
    \forall ec:EvalContext; os: ObjectSpecification; n: RDFTerm @ \\
   evalObjectSpecificationTriple~ec~os~n = \\
 \t1 \IF os \in \ran valueType \THEN \\
-\t2 evalValueType~(valueType \entryFor os)~n \\
+\t2 evalValueType~(valueType \inv os)~n \\
 \t1 \ELSE \IF os \in \ran valueSet \THEN \\
-\t2 evalTermSet~(valueSet \entryFor os)~n \\
+\t2 evalTermSet~(valueSet \inv os)~n \\
 \t1 \ELSE \IF os \in \ran osWild \THEN \\
-\t2 evalTermWild~(osWild \entryFor os)~n \\
+\t2 evalTermWild~(osWild \inv os)~n \\
 \t1 \ELSE \\
-\t2 evalTermReference~ec~(valueRef \entryFor os)~n
-\end{gendef}
+\t2 evalTermReference~ec~(valueRef \inv os)~n
+\end{axdef}
 
 
 \paragraph{evalValueType} -- returns pass if the supplied \zc{RDFTerm} is:
@@ -419,7 +417,7 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \item type \zc{literal} and whose \zc{dataType} matches ValueType
 \item type \zc{IRI} and \zc{ValueType} is type \zc{RDF\_Literal}
 \end{itemize}
-\begin{gendef}
+\begin{axdef}
    evalValueType: IRI \pfun RDFTerm \pfun OptValidity
 \where
    \forall vt: IRI; n: RDFTerm; l: RDFLiteral @ evalValueType~vt~ n = \\
@@ -427,45 +425,45 @@ match the supplied \zc{ObjectSpecification}, otherwise \zc{fail} ($\fail$)
 \t1 \ELSE \IF vt = SHEX\_BNODE \land  n \in \ran bnode \THEN \pass \\
 \t1 \ELSE \IF vt = SHEX\_NONLITERAL \land  (n \in \ran iri \lor n \in \ran bnode) \THEN \pass \\
 \t1 \ELSE \IF vt = SHEX\_LITERAL \land  n \in \ran literal \THEN \pass \\
-\t1 \ELSE \IF n \in \ran literal \land l = (literal \entryFor n) \land \\
-\t2 ((l \in \ran pl \land (pl \entryFor l).dataType = vt) \lor \\
-\t2  (l \in \ran tl \land (tl \entryFor l).dataType = vt)) \THEN \pass \\
+\t1 \ELSE \IF n \in \ran literal \land l = (literal \inv n) \land \\
+\t2 ((l \in \ran pl \land (pl \inv l).dataType = vt) \lor \\
+\t2  (l \in \ran tl \land (tl \inv l).dataType = vt)) \THEN \pass \\
 \t1 \ELSE \fail
-\end{gendef}
+\end{axdef}
 
 \paragraph{evalTermSet} -- return $\pass$ if the supplied \zc{RDFTerm} is a member of \zc{MatchValue}
-\begin{gendef}
+\begin{axdef}
    evalTermSet: \power MatchValue \pfun RDFTerm \pfun OptValidity
 \where
    \forall mvs: \power MatchValue; n: RDFTerm @ evalTermSet~mvs~n = \\
 \t1	\IF \exists mv: mvs @ \\
-\t2 ((mv \in \ran mviri \land n \in \ran iri \land (iri \entryFor n) = mviri \entryFor mv) \lor \\
+\t2 ((mv \in \ran mviri \land n \in \ran iri \land (iri \inv n) = mviri \inv mv) \lor \\
 \t2  (mv \in \ran mviris \land n \in \ran iri \land  \\
-\t3 (iri \entryFor n) \in IRIstemRange ~ (mviris \entryFor mv) ) \lor \\
-\t2  (n \in \ran literal \land mvlit \entryFor mv = literal \entryFor n)) \\
+\t3 (iri \inv n) \in IRIstemRange ~ (mviris \inv mv) ) \lor \\
+\t2  (n \in \ran literal \land mvlit \inv mv = literal \inv n)) \\
 \t1 \THEN \pass \\
 \t1 \ELSE \fail
-\end{gendef}
+\end{axdef}
 
 
 \paragraph{evalTermWild} -- return pass ($\pass$) if the supplied \zc{RDFTerm} is \textit{not} a member of \zc{MatchValue}.
 
-\begin{gendef}
+\begin{axdef}
    evalTermWild: \power MatchValue \fun RDFTerm \fun OptValidity
 \where
    \forall mvs: \power MatchValue; n: RDFTerm @ evalTermWild~mvs~n = \\
 \t1 \IF evalTermSet~ mvs~ n = \pass \THEN \fail \ELSE \pass
-\end{gendef}
+\end{axdef}
 
 \paragraph{evalTermReference} -- return $\pass$ if the subgraph of the \zc{EvalContext} graph whose subjects match the supplied \zc{RDFTerm} satisfies the \zc{ValueReference} rule.
 
-\begin{gendef}
+\begin{axdef}
    evalTermReference: EvalContext \pfun Label \pfun RDFTerm \pfun OptValidity
 \where
 	\forall ec: EvalContext; vr: Label; n: RDFTerm @ \\ evalTermReference~ec~vr~n = \\
 \t1 \IF n \notin \ran literal \THEN evalRule'~ec~n~vr \\
 \t1 \ELSE \fail
-\end{gendef}
+\end{axdef}
 
 
 \subsection{RevArcRule evaluation}
@@ -489,7 +487,7 @@ a supplied criteria. The rule itself consists of a \zc{PredicateFilter} to selec
 \item Evaluate the object of each of the triples in the set against \zc{SubjectSpecification}.  If any of the evaluations fail, return \zc{fail} ($\fail$).
 \item Return the result of evaluating \zc{actions} against the matching triples.
 \end{enumerate}
-\begin{gendef}
+\begin{axdef}
    evalRevArcRule: EvalContext \fun RDFTerm \fun RevArcRule \fun OptValidity
 \where
    \forall ec: EvalContext; o: RDFTerm; rar: RevArcRule; og: Graph  | \\ 
@@ -501,7 +499,7 @@ evalRevArcRule~ec~o~rar = \\
 \t2 \THEN evalSubjectSpecification~ec~rar.valueSpec~og \\
 \t1 \ELSE \\
 \t2  dispatch~ rar.actions~ og~ ec 
-\end{gendef}
+\end{axdef}
 
 \subsubsection{SubjectSpecification evaluation}
 \zc{SubjectSpecification} specifies a set of possible values for an \zc{RDFTerm} and takes one of the following forms:
@@ -518,27 +516,27 @@ SubjectSpecification ::=  subjectSet \ldata \power MatchValue \rdata | \\
 
 paragraph{evalSubjectSpecification} -- returns \zc{pass} ($\pass$) if all of the triples in a \zc{Graph} 
 match the supplied \zc{SubjectSpecification}, otherwise \zc{fail} ($\fail$)
-\begin{gendef}
+\begin{axdef}
    evalSubjectSpecification: EvalContext \fun SubjectSpecification \fun Graph \fun \\
 \t1 OptValidity
 \where
    \forall ec: EvalContext; ss: SubjectSpecification; g: Graph @ \\ evalSubjectSpecification~ec~ss~g = \\
 \t1 \IF \forall t: g @ evalSubjectSpecificationTriple~ec~ss~t.o = \pass \THEN \pass \\
 \t1 \ELSE \fail
-\end{gendef}
-\begin{gendef}
+\end{axdef}
+\begin{axdef}
    evalSubjectSpecificationTriple: EvalContext \fun SubjectSpecification \fun \\
 \t1 RDFTerm \fun OptValidity
 \where
    \forall ec:EvalContext; ss: SubjectSpecification; n: RDFTerm @ \\
   evalSubjectSpecificationTriple~ec~ss~n = \\
 \t1 \IF ss \in \ran subjectSet \THEN \\
-\t2 evalTermSet~(subjectSet \entryFor ss)~n \\
+\t2 evalTermSet~(subjectSet \inv ss)~n \\
 \t1 \ELSE \IF ss \in \ran ssWild \THEN \\
-\t2 evalTermWild~(ssWild \entryFor ss)~n \\
+\t2 evalTermWild~(ssWild \inv ss)~n \\
 \t1 \ELSE \\
-\t2 evalTermReference~ec~(subjectRef \entryFor ss)~n
-\end{gendef}
+\t2 evalTermReference~ec~(subjectRef \inv ss)~n
+\end{axdef}
 
 \subsection{GroupRule evaluation}
 A \zc{GroupRule} serves two purposes.  The first is to declare that a referenced rule is to be
@@ -558,7 +556,7 @@ OPT ::= OPTIONAL | REQUIRED \\
 GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
 \end{zed}
 \zc{evalGroupRule} evaluates \zc{Rule}, applies \zc{opt} and,if the result is \zc{pass} ($\pass$) evaluates the actions with respect the passing \zc{Graph} 
-\begin{gendef}
+\begin{axdef}
    evalGroupRule: EvalContext \fun RDFTerm \fun GroupRule \fun OptValidity
 \where
    \forall ec: EvalContext; i: RDFTerm; gr: GroupRule @ evalGroupRule~ ec~ i ~ gr = \\
@@ -569,7 +567,7 @@ GroupRule \defs [rule: Label; opt: OPT; actions: \power Action ] \\
 \t1 \ELSE \IF evalRule'~ec~i~gr.rule = \pass \\
 \t2 \THEN dispatch~ gr.actions~ \emptyset ~ ec \\
 \t1 \ELSE evalRule'~ec~i~gr.rule
-\end{gendef}
+\end{axdef}
 
 \subsection{AndRule evaluation}
 An \zc{AndRule} consists of a set of one or more \zc{Rules}, whose evaluation is determined
@@ -587,22 +585,22 @@ by the following table: \\
 \end{tabular} \\
 
 The formal implementation of which will be realized in the corresponding function:
-\begin{gendef}
+\begin{axdef}
    And: OptValidity \fun OptValidity \fun OptValidity
-\end{gendef}
+\end{axdef}
 
 Observing that the above table is a monoid with \zc{nomatch} ($\nomatch$) as an identity
 element, \zc{evalAndRule} can be applied using the standard functional pattern:
 \begin{zed}
 AndRule == \seq_1 Label
 \end{zed}
-\begin{gendef}
+\begin{axdef}
    evalAndRule: EvalContext \fun RDFTerm \fun AndRule \fun OptValidity
 \where
    \forall ec: EvalContext; i: RDFTerm; r: AndRule  @ \\
 	evalAndRule~ec~i~r = \\
 \t1	foldr~ And~ \nomatch ~ (map~(evalRule'~ec~i)~r)
-\end{gendef}
+\end{axdef}
 
 \subsection{XorRule evaluation}
 An \zc{XorRule} consists of a set of one or more \zc{Rules}, whose evaluation is determined
@@ -620,21 +618,21 @@ by the following table: \\
 \end{tabular}
 \\
 The formal implementation of which will be realized in the corresponding function:
-\begin{gendef}
+\begin{axdef}
    Xor: OptValidity \fun OptValidity \fun OptValidity
-\end{gendef}
+\end{axdef}
 As with the \zc{And} function above, \zc{Xor} is a monoid whose identity is \zc{fail} ($\fail$)
 resulting in the following definition for \zc{evalXorRule}
 \begin{zed}
 XorRule == \seq_1 Label
 \end{zed}
-\begin{gendef}
+\begin{axdef}
    evalXorRule: EvalContext \fun RDFTerm \fun XorRule \fun OptValidity
 \where
    \forall ec: EvalContext; i: RDFTerm; r: XorRule  @ \\
 	evalXorRule~ec~i~r = \\
 \t1	foldr~ Xor~ \fail ~ (map~(evalRule'~ ec ~i)~ r)
-\end{gendef}
+\end{axdef}
 
 
 
@@ -656,12 +654,12 @@ always returns \zc{pass} ($\pass$) if the set of actions is empty.
 \begin{zed}
 [Action]
 \end{zed}
-\begin{gendef}
+\begin{axdef}
    dispatch: \power Action \fun Graph \fun EvalContext \fun OptValidity
 \where
    \forall as: \power Action; g: Graph; ec: EvalContext @ \\
 \t1 as = \emptyset \implies dispatch~ as~ g ~ec = \pass
-\end{gendef}
+\end{axdef}
 
 
 \section{Appendix}
@@ -700,7 +698,7 @@ which introduces a collection of constants of type $FreeType$, one for each elem
 constructor ::= source \inj FreeType
 \end{syntax}
 In the models that follow, there is a need to reverse this -- to find the $source$ for a given $FreeType$ instance. The 
-$\entryFor$ function exists for this purpose.  As an example, if one were to define:
+$\inv$ function exists for this purpose.  As an example, if one were to define:
 %%unchecked
 \begin{syntax}
 TravelDirections ::= bus \ldata BusDirections \rdata | \ walking \ldata WalkingDirections \rdata
@@ -710,16 +708,9 @@ If one is supplied with an instance of $Travel$ , one can convert it to the appr
 \begin{syntax}
 x : TravelDirections
 \where
-\IF x \in \ran bus \THEN bus \entryFor x \ELSE walking \entryFor x
+\IF x \in \ran bus \THEN bus \inv x \ELSE walking \inv x
 \end{syntax}
 
-\begin{gendef}[X, Y]
-    \_~  \entryFor \_~   : (X \inj Y) \cross Y \pfun X
-   %
-   \where %
-   \forall y : Y; f : X \inj Y @  f \entryFor y =
-   (\mu x : \dom f | f~x = y)
-\end{gendef}
 
 One way to represent optional values is a set with one member.  We take that route here 
 and introduce a bit of syntactic sugar to show our intent:
